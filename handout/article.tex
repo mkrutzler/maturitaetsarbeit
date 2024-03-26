@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+
+
+
+%define "squiggly" to make red squiggly underline
+\makeatletter
+\def\squiggly{\bgroup \markoverwith{\textcolor{red}{\lower3.5\p@\hbox{\sixly \char58}}}\ULon}
+\makeatother
+
+
+% Stuff to edit.
+\title{Creating an Operating System}
+\newcommand{\thesubtitle}{What it takes to make a computer usable}
+\newcommand{\currentdate}{2024/25}
+\author{Mark Krutzler}
+\newcommand{\auinstitution}{Kantonschule Im Lee}
+
+\titleformat{\section}
+{\huge\bfseries}
+{\thesection}
+{0.5em}
+{}[\titlerule]
+
+\titleformat{\subsection}
+{\bfseries\LARGE}
+{\thesection}
+{0.5em}
+{}
+
+\titleformat{\subsubsection}
+{\large\bfseries}
+{\thesection}
+{0.5em}
+{}
+
+
+\renewcommand{\maketitle}{
+\begin{center}
+
+
+{\Huge\bfseries
+\thetitle}
+\vspace{0.5em}\\
+{\LARGE\thesubtitle}
+
+
+{\rule{0.4\textwidth}{.4pt}}
+
+{\bfseries \theauthor}\\
+\textit{\auinstitution \ --- \currentdate}
+\end{center}
+}
+
+\begin{document}
+
+% A hacked together way to make the title and table of contents
+\begin{titlepage}\centering
+\vspace*{\fill}
+\maketitle
+\vspace*{\fill}
+\end{titlepage}
+\pagebreak
+\tableofcontents
+\pagebreak
+
+
+
+\section{section}
+
+\subsection{subsection}
+
+\subsubsection{subsubsection}
+
+
+
+\end{document}
