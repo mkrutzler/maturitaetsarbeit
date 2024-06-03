@@ -26,8 +26,7 @@ char *fb = (char *) FRAMEBUFFER_BASE_ADDRESS;
 
 /* Setup Cursor & writing state */
 
-unsigned int writing_state = 160;
-unsigned int cursor_state = 80;
+unsigned int cursor_state = 0;
 
 /* define I/O Ports */
 #define FB_COMMAND_PORT   0x3D4
@@ -45,6 +44,7 @@ void fb_clear_line(int pos);
 void fb_write_cell(unsigned i, char c, unsigned char fg, unsigned char bg);
 void fb_move_cursor(unsigned short pos);
 int fb_write(char *buf, unsigned int len);
+void fb_scroll(void);
 
 
 /** fb_move_cursor:
@@ -60,6 +60,7 @@ void fb_move_cursor(unsigned short pos)
   outb(FB_DATA_PORT, ((pos >> 8) & 0x00FF));
   outb(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
   outb(FB_DATA_PORT, (pos & 0x00FF));
+  cursor_state = pos;
 }
 
 
@@ -69,10 +70,18 @@ void fb_clear(void)
 {
   for (int i = 0; i < FRAMEBUFFER_LENGTH; i++)
   {
-    fb_write_cell(i*2, ' ', 0, 0);
+    fb_write_cell(i, ' ', 0, 0);
   }
 }
 
+/* fills buffer with "a", used for testing */
+void fb_spam_a(void)
+{
+  for (int i = 0; i < FRAMEBUFFER_LENGTH; i++)
+  {
+    fb_write_cell(i, 'a', 15, 0);
+  }
+}
 
 /* clears the current line (next 80 characters for now)*/
 
@@ -80,7 +89,7 @@ void fb_clear_line(int pos)
 {
   for (int i = 0; i < 80; i++)
   {
-    fb_write_cell(pos + i*2, ' ', 0, 0);
+    fb_write_cell(pos + i, ' ', 0, 0);
   }
 }
 
@@ -97,9 +106,29 @@ void fb_clear_line(int pos)
 
 void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
 {
+  i = i*2;
   fb[i] = c;
-  fb[i + 1] = ((fg & 0x0F) << 4 | (bg & 0x0F));
+  fb[i + 1] = ((bg & 0x0F) << 4 | (fg & 0x0F));
 }
+
+
+
+/** fb_scroll:
+ * Scrolls a line upwards
+ *
+ * no parameters needed
+ */
+
+void fb_scroll(void)
+{
+  for (unsigned int i = 0; i < 160; i++)
+    /* i: 160, because the fb has two parts: char & color => to move 80 cells you need to shift 160 chars */
+  {
+    fb[i] = fb[i+160];
+  }
+  fb_clear_line(24*80);
+}
+
 
 
 
@@ -108,17 +137,14 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
  *
  * @ param *buf: buffer to be written
  * @ param len: length of the buffer
- *
- * TO IMPLEMENT: fb_write automatically scrolls
  */
 
 int fb_write(char *buf, unsigned int len)
 {
   for (unsigned int i = 0; i < len; i++)
     {
-      fb_write_cell((writing_state+i*2), buf[i], 0, 15);
+      fb_write_cell((cursor_state+i), buf[i], 15, 0);
     }
-  writing_state+=len*2;
   cursor_state+=len;
   fb_move_cursor(cursor_state);
 

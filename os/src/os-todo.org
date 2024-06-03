@@ -1,3 +1,5 @@
-#+title: Os Todo
+#+title: OS Todo
 
 I will collect the todo's for the os here
+
+* TODO can't scroll fb twice
