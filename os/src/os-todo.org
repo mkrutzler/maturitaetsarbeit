@@ -1,0 +1,3 @@
+#+title: Os Todo
+
+I will collect the todo's for the os here
