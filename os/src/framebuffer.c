@@ -68,7 +68,7 @@ void fb_move_cursor(unsigned short pos)
 
 void fb_clear(void)
 {
-  for (int i = 0; i < FRAMEBUFFER_LENGTH; i++)
+  for (int i = 0; i < 24*80+1; i++)
   {
     fb_write_cell(i, ' ', 0, 0);
   }
@@ -77,7 +77,7 @@ void fb_clear(void)
 /* fills buffer with "a", used for testing */
 void fb_spam_a(void)
 {
-  for (int i = 0; i < FRAMEBUFFER_LENGTH; i++)
+  for (int i = 0; i < 24*80; i++)
   {
     fb_write_cell(i, 'a', 15, 0);
   }
@@ -121,10 +121,11 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
 
 void fb_scroll(void)
 {
-  for (unsigned int i = 0; i < 160; i++)
-    /* i: 160, because the fb has two parts: char & color => to move 80 cells you need to shift 160 chars */
+  for (unsigned int i = 0; i <= (25*80); i++)
   {
+    //fb_write_cell((i+80), fb[i*2], 15, 0);
     fb[i] = fb[i+160];
+    /* i: 160, because the fb has two parts: char & color => to move 80 cells you need to shift 160 chars */
   }
   fb_clear_line(24*80);
 }
