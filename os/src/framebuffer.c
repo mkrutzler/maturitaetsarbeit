@@ -121,7 +121,7 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
 
 void fb_scroll(void)
 {
-  for (unsigned int i = 0; i <= (25*80); i++)
+  for (unsigned int i = 0; i < (2*25*80); i++)
   {
     //fb_write_cell((i+80), fb[i*2], 15, 0);
     fb[i] = fb[i+160];
