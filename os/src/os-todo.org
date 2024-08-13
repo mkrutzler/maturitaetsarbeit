@@ -1,7 +1,0 @@
-#+title: OS Todo
-
-I will collect the todo's for the os here
-
-* TODO can't scroll fb twice & strange scroll behaviour
-  works, when working with fb_write, doest with fb_write_cell
-  after a while it doesn't scroll
