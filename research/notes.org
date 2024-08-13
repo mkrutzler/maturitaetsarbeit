@@ -1,0 +1,29 @@
+#+TITLE: Notes / Research on CPU-Scheduling
+#+AUTHOR: Mark Krutzler
+
+* Basics (OStep)
+** Introduction (chapter 7)
+Scheduling is not a low level mechanism but a high level policy/disciplines.
+We need to make simplifying assumptions of the workload:
+1. Each job runs for the same amount of time
+2. All jobs arrive at the same time.
+3. Once started, each job runs to completion
+4. All jobs only use the CPU (no I/O)
+5. The run-time of each job is known.
+These rules will be eased over time until we get a fully functioning policy.
+Of course the more you know the easier it is to schedule.
+*** Metrics
+The fundamental question is: How to we measure the "efficiency" or the "quality" of the scheduler?
+You can measure performance or fairness. Here are ways to measure performance:
+- turnaround time
+   $T_{turnaround} = T_{completion} - T_{arrival}$
+  For us $T_{arrival} = 0$, because of simplification 1.
+- response time
+*** First In, First Out (FIFO) / First Come, First Served (FCFS)
+- Most basic scheduling policy
+* Computer Scheduling Methods and their Countermeasures
+* Lottery Scheduling
+* Examples
+** Linux 2.6 Fair Scheduler
+** Solaris Scheduling
+** Ule vs Cfs
