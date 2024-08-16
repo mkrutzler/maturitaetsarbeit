@@ -16,11 +16,42 @@ Of course the more you know the easier it is to schedule.
 The fundamental question is: How to we measure the "efficiency" or the "quality" of the scheduler?
 You can measure performance or fairness. Here are ways to measure performance:
 - turnaround time
-   $T_{turnaround} = T_{completion} - T_{arrival}$
-  For us $T_{arrival} = 0$, because of simplification 1.
-- response time
+  - Calculated as:
+    $T_{turnaround} = T_{completion} - T_{arrival}$
+    For us $T_{arrival} = 0$, because of simplification 1. (can be neglected later)
+- response time: measures the frustration of the user, while looking at the spinning ball
+  - Calculated as:
+    $T_{response} = T_{firstrun} - T_{arrival}$
+    - For modern computers, it is essential that this is kept at a minimum
 *** First In, First Out (FIFO) / First Come, First Served (FCFS)
 - Most basic scheduling policy
+- Given our simplification it works really well and is easy to implement
+- However after relaxing assumption 1, it will perform poorly if a huge process gets infront of many small ones
+  - This is the so called *convoy effect*
+  - It is like if you're at waiting in line to pay and before you have a family of five with two full carts: annoying
+*** Shortest Job First (SJF)
+- The shortest job is run first
+  - non-preemptive: runs a process until finish
+  - preemptive: can stop and perform a context switch
+- If the smaller tasks arrive later (by relaxing assumption 2), then we face the same problem as before. (due to this algorithm can't perform a context switch / is non-preemptive)
+*** Shortest Time-to-Completion (STCF) / Preemptive Shortest Job First (PSJF)
+- This policy requires that rule 3 is ignored.
+- This is the preemptive version of SJF.
+- It updates, whenever a new job arrives or one is finished
+*** Round Robin (RR) / time-slicing
+- this policy runs each job for a specified "time slice" / "scheduling quantum" (introducing a variable)
+- general technique is called "amortization".
+- The shorter the time slice, the more responsive the system, however context switching costs CPU time aswell, so you'll need to balance out
+- RR is one of the worst policies for turnaround time
+- It gives up performance for fairness
+*** Relaxing Assumptions 4 & 5
+**** assumption 4
+- If a job waits for I/O than it is in a state called "blocked"
+- While a job is waiting for I/O, the CPU can be passed onto somebodye else: "overlapping"
+**** assumption 5
+- we usually have no idea how long a job will take
+- This actually breaks most of our policies, because they all rely on knowing the length of the job (except RR)
+- Solution: Multi-Level Feedback Queue (MLFQ) $\Rightarrow$ See next Chapter
 * Computer Scheduling Methods and their Countermeasures
 * Lottery Scheduling
 * Examples
