@@ -12,6 +12,8 @@
 ** [0/2] Lottery Scheduling
 *** [ ] phd-mit-tr667.pdf
 *** [ ] waldspurger.pdf
+** [0/1] Adjusting Parameters using Machine Learning
+*** [ ] ml.pdf
 ** [0/1] 2.6 CFS
 *** [ ] inside-cfs.pdf
 ** [0/1] Solaris Scheduling
