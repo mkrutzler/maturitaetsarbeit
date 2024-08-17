@@ -21,7 +21,7 @@
 ** [0/1] ULE vs CFS
 *** [ ] atc18-bouron.pdf
 * Basics (OStep)
-** Introduction (chapter 7)
+** Introduction (Chapter 7)
 Scheduling is not a low level mechanism but a high level policy/disciplines.
 We need to make simplifying assumptions of the workload:
 1. Each job runs for the same amount of time
@@ -71,8 +71,44 @@ You can measure performance or fairness. Here are ways to measure performance:
 - we usually have no idea how long a job will take
 - This actually breaks most of our policies, because they all rely on knowing the length of the job (except RR)
 - Solution: Multi-Level Feedback Queue (MLFQ) $\Rightarrow$ See next Chapter
+** Multi-Level Feedback Queue (Chapter 8)
+- One of the most known Policies (Turning Awarded)
+- It tries to:
+  - optimize turn around time (without knowing the length of the job)
+  - minimize response time
+*** (Basic) Rules of MLFQ
+- There are multiple queues and each has their priority level. (higher priority is preferred when switching)
+- If multiple jobs are on the same priority than RR (Round Robin) is used
+- Priorities can change over time.
+- Assume that if a job is resource intensive than it will stay as such. (The history of the job determines the future)
+*** Changing Priority
+- Depending on the CPU time usage, the priority changes
+- "allotment": time that a job can spend at a given priority before demotion.
+*** Priority Boost
+- to counter starvation of longer jobs every now and then all of the jobs are put into the priority queue
+- also this counters the fact that some programs might start non interactively and than turn into interactive (you know what I mean)
+*** "Better Accounting" (Anti gaming)
+- to prevent people from abusing the allotment method and game the CPU, we need to update rule 4:
+- previous:
+  a. If a job uses up its allotment while running, its priority is reduced
+  b. If a job gives up the CPU before the allotment is up, it stays at the same priority
+- new:
+  Once a job uses up its time allotment at a given level, its priority is reduced
+*** Summary of Rules (Copied out of the book)
+1. If Priority (A) > Priority (B) $\Rightarrow$ A runs & B doesn't
+2. If Priority (A) = Priority (B) $\Rightarrow$ A & B run in RR
+3. When a job enters the system, it is placed at the highest priority
+4. Once a job uses up its time allotment at a given level, its priority is reduced
+5. After some period S, move all the jobs in the system to the topmost queue
+*** Voo-Doo Constants
+These constants heavily change how effective the MLFQ is:
+- scheduling quantum (RR)
+- amount of queues
+- when to priority boost
+- allotment (could change in every priority queue)
 * Computer Scheduling Methods and their Countermeasures
 * Lottery Scheduling
+* Adjusting Parameters using Machine Learning
 * Examples
 ** Linux 2.6 Fair Scheduler
 ** Solaris Scheduling
