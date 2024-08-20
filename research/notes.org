@@ -22,17 +22,6 @@
 ** [0/2] Advanced Stuff (for Later)
 *** [ ] cpu-sched-multi.pdf
 *** [ ] ml.pdf
-* Scratchpad
-- main goal: learn about CPU-scheduler (and schedulers) in general
-  - take the concepts and apply it to real life? WILL BE REAL HARD AND NOT REALLY APPLICABLE
-    maybe a task scheduler but using the algorithms of a CPU-Scheduler???
-    that could be pretty cool
-    - could be hard, because we have deadlines...
-    - and also less I/O, because there is mostly only solo work...
-    - if so I would need to look at either how to estimate time to finish and adjust the priority when the deadline is closing or something like that
-    - calculation needs not to be efficient, however with only a certain amount of switching
-- probably best to focus on stride/Proportinal Share methods
-  - implementation in CPP?
 * Basics (OStep)
 ** Introduction (Chapter 7)
 Scheduling is not a low level mechanism but a high level policy/disciplines.
