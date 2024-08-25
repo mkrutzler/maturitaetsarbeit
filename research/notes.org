@@ -1,5 +1,6 @@
 #+TITLE: Notes / Research on CPU-Scheduling
 #+AUTHOR: Mark Krutzler
+#+LaTeX_CLASS: report
 
 * Basics (OStep)
 ** Introduction (Chapter 7)
