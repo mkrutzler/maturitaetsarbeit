@@ -1,27 +1,6 @@
 #+TITLE: Notes / Research on CPU-Scheduling
 #+AUTHOR: Mark Krutzler
 
-* Sources Checklist:
-** [3/3] OStep
-*** [X] cpu-sched.pdf
-*** [X] cpu-sched-mlfq.pdf
-*** [X] cpu-sched-lottery.pdf
-** [0/1] Computer Scheduling Methods and their Countermeasures
-*** [ ] cpu-sched.pdf
-** [0/2] Lottery Scheduling
-*** [ ] phd-mit-tr667.pdf
-*** [ ] waldspurger.pdf
-** [0/1] 2.6 CFS
-*** [ ] inside-cfs.pdf
-** [0/1] Solaris Scheduling
-*** [ ]  notes-solaris.pdf
-** [0/1] ULE vs CFS
-*** [ ] atc18-bouron.pdf
-** [0/1] Look into balanced tree datastructures???
-*** [ ] Get the book "Symmetric binary B-Trees: Data Structure And Maintenance Algorithms" by Rudolf Bayer
-** [0/2] Advanced Stuff (for Later)
-*** [ ] cpu-sched-multi.pdf
-*** [ ] ml.pdf
 * Basics (OStep)
 ** Introduction (Chapter 7)
 Scheduling is not a low level mechanism but a high level policy/disciplines.
