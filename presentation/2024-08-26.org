@@ -1,0 +1,19 @@
+#+title: Bericht
+#+author: Mark Krutzler
+#+options: toc:nil
+* Was ich gemacht habe
+- Übersicht
+- Einfach Methoden
+  $\Rightarrow$ Stichwortartigen Notizen
+* Was ich nicht gemacht habe
+- Probekapitel schreiben
+  - Noch nicht genug Informationen
+- Programmieren
+* Was ich machen werde
+- Theorie
+  - Lottery / Stride Scheduling
+  - FreeBSD (ULE) und Linux (CFS) Scheduler vergleichen
+  - Datastructure? (Red-Black Tree)
+- Implementation?
+- Extra Material
+  - Multi CPU

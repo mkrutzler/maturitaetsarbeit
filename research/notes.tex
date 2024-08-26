@@ -1,0 +1,432 @@
+% Created 2024-08-25 Sun 14:46
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Mark Krutzler}
+\date{\today}
+\title{Notes / Research on CPU-Scheduling}
+\hypersetup{
+ pdfauthor={Mark Krutzler},
+ pdftitle={Notes / Research on CPU-Scheduling},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.4 (Org mode 9.8)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\part{Basics (OStep)}
+\label{sec:orgce4bae2}
+\chapter{Introduction (Chapter 7)}
+\label{sec:org02640b6}
+Scheduling is not a low level mechanism but a high level policy/disciplines.
+We need to make simplifying assumptions of the workload:
+\begin{enumerate}
+\item Each job runs for the same amount of time
+\item All jobs arrive at the same time.
+\item Once started, each job runs to completion
+\item All jobs only use the CPU (no I/O)
+\item The run-time of each job is known.
+\end{enumerate}
+These rules will be eased over time until we get a fully functioning policy.
+Of course the more you know the easier it is to schedule.
+\section{Metrics}
+\label{sec:orgb0f9911}
+The fundamental question is: How to we measure the ``efficiency'' or the ``quality'' of the scheduler?
+You can measure performance or fairness. Here are ways to measure performance:
+\begin{itemize}
+\item turnaround time
+\begin{itemize}
+\item Calculated as:
+\(T_{turnaround} = T_{completion} - T_{arrival}\)
+For us \(T_{arrival} = 0\), because of simplification 1. (can be neglected later)
+\end{itemize}
+\item response time: measures the frustration of the user, while looking at the spinning ball
+\begin{itemize}
+\item Calculated as:
+\(T_{response} = T_{firstrun} - T_{arrival}\)
+\begin{itemize}
+\item For modern computers, it is essential that this is kept at a minimum
+\end{itemize}
+\end{itemize}
+\item fairness: first job to finish divided by last job to finish (this is not a performance metric!!)
+\end{itemize}
+\section{First In, First Out (FIFO) / First Come, First Served (FCFS)}
+\label{sec:org930f0a2}
+\begin{itemize}
+\item Most basic scheduling policy
+\item Given our simplification it works really well and is easy to implement
+\item However after relaxing assumption 1, it will perform poorly if a huge process gets infront of many small ones
+\begin{itemize}
+\item This is the so called \textbf{convoy effect}
+\item It is like if you're at waiting in line to pay and before you have a family of five with two full carts: annoying
+\end{itemize}
+\end{itemize}
+\section{Shortest Job First (SJF)}
+\label{sec:org1f10514}
+\begin{itemize}
+\item The shortest job is run first
+\begin{itemize}
+\item non-preemptive: runs a process until finish
+\item preemptive: can stop and perform a context switch
+\end{itemize}
+\item If the smaller tasks arrive later (by relaxing assumption 2), then we face the same problem as before. (due to this algorithm can't perform a context switch / is non-preemptive)
+\end{itemize}
+\section{Shortest Time-to-Completion (STCF) / Preemptive Shortest Job First (PSJF)}
+\label{sec:orgb6c2621}
+\begin{itemize}
+\item This policy requires that rule 3 is ignored.
+\item This is the preemptive version of SJF.
+\item It updates, whenever a new job arrives or one is finished
+\end{itemize}
+\section{Round Robin (RR) / time-slicing}
+\label{sec:orgc7555bf}
+\begin{itemize}
+\item this policy runs each job for a specified ``time slice'' / ``scheduling quantum'' (introducing a variable)
+\item general technique is called ``amortization''.
+\item The shorter the time slice, the more responsive the system, however context switching costs CPU time aswell, so you'll need to balance out
+\item RR is one of the worst policies for turnaround time
+\item It gives up performance for fairness
+\end{itemize}
+\section{Relaxing Assumptions 4 \& 5}
+\label{sec:orgac13a29}
+\begin{enumerate}
+\item assumption 4
+\label{sec:org61b9a39}
+\begin{itemize}
+\item If a job waits for I/O than it is in a state called ``blocked''
+\item While a job is waiting for I/O, the CPU can be passed onto somebodye else: ``overlapping''
+\end{itemize}
+\item assumption 5
+\label{sec:org64b9783}
+\begin{itemize}
+\item we usually have no idea how long a job will take
+\item This actually breaks most of our policies, because they all rely on knowing the length of the job (except RR)
+\item Solution: Multi-Level Feedback Queue (MLFQ) \(\Rightarrow\) See next Chapter
+\end{itemize}
+\end{enumerate}
+\chapter{Multi-Level Feedback Queue (Chapter 8)}
+\label{sec:org36243f5}
+\begin{itemize}
+\item One of the most known Policies (Turning Awarded)
+\item It tries to:
+\begin{itemize}
+\item optimize turn around time (without knowing the length of the job)
+\item minimize response time
+\end{itemize}
+\end{itemize}
+\section{(Basic) Rules of MLFQ}
+\label{sec:orga3d0fb4}
+\begin{itemize}
+\item There are multiple queues and each has their priority level. (higher priority is preferred when switching)
+\item If multiple jobs are on the same priority than RR (Round Robin) is used
+\item Priorities can change over time.
+\item Assume that if a job is resource intensive than it will stay as such. (The history of the job determines the future)
+\end{itemize}
+\section{Changing Priority}
+\label{sec:org4946c2d}
+\begin{itemize}
+\item Depending on the CPU time usage, the priority changes
+\item ``allotment'': time that a job can spend at a given priority before demotion.
+\end{itemize}
+\section{Priority Boost}
+\label{sec:orgfe8a82e}
+\begin{itemize}
+\item to counter starvation of longer jobs every now and then all of the jobs are put into the priority queue
+\item also this counters the fact that some programs might start non interactively and than turn into interactive (you know what I mean)
+\end{itemize}
+\section{``Better Accounting'' (Anti gaming)}
+\label{sec:orgd12a267}
+\begin{itemize}
+\item to prevent people from abusing the allotment method and game the CPU, we need to update rule 4:
+\item previous:
+\begin{enumerate}
+\item If a job uses up its allotment while running, its priority is reduced
+\item If a job gives up the CPU before the allotment is up, it stays at the same priority
+\end{enumerate}
+\item new:
+Once a job uses up its time allotment at a given level, its priority is reduced
+\end{itemize}
+\section{Summary of Rules (Copied out of the book)}
+\label{sec:orga6a11c6}
+\begin{enumerate}
+\item If Priority (A) > Priority (B) \(\Rightarrow\) A runs \& B doesn't
+\item If Priority (A) = Priority (B) \(\Rightarrow\) A \& B run in RR
+\item When a job enters the system, it is placed at the highest priority
+\item Once a job uses up its time allotment at a given level, its priority is reduced
+\item After some period S, move all the jobs in the system to the topmost queue
+\end{enumerate}
+\section{Voo-Doo Constants}
+\label{sec:org578a8d8}
+These constants heavily change how effective the MLFQ is:
+\begin{itemize}
+\item scheduling quantum (RR)
+\item amount of queues
+\item when to priority boost
+\item allotment (could change in every priority queue)
+\end{itemize}
+\chapter{Proportional Share (Chapter 9)}
+\label{sec:org0922768}
+\begin{itemize}
+\item This is a fair scheduler
+\begin{itemize}
+\item The more/longer jobs run the fairer it becomes
+\end{itemize}
+\item literally just hold a lottery to determine which programs runs next
+\item ``tickets'' represent the share of a resource that a process should recieve = it is like a currency
+\begin{itemize}
+\item the more tickets you hold, the higher the chance that you have a winning one
+\item every time slice a new ticket is picked out as the winning ticket
+\item more generally tickets can represent the share of something.
+\end{itemize}
+\item the tickets are handed out to the user, who than can allocate among their jobs
+\begin{itemize}
+\item the user can use their ``own'' tickets which will be converted into the global currency
+\end{itemize}
+\item ticket transfer can be used to boost a process
+\begin{itemize}
+\item think server / client => client give server their tickets, so that the server has a higher global share
+\end{itemize}
+\item ?? in a trusted environment you could also inflate your own tickets to boost you own CPU time
+\end{itemize}
+\section{Advantages of using randomness}
+\label{sec:org26fc12b}
+\begin{itemize}
+\item no strange corner-case behaviors
+\item lightweight
+\item if the randomizing algorithm is quick than the speed is quick
+\begin{itemize}
+\item faster algorithms tend to be more like pseudo-random
+\end{itemize}
+\end{itemize}
+\section{Implementation}
+\label{sec:org36bc201}
+\begin{enumerate}
+\item requirements:
+\label{sec:orgf067f7d}
+\begin{itemize}
+\item random number generator
+\item data structure (to track the processes of the system)
+\item amount of total number of tickets
+\end{itemize}
+\item sample code (copied):
+\label{sec:orgc4e4c39}
+\begin{verbatim}
+// counter: used to track if we’ve found the winner yet
+int counter = 0;
+
+// winner: call some random number generator to
+//         get a value >= 0 and <= (totaltickets - 1)
+int winner = getrandom(0, totaltickets);
+
+// current: use this to walk through the list of jobs
+node_t *current = head;
+while (current) {
+    counter = counter + current->tickets;
+    if (counter > winner)
+        break; // found the winner
+    current = current->next;
+}
+// ’current’ is the winner: schedule it...
+\end{verbatim}
+\end{enumerate}
+\section{Assigning tickets}
+\label{sec:orga879a75}
+\begin{itemize}
+\item Remains open for now
+\end{itemize}
+\section{Stride Scheduling}
+\label{sec:org3130976}
+\begin{itemize}
+\item it is a deterministic fair-share scheduler
+\begin{itemize}
+\item while lottery scheduling achieves the proportions with probability (can be off), stride scheduling gets it right each time.
+\item PROBLEM: you can't have a new job entering, because it will monopolize the CPU (due to low pass value)
+\end{itemize}
+\item bit tricky to understand: there is another article about it that I'll later read (under heading Lottery Scheduling)
+\item how it works:
+\begin{itemize}
+\item each process has a stride to begin with (the more tickets the smaller the stride)
+\item each time the process runs, it's counter (called ``pass'') get incremented by the value of the stride
+\begin{itemize}
+\item this is tracking its global progress
+\end{itemize}
+\item scheduler schedules according to the pass and the stride
+\begin{itemize}
+\item pick the lowest pass
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\begin{enumerate}
+\item pseudo-implementation (code copied)
+\label{sec:org4c549fe}
+\begin{verbatim}
+current = remove_min(queue); // pick client with min pass
+schedule(current); // run for quantum
+current->pass += current->stride; // update pass using stride
+insert(queue, current); // return current to queue
+\end{verbatim}
+\end{enumerate}
+\section{Sidequest: Linux Completely Fair Scheduler (CFS)}
+\label{sec:orgf8d6ba7}
+\begin{itemize}
+\item will talk about it later as well
+\item every process has a counter called ``vruntime''
+\begin{itemize}
+\item as they run it increases
+\item the process with the lowest ``vruntime'' is next
+\begin{itemize}
+\item PROBLEM: while waiting / in I/O the process vruntime is not increased: after coming back alive, it'll monopolize the CPU
+\item SOLUTION: Once a process wakes up, it will take the lowest amount of vruntime
+\item PROBLEM: short sleep will make it less fair for you for you
+\end{itemize}
+\end{itemize}
+\item the switching is controlled through parameters:
+\begin{itemize}
+\item sched\textsubscript{latency}: dynamic time slice (is calculated), typically 48ms divided by n number of processes
+\item sched\textsubscript{latency} basicly determines the maximal time frame until each process has run atleast once (if not controlled for minimun time slice)
+\end{itemize}
+\item There is also a minimal time slice:
+\begin{itemize}
+\item min\textsubscript{granularity} (set to usually 6ms) ensures that each process runs atleast a certain amount of time switching
+\begin{itemize}
+\item else the context switch would be too expensive
+\item with this the scheduler becomes less fair, when only looking at the sched\textsubscript{latency}, however it is a good tradeoff
+\end{itemize}
+\end{itemize}
+\item CFS utilizes the periodic timer interrupt. This means every 1ms it can wake up and determine what to do next
+\end{itemize}
+\begin{enumerate}
+\item Niceness (Priority setting)
+\label{sec:orgb6d68eb}
+\begin{itemize}
+\item priority setting is done through the ``nice'' level
+\begin{itemize}
+\item default: 0 (min: +19, max: -20)
+\item the level will be mapped to a ``weight'' according to a premade table
+\begin{itemize}
+\item this will keep the proportianility
+meaning: if you have a difference of 5 levels between two jobs, than the ratio of sharing stays the same
+\end{itemize}
+\item The time slice is calculated as followed:
+$$timeslice_k = \frac{weight_k}{\sum_{i=0}^{n-1} weight_i} * schedlatency$$
+\begin{itemize}
+\item here n is the amount of processes
+\end{itemize}
+\item new vruntime is also calculated according to the niceness:
+$$vruntime_i = vruntime_i + \frac{weight_0}{weight_i}*runtime_i$$
+\end{itemize}
+\end{itemize}
+\item Efficiency of CFS (Red-Black Trees)
+\label{sec:orgfa1c167}
+\begin{itemize}
+\item a scheduler has to make decisions as quickly as possible (this should hopefully be scaleable)
+\item only runnable processes are kept here
+(removed while waiting for I/O)
+\item efficiency should be logarithmic (what does that mean?)
+\item how does it even work?
+\end{itemize}
+\end{enumerate}
+\part{Computer Scheduling Methods and their Countermeasures}
+\label{sec:org853bfc0}
+\begin{itemize}
+\item Started reading it and it didn't really say anything new. I than scanned over it and skipped the rest
+\end{itemize}
+\chapter{Classification of Policies}
+\label{sec:org3ff5e09}
+\section{Characteristics}
+\label{sec:org0b5c812}
+\begin{itemize}
+\item preemptive vs non-preemptive (already mentionned above)
+\begin{itemize}
+\item preemptive: if a higher priority exists, than the task can and will be abrupted
+\item non-preemptive: opposite of preemptive
+\end{itemize}
+\item resume vs restart
+\begin{itemize}
+\item if a preempted job ``comes into service again'', should we resume where we left off or should we restart the whole thing?
+\end{itemize}
+\item where does priority come from?
+\begin{itemize}
+\item job environment (e.g.: running time, I/O)
+\item computer system enviroment (dynamic priorities: e.g.: amount of jobs)
+\item users environment (assigned by user)
+\end{itemize}
+\item knowledge of estimated time until finished
+\begin{itemize}
+\item most of the computers processes don't have a preset time
+\end{itemize}
+\end{itemize}
+\section{Priority Based on running time only}
+\label{sec:org7d8be45}
+\begin{itemize}
+\item gives shorter jobs and advantage
+\end{itemize}
+\begin{enumerate}
+\item Shortest Job First (SJF)
+\label{sec:org1843cbb}
+\begin{itemize}
+\item it is assumed that we already know the running time at arrival
+\item non-preemptive
+\item rule only reapplied, when a job is finished (could be also giving back the CPU, while waiting for I/O)
+\item better for shorter running jobs, worse for long ones
+\end{itemize}
+\item Preemptive Shortest Job First
+\label{sec:orgfadfd55}
+\begin{itemize}
+\item it is assumed that we already know the running time at arrival
+\item rule reapplied, when a job is finished (+ wait for I/O) or a new job arrives (+ I/O finish)
+\item preemptive, resume principle
+\item favors the short jobs even more
+\item a bit more expensive, because of the context switch
+\end{itemize}
+\item Round Robin (RR)
+\label{sec:org74c80d2}
+\begin{itemize}
+\item running times not known in advance
+\item takes both running and arrival time in consideration
+\item cannot make the time quantum too small, because context switch will get too expensive
+\item ??? What happens if q = 0???
+\item for further info read the heading in OStep/Chapter 7
+\end{itemize}
+\item Multiple-Level Feedback (FB)
+\label{sec:orgb3bef9c}
+\begin{itemize}
+\item Do not confuse with the modern MLFQ
+\item RR but if a task arrives later, it can catch up to the others first
+\end{itemize}
+\item Two-Level FB / Limited RR
+\label{sec:org2737c32}
+\begin{itemize}
+\item work until a fixed amount of quanta, then put into the background (and only run if no one is in queue 1)
+\end{itemize}
+\item FB with finite number of levels
+\label{sec:org387ecab}
+\begin{itemize}
+\item just Two-level FB but with a parameter that tells how many queues exist
+\item => this gets pretty similar to modern MLFQ
+\end{itemize}
+\end{enumerate}
+\part{Lottery/Stride Scheduling}
+\label{sec:org71e0e31}
+\part{Adjusting Parameters using Machine Learning}
+\label{sec:orgc617b79}
+\part{Examples}
+\label{sec:orgb85a0df}
+\chapter{Linux 2.6 Fair Scheduler}
+\label{sec:org0cc4a49}
+\chapter{Solaris Scheduling}
+\label{sec:orgfa6e5fa}
+\end{document}
