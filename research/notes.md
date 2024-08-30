@@ -16,15 +16,11 @@ The fundamental question is: How to we measure the "efficiency" or the "quality"
 You can measure performance or fairness. Here are ways to measure performance:
 - turnaround time
   - Calculated as:
-    $$
-      T_{turnaround} = T_{completion} - T_{arrival}
-    $$
+    $$ T_{turnaround} = T_{completion} - T_{arrival} $$
     For us T_{arrival} = 0, because of simplification 1. (can be neglected later)
 - response time: measures the frustration of the user, while looking at the spinning ball
   - Calculated as:
-    $$
-      T_{response} = T_{firstrun} - T_{arrival}
-    $$
+    $$ T_{response} = T_{firstrun} - T_{arrival} $$
     - For modern computers, it is essential that this is kept at a minimum
 - fairness: first job to finish divided by last job to finish (this is not a performance metric!!)
 ### First In, First Out (FIFO) / First Come, First Served (FCFS)
@@ -176,14 +172,10 @@ insert(queue, current); // return current to queue
     - this will keep the proportianility
       meaning: if you have a difference of 5 levels between two jobs, than the ratio of sharing stays the same
   - The time slice is calculated as followed:
-    $$
-      timeslice_k = \frac{weight_k}{\sum_{i=0}^{n-1} weight_i} * schedlatency
-    $$
+    $$ timeslice_k = \frac{weight_k}{\sum_{i=0}^{n-1} weight_i} * schedlatency $$
     - here n is the amount of processes
   - new vruntime is also calculated according to the niceness:
-    $$
-      vruntime_i = vruntime_i + \frac{weight_0}{weight_i}*runtime_i
-    $$
+    $$ vruntime_i = vruntime_i + \frac{weight_0}{weight_i}*runtime_i $$
 #### Efficiency of CFS (Red-Black Trees)
 - a scheduler has to make decisions as quickly as possible (this should hopefully be scaleable)
 - only runnable processes are kept here
