@@ -172,7 +172,7 @@ insert(queue, current); // return current to queue
     - this will keep the proportianility
       meaning: if you have a difference of 5 levels between two jobs, than the ratio of sharing stays the same
   - The time slice is calculated as followed:
-    $$ timeslice_k = \frac{weight_k}{\sum_{i=0}^{n-1} weight_i} * schedlatency $$
+    $$timeslice_k = \frac{weight_k}{\sum_{i=0}^{n-1} weight_i} * schedlatency$$
     - here n is the amount of processes
   - new vruntime is also calculated according to the niceness:
     $$vruntime_i = vruntime_i + \frac{weight_0}{weight_i}*runtime_i$$
