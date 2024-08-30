@@ -1,5 +1,4 @@
-#+title: Todo
-* Sources Checklist:
+# Sources Checklist:
 - [3/3] OStep
   - [X] cpu-sched.pdf
   - [X] cpu-sched-mlfq.pdf
