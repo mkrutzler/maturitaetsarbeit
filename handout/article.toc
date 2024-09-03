@@ -1,3 +1,4 @@
-\contentsline {section}{\numberline {1}section}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}subsection}{2}{subsection.1.1}%
-\contentsline {subsubsection}{\numberline {1.1.1}subsubsection}{2}{subsubsection.1.1.1}%
+\contentsline {part}{I\hspace {1em}Introduction}{2}{part.1}%
+\contentsline {part}{II\hspace {1em}Basic Algorithms}{3}{part.2}%
+\contentsline {part}{III\hspace {1em}Lottery and Stride Scheduling?}{4}{part.3}%
+\contentsline {part}{IV\hspace {1em}Example Code}{5}{part.4}%

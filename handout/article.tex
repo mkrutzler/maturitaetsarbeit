@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{report}
 
 \usepackage{titlesec}
 \usepackage{titling}
@@ -62,24 +62,60 @@
 
 \begin{document}
 
-% A hacked together way to make the title and table of contents
-\begin{titlepage}\centering
+\begin{titlepage}
 \vspace*{\fill}
+\centering
 \maketitle
 \vspace*{\fill}
 \end{titlepage}
-\pagebreak
+
 \tableofcontents
-\pagebreak
 
 
 
-\section{section}
+\part{Introduction / Forewords}
 
-\subsection{subsection}
+- what is CPU scheduling
+- why do we need it
+    - how does a CPU work / why isnt there multitasking
+- What is the goal of my project
+- bit of an overview over the whole report
 
-\subsubsection{subsubsection}
 
-!!!MAKE THIS DOCUMENT IN ORG MODE!!!
+
+\part{The ABCs of CPU Scheduling}
+
+\section{Introduction to Section 1}
+
+\section{Metrics}
+    - turnaround time (performance)
+    - response time (performance)
+    - fairness (performance)
+
+\section{Basic Algorithms for Performance}
+
+\section{Basic Algorithm for Fairness}
+
+
+\part{The Industry Standard of CPU-Scheduling}
+
+\section{Multi-Level Feedback Queue}
+
+\section{Lottery and Stride Scheduling}
+
+\part{Examples}
+
+\section{My Implementation}
+
+\section{Solaris Scheduling}
+
+\section{Linux 2.6 Fair Scheduler}
+
+
+
+\part{conclusion}
+
+
+
 
 \end{document}
