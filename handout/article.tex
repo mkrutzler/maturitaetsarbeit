@@ -106,39 +106,76 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 
 
-\part{Introduction / Forewords}
+\part{Forewords?}
 
-- what is CPU scheduling
-- why do we need it
-    - how does a CPU work / why isnt there multitasking
-- What is the goal of my project
-- bit of an overview over the whole report
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction} % Ensure Sources appears in the TOC
+
+We all use computers.
+The modern person couldn't do half of the things that is expected from him without an instance of Windows, MacOs or any other Operating System.We surf the web, write emails, documents and have a video call at the same time.
+The question is: "How does CPU achieve all of this?" The things listed are only the parts of the OS that we come in contact with on a daily basis.
+What about all the other things hidden under the hood of the graphics environment? If it comes down to doing one thing than it's fine.
+The problem arises then we have multiple tasks: The CPU can only do one thing at a time and yet we all multitask on our machines.
+This Black Box effect of taking multiple jobs and working on them in a proper order is what I will disect in this "Maturarbeit".
+
+The art of scheduling tasks could seem easy for us humans.
+We ?instinctively? estimate the many aspects of the task:
+\begin{itemize}
+\item Job: Convince our boss to give us a pay rise\\Priority: High\\Time Required: Medium (With a lot of Waiting Time)\\Effort: High (Said "No Way" last week)
+\item Job: Walk the Dog\\Priority: High\\Time Required: High\\Effort: Low
+\item Job: Go to the Hairdresser\\ Priority: Low (Went last week as well)\\Time Required: High\\Effort: Low
+\end{itemize}
+These prediction are often highly complex and are based on previous experiences.
+We also include factors like: When was the last time I did it?
+In addition to all that every human plans differently based on what's important to him/her.
+
+A computer does nothing like that. How could it? What he sees is:
+\begin{itemize}
+\item Job: Process 1\\Priority: Needs to be Set\\Time Required: ??? (Waiting Time: ???)\\Effort: ???
+\end{itemize}
+What he knows is when the task arrived and how much time he worked on it.
+With this in mind the let's get to a quick introduction of the metrics, so that we know how to rate the policies that we'll look at.
+
+
+
+\chapter*{Metrics}
+\addcontentsline{toc}{chapter}{Metrics} % Ensure Sources appears in the TOC
+
+
+We can measure different aspects of a Scheduler Policy. There is however a differentiation between fairness and performance. It is often a tradeoff between the two. For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
+
+\begin{defi}[Turnaround Time]{dfn:turnaround}
+The turnaround time is a performance metric. It measures how long a task took to be completed from the time it arrived.
+It is calculated as follows:
+$$T_{Turnaround} = T_{Completion} - T_{Arrival}$$
+\vspace{1em}
+\end{defi}
+
+We'll often look at the Average Turnaround time for a predetermined set of jobs.
+This helps us to quantify how "efficient" a single task is handeled.
+In the best case scenario a single jobs turnaround time is equivalent to the runtime of that job.
+Another really important thing for us is Response Time.
+We want to move our mouse around.
+If we type we want the letter to appear in an instant and the Microsoft suite should start without much delay.
+Of course the startup time of a program depends on many other factors, however if we never even start to work on it, it'll take a good while.
+
+
+\begin{defi}[Response Time]{dfn:response}
+The response time is a performance metric. It measures the responsiveness of our computer. How much time does it take until the job is run?
+It is calculated as follows:
+$$T_{Response} = T_{First\_Run} - T_{Arrival}$$
+\vspace{1em}
+\end{defi}
 
 
 
 \part{The ABCs of CPU Scheduling}
 
-\chapter{Introduction to Part 1}
-
-
-
-\section{Metrics}
-
-    - turnaround time (performance)
-    - response time (performance)
-    - fairness
-
-\begin{defi}[Turnaround Time]{dfn:turnaround}
-The turnaround time is ...\\
-It is calculated as follows:
-$$T_{Turnaround} = T_{Completion} - T_{Arrival}$$
-\end{defi}
-
 \chapter{Basic Algorithms}
 
 \section{Optimized for Performance}
 
-\subsection{First In, First Out (FIFO )}
+\subsection{First In, First Out (FIFO)}
 
 \subsection{Shortest Job First (SJF)}
 
@@ -168,7 +205,14 @@ $$T_{Turnaround} = T_{Completion} - T_{Arrival}$$
 
 
 
-\part{conclusion}
+\part{Conclusion}
+
+\chapter*{Sources}
+\addcontentsline{toc}{chapter}{Sources} % Ensure Sources appears in the TOC
+
+\begin{itemize}
+    \item \url{https://texblog.org/2015/09/30/fancy-boxes-for-theorem-lemma-and-proof-with-mdframed/}
+\end{itemize}
 
 
 \end{document}
