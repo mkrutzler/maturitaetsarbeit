@@ -7,8 +7,41 @@
 \usepackage[normalem]{ulem}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{etoolbox}
 
+% sets up mdframed
+\newcounter{defi}[section]\setcounter{defi}{0}
+\renewcommand{\thedefi}{\arabic{section}.\arabic{defi}}
+\newenvironment{defi}[2][]{%
+\refstepcounter{defi}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut Definition~\thedefi};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut Definition~\thedefi:~#1};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax % Added this line
+}{%
+\end{mdframed} % Added this line
+}
 
+% Example usage of mdframed
+% \begin{defi}[Pythagoras' theorem]{defi:pythagoras}
+% In a right triangle, the square of the hypotenuse is equal to the sum of the squares % of the catheti.
+% $$a^2+b^2=c^2$$
+% \end{defi}
 
 
 %define "squiggly" to make red squiggly underline
@@ -85,37 +118,57 @@
 
 \part{The ABCs of CPU Scheduling}
 
-\section{Introduction to Section 1}
+\chapter{Introduction to Part 1}
+
+
 
 \section{Metrics}
+
     - turnaround time (performance)
     - response time (performance)
-    - fairness (performance)
+    - fairness
 
-\section{Basic Algorithms for Performance}
+\begin{defi}[Turnaround Time]{dfn:turnaround}
+The turnaround time is ...\\
+It is calculated as follows:
+$$T_{Turnaround} = T_{Completion} - T_{Arrival}$$
+\end{defi}
 
-\section{Basic Algorithm for Fairness}
+\chapter{Basic Algorithms}
+
+\section{Optimized for Performance}
+
+\subsection{First In, First Out (FIFO )}
+
+\subsection{Shortest Job First (SJF)}
+
+\subsection{Shortest Time-to-Completion (STCF)}
+
+\section{Optimized for Fairness}
+
+\subsection{Round Robin (RR)}
+
+
+
 
 
 \part{The Industry Standard of CPU-Scheduling}
 
-\section{Multi-Level Feedback Queue}
+\chapter{Multi-Level Feedback Queue}
 
-\section{Lottery and Stride Scheduling}
+\chapter{Lottery and Stride Scheduling}
 
 \part{Examples}
 
-\section{My Implementation}
+\chapter{My Implementation}
 
-\section{Solaris Scheduling}
+\chapter{Solaris Scheduling}
 
-\section{Linux 2.6 Fair Scheduler}
+\chapter{Linux 2.6 Fair Scheduler}
 
 
 
 \part{conclusion}
-
-
 
 
 \end{document}
