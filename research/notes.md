@@ -227,7 +227,9 @@ insert(queue, current); // return current to queue
 # Lottery/Stride Scheduling
 ## Lottery and Stride Scheduling: Flexible Proportioal-Share Resource Management
 ### Abstract
+not much to say here
 ### Introduction
+nothing important here either
 ### Resource Management Framework
 ### Proportional-Share Mechanisms
 ### Performance Results
