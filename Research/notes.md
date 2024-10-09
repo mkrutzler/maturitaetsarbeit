@@ -231,13 +231,69 @@ not much to say here
 ### Introduction
 nothing important here either
 ### Resource Management Framework
+
+
+
+
+
+
+
 ### Proportional-Share Mechanisms
+
+
+
+
+
+
+
 ### Performance Results
+
+
+
+
+
+
+
 ### Prototype Implementations
+
+
+
+
+
+
+
 ### Scheduling Diverse Resources
+
+
+
+
+
+
+
 ### Related Work
+
+
+
+
+
+
+
 ### Conclusions
+
+
+
+
+
+
+
 # Adjusting Parameters using Machine Learning
+
+
+
+
+
+
+
 # Examples
 ## Linux 2.6 Fair Scheduler
 ## Solaris Scheduling
