@@ -1,4 +1,4 @@
-# Notes on Research
+
 
 # Basics (OStep)
 ## Introduction (Chapter 7)
@@ -230,11 +230,53 @@ insert(queue, current); // return current to queue
 not much to say here
 ### Introduction
 nothing important here either
-### Resource Management Framework
+### 2 - Resource Management Framework
+
+Two basic techniques for tickets:
+- ticket transfers => tickets are redistributed amongst clients
+- ticket inflation => By manipulating the overall amounts of tickets, you'll change the resource rights
+  - currency abstraction => sharing, protecting, naming of resource rights
+    - contains the ticket inflation
+
+#### 2.1 - Tickets
+
+Tickets can be distributed with different values (e.g.: 100.- or 20.- bill)
+If you seek out tickets, you're active
+Tickets give you a right to use resources (you use the resources proportionally to your tickets)
+Response time is reverse proportionaly (the more tickets you have, the less response time)
+
+Tickets enable easy comparison between processes and their resources.
+
+THEY ARE NOT CONSUMED! They represent a share of the CPU.
+
+#### 2.2 - Ticket Transfers
+
+Basically what the title already says. They can be redistributed but not created or destroyed. => not suitable for child processes
+You can also "boost" other processes: give your tickets to the server, so that it will have more resources and therefore complete your request sooner, while you wait.
+
+Bit advantage over "priority inheritance"?? atleast according to the author
 
 
+#### 2.3 - Ticket Inflation
 
+This is the "creation" and "destruction" of tickets. => Inflating your own tickets (on a global scale) makes others less "worthy".
 
+to counter this abusive use, we introduce "ticket currencies"
+
+#### 2.4 - Ticket Currencies
+
+Each Parent process can "create" his own currency. The "base tickets" fund these custom currencies. Therefore after inflation the exchange rate changes and not the real value of the tickets.
+
+![Example Sketch](./lottery-scheduling/ticket-currency.png)
+
+you also don't have to be in the same "group" => A could give B1 some of his Currency, which would boost B1.
+
+#### 2.5 - Example Policies
+
+generally not really interesting and repeats some stuff...
+
+you could to a "translation" to priorities by distributing the tickets accordingly:
+if priority 1 is run twice as frequent as priority 2 then p1 has 20 tickets and p2 has 10.
 
 
 
