@@ -282,8 +282,74 @@ if priority 1 is run twice as frequent as priority 2 then p1 has 20 tickets and 
 
 ### Proportional-Share Mechanisms
 
+Basically the efficient implementation of the philosophy of chapter 2?
+the goal is to come as close to actual runtime share as the ticket share (if it makes sense) => it is actually almost impossible
+absolute error is the error between the specified and actual allocations
+relative error is something I didn't understand (see page 33 middle)
+
+The actual challenge start if we want to implement dynamic environments. It is one thing to manage static tasks and dynamic ones.
+
+randomization can be "exploited" (authors words) => game of chance, however this does need a random number generator or something that sort.
+to limit error there is the "multi-winner lottery scheduling", which I have no idea what it is.
+
+also "stride scheduling" is introduced. (it is determenistic)
+it computes the interval (also called stride) that each client has to wait?
+
+Now we get to the different policies:
+
+#### Lottery Scheduling
+
+literally just a lottery. the process holding the winning ticket gets the allocation.
+accuracy increases with more data (obviously)
+
+(quick) Implementation code: (heavily inspired by page 36)
+```cpp
+/* Quick Implementation of List-Based Lottery Scheduling Algorithm (not bugtested, just to clear thoughts, heavily inspired after p.36 from "phd-mit-tr667.pdf" */
+#include <vector>
+#include "client.hpp" /* arbitrary custom client class */
+
+std::vector<client> client_list;
+int global_tickets{0};
 
 
+void client_init(client c, int tickets) {
+
+  /* assign tickets to client and updte global ticket count */
+  c.assign_tickets(tickets);
+  global_tickets += tickets;
+
+  client_list.push_back(c);
+}
+
+void allocate(void) {
+
+  int winner = fast_random() % global_tickets;
+  int sum{0};
+  int i{0};
+
+  while (sum < winner) {
+    c = client_list[i];
+    sum += c.tickets;
+    i++;
+  }
+
+ current = client_list[i-1];
+ use_resource(current);
+
+}
+```
+This method is quite inefficient and you don't really want to use it.
+However if you base the algorithm on "balanced binary trees" instead of lists it will become much faster.
+
+
+
+
+#### Multiwinner lottery scheduling
+
+
+#### Stride scheduling
+
+#### hierchical stride scheduling?
 
 
 
