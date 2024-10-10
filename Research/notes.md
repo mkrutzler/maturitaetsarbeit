@@ -341,10 +341,26 @@ void allocate(void) {
 This method is quite inefficient and you don't really want to use it.
 However if you base the algorithm on "balanced binary trees" instead of lists it will become much faster.
 
+This image displays it really well (from page 39 top)
+
+the winner ticket is 25. the right path is chosen and the ticket is adjust accordingly. there are 10 tickets at the left so the "new" winning ticket is 15. 15 is inside 20, so we choose 20. there is no readjusting. after that 15 is larger than 12, meaning 8 is the correct path and process
+
+![Binary Tree](./lottery-scheduling/binary-tree-diagram.png)
 
 
+There algorithms do not support dynamic operations. it is not difficult to add however, because the single processes do not really change when a newone is added. the only thing that changes is the choosing part (max tickets and stuff).
+
+adding and removing clients is as easy as adding them to the list and adding their tickets to the global max.
+As for the binary three variation it is more complex. I think I'll just try to comprehend it for now and not really implement it. I can always come back later.
+
+depending whether the client uses all of the allocation can change it's tickets. For example if you only use a fraction of the time than your tickets can grow and the reverse is true (under a non-preemptive scheduler). This change only persists until he wins again
+
+you can create a "compensate" function and call it right after the allocation
 
 #### Multiwinner lottery scheduling
+
+
+
 
 
 #### Stride scheduling
