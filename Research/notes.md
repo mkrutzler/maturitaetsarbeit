@@ -359,6 +359,18 @@ you can create a "compensate" function and call it right after the allocation
 
 #### Multiwinner lottery scheduling
 
+This is a semi randomized semi deterministic scheduling method.
+You basicly hold a large lottery, which will have multiple winners. than you have a "superquantum", where everyone gets its CPU time.
+You will have a random winner and than a few other winners in a specific offset from the orginal w.
+the distribution is uniform and therefore you already have a proportional-share fair system. => WHY????? (page 43)
+This can reduce the random error effect, because there are also other clients that will be selected.
+
+The "superquantum" part creates some problems though: which order should the tasks be?
+
+The calculated extra winners mean that the random algroithm has to be used less.
+The order of allocations in the superquanta can be either predetermened or randomized. Randomized is much better though, because it means that you won't really have to change anything when you introduce dynamic clients:
+if a client joins / leaves, than you just restart the superquanta. if you would do a predetermened permutation of clients, than the first few would get more CPU time, than the ones later.
+
 
 
 
