@@ -1,5 +1,3 @@
-
-
 # Basics (OStep)
 ## Introduction (Chapter 7)
 Scheduling is not a low level mechanism but a high level policy/disciplines.
@@ -23,6 +21,7 @@ You can measure performance or fairness. Here are ways to measure performance:
     $$T_{response} = T_{firstrun} - T_{arrival}$$
     - For modern computers, it is essential that this is kept at a minimum
 - fairness: first job to finish divided by last job to finish (this is not a performance metric!!)
+- does it work dynamically?
 ### First In, First Out (FIFO) / First Come, First Served (FCFS)
 - Most basic scheduling policy
 - Given our simplification it works really well and is easy to implement
@@ -371,63 +370,43 @@ The calculated extra winners mean that the random algroithm has to be used less.
 The order of allocations in the superquanta can be either predetermened or randomized. Randomized is much better though, because it means that you won't really have to change anything when you introduce dynamic clients:
 if a client joins / leaves, than you just restart the superquanta. if you would do a predetermened permutation of clients, than the first few would get more CPU time, than the ones later.
 
-
-
-
-
 #### Stride scheduling
 
+Basic Algorithm:
+- It is the calculation of "frequency" of allocation
+- it is measured in "passes"
+- there also "tickets", these are reverse proportional to the strides
+- when finding the new client for allocation just look for the lowest pass. than add the stride to the pass for an update
+- error should be less than lottery scheduling (idk why tho?)
+
+=> represent in a table
+
+needs adjustments to work dynamically:
+
+basically you have a global ticket and stride variable. you can also save "states" for each client. this will save the difference between the global and the clients pass => if the client rejoins the remainder + the global pass will be taken as the clients pass
+if a completely new client appears the stride will be the clients "remainder".
+If the global pass gets overall smaller than the remainder should scale appropriatly.
+
+
 #### hierchical stride scheduling?
+
+Somehow makes sure that the error is not larger than log?
+This is important if you have subtasks? basically do the scheduling like a binary tree.
+
+at this point I don't really care about this. I will look at the 2.6 CFS and the ULE. Maybe even some programming? - 2024-10-17
 
 
 
 
 ### Performance Results
 
-
-
-
-
-
-
 ### Prototype Implementations
-
-
-
-
-
-
 
 ### Scheduling Diverse Resources
 
-
-
-
-
-
-
 ### Related Work
 
-
-
-
-
-
-
 ### Conclusions
-
-
-
-
-
-
-
-# Adjusting Parameters using Machine Learning
-
-
-
-
-
 
 
 # Examples
