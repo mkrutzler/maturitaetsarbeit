@@ -5,10 +5,11 @@
 \usepackage{hyperref}
 \usepackage[margin=1in]{geometry}
 \usepackage[normalem]{ulem}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{etoolbox}
+\usepackage{listings}
 
 % sets up mdframed
 \newcounter{defi}[section]\setcounter{defi}{0}
@@ -42,6 +43,44 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 % In a right triangle, the square of the hypotenuse is equal to the sum of the squares % of the catheti.
 % $$a^2+b^2=c^2$$
 % \end{defi}
+
+% setup listings for code blocks
+% -- colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolor}{rgb}{0.95,0.95,0.92}
+
+%custom style:
+\lsdefinestyle{codeblock}{
+  backgroundcolor=\color{backcolor},
+  commentstyle=\color{codepurple},
+  keywordstyle=\color{NavyBlue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize\bfseries,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=t,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+}
+
+\lstset{
+  style=codeblock,
+  framexleftmargin=3.5mm,
+  frame=box
+  rulesepcolor=\color{black},
+  linewidth=0.6\linewidth,
+  xleftmargin=12pt,
+  aboveskip=12pt,
+  belowskip=12pt
+}
 
 
 %define "squiggly" to make red squiggly underline
@@ -112,9 +151,10 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \addcontentsline{toc}{chapter}{Introduction} % Ensure Sources appears in the TOC
 
 We all use computers.
-The modern person couldn't do half of the things that is expected from him without an instance of Windows, MacOs or any other Operating System.We surf the web, write emails, documents and have a video call at the same time.
+The modern person couldn't do half of the things that is expected from him without an instance of Windows, MacOs or any other Operating System.
+We surf the web, write emails, documents and have a video call at the same time.
 The question is: "How does CPU achieve all of this?" The things listed are only the parts of the OS that we come in contact with on a daily basis.
-What about all the other things hidden under the hood of the graphics environment? If it comes down to doing one thing than it's fine.
+What about all the other things hidden under the hood of a graphics environment? If it comes down to doing one thing than it's fine.
 The problem arises then we have multiple tasks: The CPU can only do one thing at a time and yet we all multitask on our machines.
 This Black Box effect of taking multiple jobs and working on them in a proper order is what I will disect in this "Maturarbeit".
 
@@ -122,12 +162,15 @@ The art of scheduling tasks could seem easy for us humans.
 We ?instinctively? estimate the many aspects of the task:
 \begin{itemize}
 \item Job: Convince our boss to give us a pay rise\\Priority: High\\Time Required: Medium (With a lot of Waiting Time)\\Effort: High (Said "No Way" last week)
-\item Job: Walk the Dog\\Priority: High\\Time Required: High\\Effort: Low
+\item Job: Walk the Dog\\Priority: High\\Time Required: Low\\Effort: Low
 \item Job: Go to the Hairdresser\\ Priority: Low (Went last week as well)\\Time Required: High\\Effort: Low
 \end{itemize}
 These prediction are often highly complex and are based on previous experiences.
 We also include factors like: When was the last time I did it?
 In addition to all that every human plans differently based on what's important to him/her.
+Still from just the priority, time required and effort, we would roughly know how to order these things.
+For example I would walk the dog first, because it is a "request" made by someone else and therefore the response time should be as low as possible.
+The Hairdresser can fade into the background, due to its low priority. Maybe making an appointment is a good idea though.
 
 A computer does nothing like that. How could it? What he sees is:
 \begin{itemize}
@@ -140,8 +183,8 @@ With this in mind the let's get to a quick introduction of the metrics, so that 
 
 \chapter*{Metrics}
 \addcontentsline{toc}{chapter}{Metrics} % Ensure Sources appears in the TOC
-
-
+MAYBE JUST LEAVING THIS OUT AND LOOKING AT THIS DURING A LATER TIME (WHEN THE METRICS ARE MENTIONNED OR LINK AS A FOOTNOTE?)
+ALSO THIS FOLLOWS THE OSTEP WAY TOO MUCH:
 We can measure different aspects of a Scheduler Policy. There is however a differentiation between fairness and performance. It is often a tradeoff between the two. For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
 
 \begin{defi}[Turnaround Time]{dfn:turnaround}
@@ -171,33 +214,55 @@ $$T_{Response} = T_{First\_Run} - T_{Arrival}$$
 
 \part{The ABCs of CPU Scheduling}
 
+MAYBE HERE THE METRICS PART?
+
 \chapter{Basic Algorithms}
 
-\section{Optimized for Performance}
+This chapter mainly focuses on simple policies that can be used to order processes.
+Usually there are multiple simplifications added to the scenario so that it makes sense.
+The policies are generally either an abstraction for though experiments or a part of a larger system.
+Therefore there will be an absense of answers to common questions like: "How do we know how long a process takes until completion?"
+(Actually we actually never really know how long something will take)
 
-\subsection{First In, First Out (FIFO)}
+\section{First In, First Out (FIFO)}
 
-\subsection{Shortest Job First (SJF)}
+Probably the most basic of them all. The "First In, First Our" is just as the name suggests it. Usually we humans know it as first come, first served. This policies runs into problems really quickly if the discard the possibility of all tasks requiring the same amount of run time. A so called "Convoy Effect" takes place. Just imagen how annoying it is, when you're at a store and a family of five cuts into the line in front of you. They have two full carts loaded. You have to wait until they finish. In addition to that they also send back their kid to get something. Wouldn't it be overall much faster if they let you in front, before the cashier starts scanning the items?
 
-\subsection{Shortest Time-to-Completion (STCF)}
+\begin{lstlisting}[language=Python, title={FIFO Implementation in Python}]
+# Simple implementation of FIFO in Python
+list = []
 
-\section{Optimized for Fairness}
+# Adding a new process
+def add_client(name):
+  list.append(name)
 
-\subsection{Round Robin (RR)}
+# Decide which process is next
+def allocate():
+  next = list.pop(0)
+  use_resource(next) # arbitrary function that will allow "next" to use the CPU
+\end{lstlisting}
+
+As you can see the implementation is itself pretty easy.
+
+\section{Shortest Job First (SJF)}
+
+\section{Shortest Time-to-Completion (STCF)}
+
+\section{Round Robin (RR)}
 
 
 
 
 
-\part{The Industry Standard of CPU-Scheduling}
+\part{Advanced Policies}
 
 \chapter{Multi-Level Feedback Queue}
 
 \chapter{Lottery and Stride Scheduling}
 
-\part{Examples}
+\part{Implementations}
 
-\chapter{My Implementation}
+\chapter{My Implementation?}
 
 \chapter{Solaris Scheduling}
 
