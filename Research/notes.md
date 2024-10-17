@@ -395,19 +395,7 @@ This is important if you have subtasks? basically do the scheduling like a binar
 
 at this point I don't really care about this. I will look at the 2.6 CFS and the ULE. Maybe even some programming? - 2024-10-17
 
-
-
-
-### Performance Results
-
-### Prototype Implementations
-
-### Scheduling Diverse Resources
-
-### Related Work
-
-### Conclusions
-
+# Time Complexity
 
 # Examples
 ## Linux 2.6 Fair Scheduler
