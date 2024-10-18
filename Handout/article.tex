@@ -240,8 +240,12 @@ MAYBE HERE THE METRICS PART?
 This chapter mainly focuses on simple policies that can be used to order processes.
 Usually there are multiple simplifications added to the scenario so that it makes sense.
 The policies are generally either an abstraction for though experiments or a part of a larger system.
-Therefore there will be an absense of answers to common questions like: "How do we know how long a process takes until completion?"
-(Actually we actually never really know how long something will take)
+Therefore there will be an absense of answers to common questions like: "How do we know how long a process takes until completion?" \footnote{Actually we actually never really know how long something will take}
+There are also some example code snippets to each policy.
+These are just so you can understand the algorithm and they don't really work in a real life scenario.
+First of all they can't handle interrupts and therefore don't work in a real system.
+In addition to that Python is a high level language and is absolutely not made to handle low level stuff!
+Later on we'll switch to C++, because it fits better, however a "real" OS is written mostly in C.
 
 \section{First In, First Out (FIFO)}
 
@@ -283,27 +287,27 @@ This is the "Shortest Job First" (SJF).
 
 # Define client class and list
 class Client:
-  def __init__(self, ttc): # ttc as time to completion
-    self.ttc = ttc
+  def __init__(self, burst): # burst time is the time required for the process to finish
+    self.burst = burst
     # other stuff that is relevant for the client class
 
 list = []
 
 # Adding a new process
-client = Client(ttc) 
+client = Client(burst) 
 def add_client(client): 
   list.append(client)
 
 # Decide which process is next
 def allocate():
-  list.sort(key=lambda a: a.ttc) # sort according to ttc
+  list.sort(key=lambda a: a.burst) # sort according to burst
   next = list.pop(0)
   use_resource(next) # function that will allow "next" to use the CPU
 \end{lstlisting}
 
 There are two notable changes in this code snippet, when compared to FIFO. One of them is relevant.
 First, the less exiting part is that I actually took my time to write out some of the client class definition.
-Second and the real difference to FIFO is that we sort the according to the time to completion. 
+Second and the real difference to FIFO is that we sort the according to the burst time\footnote{Burst time is basically the runtime needed until the process finishes. This variable can be only predicted}. 
 This means that we will choose the task with the shortest time to completion.
 AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
 THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
@@ -326,7 +330,7 @@ The best part is that we don't even have to change much of the previous code.
   # Simple implementation of STCF in Python
   
   # definition of client class and list go here
-  current = Client(ttc)
+  current = Client(burst)
   current_runtime = 0
   
   # Adding a new process
@@ -338,10 +342,10 @@ The best part is that we don't even have to change much of the previous code.
   def allocate():
     save_state() # saves of the current process
 
-    current.ttc -= current_runtime # first update ttc
+    current.burst -= current_runtime # first update burst
     current_runtime = 0
 
-    list.sort(key=lambda a: a.ttc) # sort according to ttc
+    list.sort(key=lambda a: a.burst) # sort according to burst
     current = list.pop(0)
 
     use_resource(current) # function that will allow "next" to use the CPU (also tracks runtime)
@@ -351,13 +355,36 @@ Whenever a new client "joins", the "allocation" function gets run.
 In addition to that, whenever the process finishes, or it voluntarily gives up the CPU, the same "allocation" function can be run.
 
 
-
-
 \section{Round Robin (RR)}
 
+Now, why don't we just scan one item for everyone? 
+This would mean that, even though slow but progress is being constantly made.
+At this point the item scanning doesn't really work anymore\footnote{You can't scan a fraction of a product, or can you?} but let's just make the so called "quanta" (quantum in singular) even smaller.
+As already mentionned in the previous chapter, the cashier needs some time to "save" the state of the current purchases. 
+This effectively mean that after the quantum shrinks to a certain extent, the "context switching"\footnote{Context switch saves the state of a process so that it can be restored later} would get too expensive. 
+The goal is to reach a balance, where we have enough responsibility, but the price for it is not too high.
+Notice how by treating the processes more "fairly" by don't caring about their overall burst time, we get rid of a variable, which can only be predicted and replace it with another one, which is more abstract and global.
+\pagebreak
+\begin{lstlisting}[language=Python, style=colorEX]
+  # Simple implementation of RR in Python
 
+  list = []
+  quantum = 1 # Adjust the time slice here
 
+  def add_client(client):
+    list.append(client)
 
+  def use_resource(client, quanta):
+    # definition of use_resource
+    # now it also takes an amount of quanta that the process can run for
+    # after that it saves the state and returns.
+
+  for client in list:
+    use_resource(client, quantum)
+
+\end{lstlisting}
+
+At this point it is time to advance to move onto more advanced policies.
 
 \part{Advanced Policies}
 
@@ -366,8 +393,6 @@ In addition to that, whenever the process finishes, or it voluntarily gives up t
 \chapter{Lottery and Stride Scheduling}
 
 \part{Implementations}
-
-\chapter{My Implementation?}
 
 \chapter{Solaris Scheduling}
 
@@ -382,10 +407,13 @@ In addition to that, whenever the process finishes, or it voluntarily gives up t
 
 \begin{itemize}
     \item \url{https://texblog.org/2015/09/30/fancy-boxes-for-theorem-lemma-and-proof-with-mdframed/}
+    \item \url{https://wiki.osdev.org/Context_Switching}
 \end{itemize}
 
 
 TODOS:
 - PROPERLY LABEL IMAGES AND CODE BLOCKS
+- MAYBE ADD TABLES AND CHARTS FOR THE BASICS, SO THAT THEY CAN SEE WHEN WHAT RUNS (SIMILAR TO OSTEP)
+
 
 \end{document}
