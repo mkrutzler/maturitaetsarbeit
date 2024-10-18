@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1729263679.64545 "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.pdf" "article" 1729263680.43312 0
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.aux" 1729263680.32166 2591 2b8947aa92b359f60105d2ff7563beb8 "pdflatex"
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.out" 1729263680.32248 2621 c2e89b828f2df7223983b088463e673d "pdflatex"
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" 1729263679.46123 16879 391d1c5f6c24398e7a3aa1304c94454d ""
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.toc" 1729263680.32285 1225 6361f1c0c105ce9c24b4f53e56e7122f "pdflatex"
+["pdflatex"] 1729269239.88753 "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.pdf" "article" 1729269240.68594 0
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.aux" 1729269240.60231 2989 b2bc8e70d16ff08b8a6e5a2e7c50113b "pdflatex"
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.out" 1729269240.60305 3088 db7131c5f46d420fddc3ab5e9e62aeda "pdflatex"
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" 1729269238.93179 19588 8f986ab3c5367218f6f7a0c6476013a2 ""
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.toc" 1729269240.60325 1500 906acbbdc94cf480cb9185768c3d5365 "pdflatex"
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1710106625 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/map/fontname/texfonts.map" 1710106625 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map" 1710106625 5472554 f7861620179a71a79d4bd86251f559d0 ""

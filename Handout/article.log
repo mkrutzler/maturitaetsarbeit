@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Homebrew) (preloaded format=pdflatex 2024.7.14)  18 OCT 2024 17:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Homebrew) (preloaded format=pdflatex 2024.7.14)  18 OCT 2024 18:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -613,9 +613,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 {/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}] (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 6.
+(Font)              <7> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 6.
+(Font)              <5> on input line 2.
 )
 \tf@toc=\write5
 \openout5 = `article.toc'.
@@ -629,29 +629,33 @@ l.167 \part
 
 ] [2
 
-] [3
+]
 
-{/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [4
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 169.
 
-] [5
+Package mdframed Info: Not enough space on this page on input line 212.
+[3{/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+Package mdframed Info: Not enough space on this page on input line 212.
+ [4] [5
 
 ] [6]
 Chapter 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 243.
+(Font)              <8> on input line 241.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 243.
+(Font)              <6> on input line 241.
 (/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/02/21 1.10 listings language file
 )
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 264.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 262.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/it' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/it' tried instead on input line 267.
+(Font)              Font shape `OT1/cmtt/m/it' tried instead on input line 265.
  [7
 
 ]
-Overfull \hbox (2.3511pt too wide) in paragraph at lines 319--319
+Overfull \hbox (2.3511pt too wide) in paragraph at lines 317--317
 |[]\OT1/cmr/bx/n/20.74 Shortest Time-to-Completion First(STCF)| 
  []
 
@@ -661,28 +665,30 @@ Overfull \hbox (2.3511pt too wide) in paragraph at lines 319--319
 Chapter 2.
 [12
 
-]
+] [13]
 Chapter 3.
-[13
+[14
 
-] [14
+] [15
 
 ]
 Chapter 4.
-[15
+[16
 
 ]
 Chapter 5.
-[16
+[17
 
-] [17
+] [18
 
 ]
-Overfull \hbox (5.49112pt too wide) in paragraph at lines 409--410
+Overfull \hbox (5.49112pt too wide) in paragraph at lines 445--446
 [][]$\OT1/cmtt/m/n/10 https : / / texblog . org / 2015 / 09 / 30 / fancy-[]boxes-[]for-[]theorem-[]lemma-[]and-[]proof-[]with-[]mdframed/$[] 
  []
 
-[18
+Missing character: There is no � in font cmtt10!
+Missing character: There is no � in font cmtt10!
+[19
 
 ] (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.aux)
  ***********
@@ -690,21 +696,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `article.out' has not changed.
-(rerunfilecheck)             Checksum: C2E89B828F2DF7223983B088463E673D;2621.
+(rerunfilecheck)             Checksum: DB7131C5F46D420FDDC3AB5E9E62AEDA;3088.
  ) 
 Here is how much of TeX's memory you used:
- 22844 strings out of 474116
- 428148 string characters out of 5732613
+ 22859 strings out of 474116
+ 428331 string characters out of 5732613
  2072187 words of memory out of 5000000
- 44735 multiletter control sequences out of 15000+600000
+ 44741 multiletter control sequences out of 15000+600000
  563608 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,10n,109p,556b,1323s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,10n,109p,603b,1323s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on /Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.pdf (19 pages, 227217 bytes).
+Output written on /Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.pdf (20 pages, 233376 bytes).
 PDF statistics:
- 372 PDF objects out of 1000 (max. 8388607)
- 315 compressed objects within 4 object streams
- 116 named destinations out of 1000 (max. 500000)
- 149 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 399 PDF objects out of 1000 (max. 8388607)
+ 341 compressed objects within 4 object streams
+ 125 named destinations out of 1000 (max. 500000)
+ 173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

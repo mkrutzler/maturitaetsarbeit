@@ -1,6 +1,6 @@
 \contentsline {part}{I\hspace {1em}Forewords?}{2}{part.1}%
-\contentsline {chapter}{Introduction}{3}{chapter*.2}%
-\contentsline {chapter}{Metrics}{4}{chapter*.3}%
+\contentsline {section}{\numberline {0.1}Introduction}{3}{section.0.1}%
+\contentsline {section}{\numberline {0.2}Metrics}{3}{section.0.2}%
 \contentsline {part}{II\hspace {1em}The ABCs of CPU Scheduling}{5}{part.2}%
 \contentsline {chapter}{\numberline {1}Basic Algorithms}{7}{chapter.1}%
 \contentsline {section}{\numberline {1.1}First In, First Out (FIFO)}{7}{section.1.1}%
@@ -9,9 +9,12 @@
 \contentsline {section}{\numberline {1.4}Round Robin (RR)}{9}{section.1.4}%
 \contentsline {part}{III\hspace {1em}Advanced Policies}{11}{part.3}%
 \contentsline {chapter}{\numberline {2}Multi-Level Feedback Queue}{12}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Lottery and Stride Scheduling}{13}{chapter.3}%
-\contentsline {part}{IV\hspace {1em}Implementations}{14}{part.4}%
-\contentsline {chapter}{\numberline {4}Solaris Scheduling}{15}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Linux 2.6 Fair Scheduler}{16}{chapter.5}%
-\contentsline {part}{V\hspace {1em}Conclusion}{17}{part.5}%
-\contentsline {chapter}{Sources}{18}{chapter*.4}%
+\contentsline {section}{\numberline {2.1}Introduction and Abstract Rules}{12}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Examples}{13}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Implementation}{13}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Lottery and Stride Scheduling}{14}{chapter.3}%
+\contentsline {part}{IV\hspace {1em}Real Life Usecases}{15}{part.4}%
+\contentsline {chapter}{\numberline {4}Solaris Scheduling}{16}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Linux 2.6 Fair Scheduler}{17}{chapter.5}%
+\contentsline {part}{V\hspace {1em}Conclusion}{18}{part.5}%
+\contentsline {chapter}{Sources}{19}{chapter*.2}%

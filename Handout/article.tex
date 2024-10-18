@@ -166,8 +166,7 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 \part{Forewords?}
 
-\chapter*{Introduction}
-\addcontentsline{toc}{chapter}{Introduction} % Ensure Sources appears in the TOC
+\section{Introduction}
 
 We all use computers.
 The modern person couldn't do half of the things that is expected from him without an instance of Windows, MacOs or any other Operating System.
@@ -200,8 +199,7 @@ With this in mind the let's get to a quick introduction of the metrics, so that 
 
 
 
-\chapter*{Metrics}
-\addcontentsline{toc}{chapter}{Metrics} % Ensure Sources appears in the TOC
+\section{Metrics}
 MAYBE JUST LEAVING THIS OUT AND LOOKING AT THIS DURING A LATER TIME (WHEN THE METRICS ARE MENTIONNED OR LINK AS A FOOTNOTE?)
 ALSO THIS FOLLOWS THE OSTEP WAY TOO MUCH:
 We can measure different aspects of a Scheduler Policy. There is however a differentiation between fairness and performance. It is often a tradeoff between the two. For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
@@ -323,6 +321,7 @@ Here we will make SJF "preemptive", meaning that our cashier can now "save" the 
 Therefore STCF is also called "Preemptive Shortest Job First (PSJF)".
 Although the switching costs some time, you'd have to wait anyways until our little boy returns with the ketchup\footnote{If you don't know what I am talking about read Chapter 1.1 (FIFO)}
 The option of saving a state comes in handy, especially if a program has to wait for I/O.
+The state of waiting is usually called "blocked" and the technique of running something else during the task is blocked is called overlapping.
 Preemptiveness also makes the computer much more response, because now you can really do certain things "at the same time".
 The best part is that we don't even have to change much of the previous code.
 \pagebreak
@@ -388,11 +387,48 @@ At this point it is time to advance to move onto more advanced policies.
 
 \part{Advanced Policies}
 
+
 \chapter{Multi-Level Feedback Queue}
+
+\section{Introduction and Abstract Rules}
+
+Here we'll look at policies doesn't "just invent".
+These are usually more sophisticated and can be hypothetically used in a real system (at least with some adjustemts). 
+First we'll look at the Multi-Level Feedback Queue, short MLFQ. 
+This is one of the most known ones an is used in Solaris.
+The creator Fernando J. Corbató even recieved a Turing Award for it in 1990.
+
+First I'll write down the abstract rules. These are usually complemented with an example. 
+Please feel free to jump around to get a better grasp of the theory
+THIS IS REALLY BAD!! MAYBE WRITE AN EVOLVING STUFF OR SOMETHING:
+THIS IS NO MANUAL; WHERE YOU JUST LIST OUT THE FEATURES LOL
+The most basic principle of MLFQ are the so called "Priority Queues". These are priorities that a program can belong into.
+They can change over time and these changes reflect the action/state of a program.
+Obviously processes at a higher priority are preferred over processes lower down.
+If two processes are at the same priority then the Round Robin policy will be used.
+The changing is priority is done as followed: every task has a certain amount of "allotment" for each priority.
+If this CPU time is used up, than the process will be moved down once and recieve a new set of allotment.
+Which each process starting in the highest queue, this means that the shorter tasks are generally preferred. 
+To solve the so called "starvation" issue, which essentially means that longer tasks get to the bottom priority and stay there being stuck, because there is no way to move, we'll introduce "priority boosts". 
+As the name says this boosts the priority of all tasks into level 1 and therefore gives them a second chance. 
+So as "OSTEP REFERENCE HERE" would summarize it:
+\begin{enumerate}
+  \item If Priority (A) > Priority (B) $\Rightarrow$ A runs \& B doesn't
+  \item If Priority (A) = Priority (B) $\Rightarrow$ A \& B run in RR
+  \item When a job enters the system, it is placed at the highest priority
+  \item Once a job uses up its time allotment at a given level, its priority is reduced
+  \item After some period S, move all the jobs in the system to the topmost queue
+\end{enumerate}
+
+Even though MLFQ introduces multiple Voo-Doo Constant, like the scheduling quantum, amount of queues, period S, allotment size (constant or changing?), we still gain an advantage over just simply unknown constant like the burst time or a predetermined priority and effort. These are huge improvements, because this means that we could actually implement it properly and the use case is not just purely a though experiment. Now to further improve the understanding of the policy we'll look at some examples.
+
+\section{Examples}
+
+\section{Implementation}
 
 \chapter{Lottery and Stride Scheduling}
 
-\part{Implementations}
+\part{Real Life Usecases}
 
 \chapter{Solaris Scheduling}
 
@@ -408,12 +444,11 @@ At this point it is time to advance to move onto more advanced policies.
 \begin{itemize}
     \item \url{https://texblog.org/2015/09/30/fancy-boxes-for-theorem-lemma-and-proof-with-mdframed/}
     \item \url{https://wiki.osdev.org/Context_Switching}
+    \item \url{https://en.wikipedia.org/wiki/Fernando_J._Corbató}
+    \item \url{https://github.com/jkoritzinsky/xv6-MLFQ}
 \end{itemize}
 
 
-TODOS:
-- PROPERLY LABEL IMAGES AND CODE BLOCKS
-- MAYBE ADD TABLES AND CHARTS FOR THE BASICS, SO THAT THEY CAN SEE WHEN WHAT RUNS (SIMILAR TO OSTEP)
 
 
 \end{document}
