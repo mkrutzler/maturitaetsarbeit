@@ -245,15 +245,23 @@ Therefore there will be an absense of answers to common questions like: "How do 
 
 \section{First In, First Out (FIFO)}
 
-Probably the most basic of them all. The "First In, First Our" is just as the name suggests it. Usually we humans know it as first come, first served. This policies runs into problems really quickly if the discard the possibility of all tasks requiring the same amount of run time. A so called "Convoy Effect" takes place. Just imagen how annoying it is, when you're at a store and a family of five cuts into the line in front of you. They have two full carts loaded. You have to wait until they finish. In addition to that they also send back their kid to get something. Wouldn't it be overall much faster if they let you in front, before the cashier starts scanning the items?
+Probably the most basic of them all.
+The "First In, First Our" is just as the name suggests it. 
+Usually we humans know it as first come, first served. 
+This policies runs into problems really quickly if the discard the possibility of all tasks requiring the same amount of run time. 
+A so called "Convoy Effect" takes place. 
+Just imagen how annoying it is, when you're at a store and a family of five cuts into the line in front of you. 
+They have two full carts loaded. You have to wait until they finish. 
+In addition to that they also send back their kid to get something. 
+Wouldn't it be overall much faster if they let you in front, before the cashier starts scanning the items?
 
 \begin{lstlisting}[language=Python, style=colorEX]
 # Simple implementation of FIFO in Python
 list = []
 
 # Adding a new process
-def add_client(name):
-  list.append(name)
+def add_client(client):
+  list.append(client)
 
 # Decide which process is next
 def allocate():
@@ -262,8 +270,47 @@ def allocate():
 \end{lstlisting}
 
 As you can see the implementation is itself pretty easy.
+\pagebreak
 
 \section{Shortest Job First (SJF)}
+
+Now the situation changes a bit. 
+The infamous family of five wants to go first, however the cashier picks you first after seeing, that you only have a few items.
+This is the "Shortest Job First" (SJF). 
+
+\begin{lstlisting}[language=Python, style=colorEX]
+# Simple implementation of SJF in Python
+
+# Define client class and list
+class Client:
+  def __init__(self, ttc): # ttc as time to completion
+    self.ttc = ttc
+    # other stuff that is relevant for the client class
+
+list = []
+
+# Adding a new process
+client = Client(ttc) 
+def add_client(client): 
+  list.append(client)
+
+# Decide which process is next
+def allocate():
+  list.sort(key=lambda a: a.ttc) # sort according to ttc
+  next = list.pop(0)
+  use_resource(next) # function that will allow "next" to use the CPU
+\end{lstlisting}
+
+There are two notable changes in this code snippet, when compared to FIFO. One of them is relevant.
+First, the less exiting part is that I actually took my time to write out some of the client class definition.
+Second and the real difference to FIFO is that we sort the according to the time to completion. 
+This means that we will choose the task with the shortest time to completion.
+AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
+THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
+The only problem is when you arrive late. The scanning of products already started and you'll have to wait.
+This policy is a so called non-preemptive policy.
+"Non-preemptive" just means that once a task will run until it finishes.
+
 
 \section{Shortest Time-to-Completion (STCF)}
 
@@ -298,5 +345,8 @@ As you can see the implementation is itself pretty easy.
     \item \url{https://texblog.org/2015/09/30/fancy-boxes-for-theorem-lemma-and-proof-with-mdframed/}
 \end{itemize}
 
+
+TODOS:
+- PROPERLY LABEL IMAGES AND CODE BLOCKS
 
 \end{document}
