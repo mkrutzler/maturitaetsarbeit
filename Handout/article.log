@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Homebrew) (preloaded format=pdflatex 2024.7.14)  18 OCT 2024 18:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Homebrew) (preloaded format=pdflatex 2024.7.14)  19 OCT 2024 11:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -527,29 +527,32 @@ File: lstmisc.sty 2024/02/21 1.10 (Carsten Heinz)
 File: listings.cfg 2024/02/21 1.10 listings configuration
 ))
 Package: listings 2024/02/21 1.10 (Carsten Heinz)
+ (/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/tools/indentfirst.sty
+Package: indentfirst 2023/07/02 v1.03 Indent first paragraph (DPC)
+)
 \c@defi=\count316
  (/Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/article.aux)
 \openout1 = `article.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-Package hyperref Info: Link coloring OFF on input line 154.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 155.
+LaTeX Font Info:    ... okay on input line 155.
+Package hyperref Info: Link coloring OFF on input line 155.
  (/Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/article.out) (/Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/article.out)
 \@outlinefile=\write4
 \openout4 = `article.out'.
@@ -624,7 +627,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.167 \part
+l.168 \part
            {Forewords?} [1
 
 ] [2
@@ -632,30 +635,30 @@ l.167 \part
 ]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 169.
+(hyperref)                than one, level fixed on input line 170.
 
-Package mdframed Info: Not enough space on this page on input line 212.
+Package mdframed Info: Not enough space on this page on input line 213.
 [3{/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Package mdframed Info: Not enough space on this page on input line 212.
+Package mdframed Info: Not enough space on this page on input line 213.
  [4] [5
 
 ] [6]
 Chapter 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 241.
+(Font)              <8> on input line 242.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 241.
+(Font)              <6> on input line 242.
 (/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/02/21 1.10 listings language file
 )
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 262.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 263.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/it' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/it' tried instead on input line 265.
+(Font)              Font shape `OT1/cmtt/m/it' tried instead on input line 266.
  [7
 
 ]
-Overfull \hbox (2.3511pt too wide) in paragraph at lines 317--317
+Overfull \hbox (2.3511pt too wide) in paragraph at lines 318--318
 |[]\OT1/cmr/bx/n/20.74 Shortest Time-to-Completion First(STCF)| 
  []
 
@@ -663,32 +666,54 @@ Overfull \hbox (2.3511pt too wide) in paragraph at lines 317--317
 
 ]
 Chapter 2.
+<assets/mlfq-diag-1.png, id=253, 690.58pt x 368.37625pt>
+File: assets/mlfq-diag-1.png Graphic file (type png)
+<use assets/mlfq-diag-1.png>
+Package pdftex.def Info: assets/mlfq-diag-1.png  used on input line 415.
+(pdftex.def)             Requested size: 328.82707pt x 175.40771pt.
 [12
 
-] [13]
+ </Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/assets/mlfq-diag-1.png>]
+<assets/mlfq-diag-2.png, id=265, 688.5725pt x 369.38pt>
+File: assets/mlfq-diag-2.png Graphic file (type png)
+<use assets/mlfq-diag-2.png>
+Package pdftex.def Info: assets/mlfq-diag-2.png  used on input line 430.
+(pdftex.def)             Requested size: 328.82707pt x 176.39857pt.
+<assets/mlfq-diag-3.png, id=266, 690.58pt x 375.4025pt>
+File: assets/mlfq-diag-3.png Graphic file (type png)
+<use assets/mlfq-diag-3.png>
+Package pdftex.def Info: assets/mlfq-diag-3.png  used on input line 446.
+(pdftex.def)             Requested size: 328.82707pt x 178.75337pt.
+ [13 </Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/assets/mlfq-diag-2.png> </Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/assets/mlfq-diag-3.png>]
+<assets/mlfq-diag-4.png, id=276, 688.5725pt x 437.635pt>
+File: assets/mlfq-diag-4.png Graphic file (type png)
+<use assets/mlfq-diag-4.png>
+Package pdftex.def Info: assets/mlfq-diag-4.png  used on input line 458.
+(pdftex.def)             Requested size: 328.82707pt x 208.99396pt.
+ [14 </Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/assets/mlfq-diag-4.png>]
 Chapter 3.
-[14
+[15
 
-] [15
+] [16
 
 ]
 Chapter 4.
-[16
+[17
 
 ]
 Chapter 5.
-[17
+[18
 
-] [18
+] [19
 
 ]
-Overfull \hbox (5.49112pt too wide) in paragraph at lines 445--446
+Overfull \hbox (5.49112pt too wide) in paragraph at lines 497--498
 [][]$\OT1/cmtt/m/n/10 https : / / texblog . org / 2015 / 09 / 30 / fancy-[]boxes-[]for-[]theorem-[]lemma-[]and-[]proof-[]with-[]mdframed/$[] 
  []
 
 Missing character: There is no � in font cmtt10!
 Missing character: There is no � in font cmtt10!
-[19
+[20
 
 ] (/Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/article.aux)
  ***********
@@ -696,21 +721,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `article.out' has not changed.
-(rerunfilecheck)             Checksum: DB7131C5F46D420FDDC3AB5E9E62AEDA;3088.
+(rerunfilecheck)             Checksum: DDDA3302FC36BD41B32F209997195BD6;2902.
  ) 
 Here is how much of TeX's memory you used:
- 22859 strings out of 474116
- 428331 string characters out of 5732613
+ 22921 strings out of 474116
+ 430066 string characters out of 5732613
  2072187 words of memory out of 5000000
- 44741 multiletter control sequences out of 15000+600000
+ 44792 multiletter control sequences out of 15000+600000
  563608 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,10n,109p,603b,1323s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,10n,109p,556b,1323s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on /Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/article.pdf (20 pages, 233376 bytes).
+Output written on /Users/markkrutzler/Documents/KsImLee/Maturit채tsarbeit/Handout/article.pdf (21 pages, 651876 bytes).
 PDF statistics:
- 399 PDF objects out of 1000 (max. 8388607)
- 341 compressed objects within 4 object streams
- 125 named destinations out of 1000 (max. 500000)
- 173 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 416 PDF objects out of 1000 (max. 8388607)
+ 349 compressed objects within 4 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,9 +1,13 @@
 # Fdb version 4
-["pdflatex"] 1729269239.88753 "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.pdf" "article" 1729269240.68594 0
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.aux" 1729269240.60231 2989 b2bc8e70d16ff08b8a6e5a2e7c50113b "pdflatex"
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.out" 1729269240.60305 3088 db7131c5f46d420fddc3ab5e9e62aeda "pdflatex"
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" 1729269238.93179 19588 8f986ab3c5367218f6f7a0c6476013a2 ""
-  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.toc" 1729269240.60325 1500 906acbbdc94cf480cb9185768c3d5365 "pdflatex"
+["pdflatex"] 1729329608.90483 "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.pdf" "article" 1729329610.11659 0
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.aux" 1729329610.03089 3993 f28c2ef932d6f7824e1f581f238644e1 "pdflatex"
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.out" 1729329610.03171 2902 ddda3302fc36bd41b32f209997195bd6 "pdflatex"
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.tex" 1729329608.68183 22075 3ceb46b004fc57381aa4e3b7ee3007c2 ""
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/article.toc" 1729329610.03194 1614 dba44c8468f081df73797ae542f657ce "pdflatex"
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/assets/mlfq-diag-1.png" 1729283992.17145 130451 62d214b408f295d865873ed6dd0b0795 ""
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/assets/mlfq-diag-2.png" 1729283997.87355 145646 04b6785bf052be14ae8ddf45677e7781 ""
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/assets/mlfq-diag-3.png" 1729284004.32385 154873 b68812dd61293f8557fbaa9907c7b590 ""
+  "/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/Handout/assets/mlfq-diag-4.png" 1729284009.95235 172555 c7df7f9f2561d46166744c08196d5180 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1710106625 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/map/fontname/texfonts.map" 1710106625 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map" 1710106625 5472554 f7861620179a71a79d4bd86251f559d0 ""
@@ -160,6 +164,7 @@
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1710106625 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/titlesec/titlesec.sty" 1710106625 48766 0b93839be28e9744a24c45075c75b2e2 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/titling/titling.sty" 1710106625 7358 95ac619994bd30d405a74f3eca431c84 ""
+  "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/tools/indentfirst.sty" 1710106625 1618 c5f08dcf49a56107311a81073b35fa4e ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/url/url.sty" 1710106625 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1710106625 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "/opt/homebrew/Cellar/texlive/20240312_1/share/texmf-dist/tex/latex/zref/zref-abspage.sty" 1710106625 2269 4fe6fb3396214c91f164d45faf9bec45 ""

@@ -10,6 +10,7 @@
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{etoolbox}
 \usepackage{listings}
+\usepackage{indentfirst}
 
 % sets up mdframed
 \newcounter{defi}[section]\setcounter{defi}{0}
@@ -390,39 +391,90 @@ At this point it is time to advance to move onto more advanced policies.
 
 \chapter{Multi-Level Feedback Queue}
 
-\section{Introduction and Abstract Rules}
+\section{Abstract Rules}
 
+\subsubsection{Introduction}
 Here we'll look at policies doesn't "just invent".
 These are usually more sophisticated and can be hypothetically used in a real system (at least with some adjustemts). 
 First we'll look at the Multi-Level Feedback Queue, short MLFQ. 
 This is one of the most known ones an is used in Solaris.
 The creator Fernando J. Corbató even recieved a Turing Award for it in 1990.
+First I'll write down some abstract rules. These are usually complemented with an example. 
+After that there will be a quick implementation of the policy in C++.
+Please feel free to jump around to get a better grasp of the (theory).
 
-First I'll write down the abstract rules. These are usually complemented with an example. 
-Please feel free to jump around to get a better grasp of the theory
-THIS IS REALLY BAD!! MAYBE WRITE AN EVOLVING STUFF OR SOMETHING:
-THIS IS NO MANUAL; WHERE YOU JUST LIST OUT THE FEATURES LOL
+\subsubsection{Basics}
+
 The most basic principle of MLFQ are the so called "Priority Queues". These are priorities that a program can belong into.
 They can change over time and these changes reflect the action/state of a program.
-Obviously processes at a higher priority are preferred over processes lower down.
-If two processes are at the same priority then the Round Robin policy will be used.
-The changing is priority is done as followed: every task has a certain amount of "allotment" for each priority.
+The changing of the priority is done as followed: every task has a certain amount of "allotment" for each priority.
 If this CPU time is used up, than the process will be moved down once and recieve a new set of allotment.
-Which each process starting in the highest queue, this means that the shorter tasks are generally preferred. 
-To solve the so called "starvation" issue, which essentially means that longer tasks get to the bottom priority and stay there being stuck, because there is no way to move, we'll introduce "priority boosts". 
-As the name says this boosts the priority of all tasks into level 1 and therefore gives them a second chance. 
-So as "OSTEP REFERENCE HERE" would summarize it:
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{assets/mlfq-diag-1.png}
+    \caption{Basic Overview}
+    \label{mlfq-diag-1}
+  \end{center}
+\end{figure}
+
+As you can see in the figure \ref{mlfq-diag-1}, we have 5 queues. They are represented on the y axis. 
+Although there are usually more than just five, too many queues would just make things more complicated. 
+The x axis represents the time.
+After a while process 1, gets demoted from the current queue. This happens, because it used up it's allotment.
+None the less, process one keeps running, because there is no other competing. 
+However if the add another process 2, than the situation changes.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{assets/mlfq-diag-2.png}
+    \caption{Introducing Process 2}
+    \label{mlfq-diag-2}
+  \end{center}
+\end{figure}
+
+As you can see processes at a higher priority are preferred over processes lower down. 
+This effectively means that once process 2 joins the comptetition it can monopolize the CPU until they end up on the same level.
+Once they are there Round Robin is used to give them both a fair share of allotment.
+With each process starting in the highest queue, this means that the shorter tasks are generally preferred, because they can finish quickly, before they end up on a lower queue. Therefore the system becomes more responsive.
+Keep in mind that if a process gives up it's CPU before the allotment is used up (for example if they wait for I/O), than they will "stay" in the same priority and can use up the rest of the CPU time, before getting demoted.
+Therefore not the actual time spent there matters, but the time spent using the resource.
+As you might have to already noticed poor process 1 didn't get any runtime while process 2 was getting their priority prioperly adjusted. Note: for simplicity there are only 4 queues.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{assets/mlfq-diag-3.png}
+    \caption{Starvation of Process 1}
+    \label{mlfq-diag-3}
+  \end{center}
+\end{figure}
+
+To solve the so called "starvation" issue, which essentially means that longer tasks get to the bottom priority and stay there being stuck, because there is no way to move, we'll introduce "priority boosts".
+This effectively means that after a certain period S, all processes are boosted to queue 1 and therefore it gives everybody a "second chance". If the processes finish still in priority 1 or 2, than they deserved that queue.
+If however the processes do not finish than they get promoted together to the bottom queue and everybody recieves a fair share.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{assets/mlfq-diag-4.png}
+    \caption{Priority Boost}
+    \label{mlfq-diag-4}
+  \end{center}
+\end{figure}
+
+\noindent So as "OSTEP REFERENCE HERE" would summarize it:
 \begin{enumerate}
-  \item If Priority (A) > Priority (B) $\Rightarrow$ A runs \& B doesn't
+  \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs \& B doesn't
   \item If Priority (A) = Priority (B) $\Rightarrow$ A \& B run in RR
   \item When a job enters the system, it is placed at the highest priority
   \item Once a job uses up its time allotment at a given level, its priority is reduced
   \item After some period S, move all the jobs in the system to the topmost queue
 \end{enumerate}
 
-Even though MLFQ introduces multiple Voo-Doo Constant, like the scheduling quantum, amount of queues, period S, allotment size (constant or changing?), we still gain an advantage over just simply unknown constant like the burst time or a predetermined priority and effort. These are huge improvements, because this means that we could actually implement it properly and the use case is not just purely a though experiment. Now to further improve the understanding of the policy we'll look at some examples.
+\subsubsection{Voo-Doo Constants}
 
-\section{Examples}
+Even though MLFQ introduces multiple Voo-Doo Constant, like the scheduling quantum, amount of queues, period S, allotment size (constant or changing?), we still gain an advantage over just simply unknown constant like the burst time or a predetermined priority and effort. These are huge improvements, because this means that we could actually implement it properly and the use case is not just purely a though experiment. 
+It makes sense to find some sensible defaults for these constants and let the system admin adjust it, if they feel like it. One could find these magic numbers through machine learning, however that is out of scope of the topic?.
+LINK THE ONE LINK HERE ABOUT ADJUSTING WITH MACHINE LEARNING
 
 \section{Implementation}
 
