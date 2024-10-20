@@ -1,6 +1,6 @@
 \contentsline {part}{I\hspace {1em}Forewords?}{2}{part.1}%
 \contentsline {section}{\numberline {0.1}Introduction}{3}{section.0.1}%
-\contentsline {section}{\numberline {0.2}Metrics}{3}{section.0.2}%
+\contentsline {section}{\numberline {0.2}Metrics}{4}{section.0.2}%
 \contentsline {part}{II\hspace {1em}The ABCs of CPU Scheduling}{5}{part.2}%
 \contentsline {chapter}{\numberline {1}Basic Algorithms}{6}{chapter.1}%
 \contentsline {section}{\numberline {1.1}First In, First Out (FIFO)}{6}{section.1.1}%

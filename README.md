@@ -21,10 +21,3 @@ Another thing that I could do is a C++ implementation of one of the algorithms. 
   - multi CPU
   - adjusting parameters using machine learning (prob won't touch it)
 
-## Report 2024-10-20: First Draft (Probekapitel):
-
-- Will do:: Introduce time complexity?
-  - Move a Metrics Part: Introduce time complexity?
-    - Also reread the performance part of the phd-667.pdf
-  - Implement Comments in .tex file
-    - labeled as "% COMMENT:"

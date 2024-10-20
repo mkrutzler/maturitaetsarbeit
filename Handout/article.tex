@@ -169,18 +169,20 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 \section{Introduction}
 
+
+% TODO: Explain why a CPU can only do one operation at the time
 We all use computers.
 The modern person couldn't do half of the things that is expected from him without an instance of Windows, MacOs or any other Operating System.
 We surf the web, write emails, documents and have a video call at the same time.
 The question is: "How does CPU achieve all of this?" The things listed are only the parts of the OS that we come in contact with on a daily basis.
-What about all the other things hidden under the hood of a graphics environment? If it comes down to doing one thing than it's fine.
+What about all the other things hidden under the hood? If it comes down to doing one thing than it's fine.
 The problem arises then we have multiple tasks: The CPU can only do one thing at a time and yet we all multitask on our machines.
 This Black Box effect of taking multiple jobs and working on them in a proper order is what I will disect in this "Maturarbeit".
 
 The art of scheduling tasks could seem easy for us humans.
 We ?instinctively? estimate the many aspects of the task:
 \begin{itemize}
-\item Job: Convince our boss to give us a pay rise\\Priority: High\\Time Required: Medium (With a lot of Waiting Time)\\Effort: High (Said "No Way" last week)
+\item Job: Convince our boss to give us a pay rise\\Priority: High\\Time Required: Medium (With a lot of waiting time)\\Effort: High (Said "No way" last week)
 \item Job: Walk the Dog\\Priority: High\\Time Required: Low\\Effort: Low
 \item Job: Go to the Hairdresser\\ Priority: Low (Went last week as well)\\Time Required: High\\Effort: Low
 \end{itemize}
@@ -196,14 +198,16 @@ A computer does nothing like that. How could it? What he sees is:
 \item Job: Process 1\\Priority: Needs to be Set\\Time Required: ??? (Waiting Time: ???)\\Effort: ???
 \end{itemize}
 What he knows is when the task arrived and how much time he worked on it.
+The goal of scheduling is somehow not to rely on predictions and still decide wisely.
 With this in mind the let's get to a quick introduction of the metrics, so that we know how to rate the policies that we'll look at.
 
 
-
+\pagebreak
 \section{Metrics}
-% COMMENT: MAYBE JUST LEAVING THIS OUT AND LOOKING AT THIS DURING A LATER TIME (WHEN THE METRICS ARE MENTIONNED OR LINK AS A FOOTNOTE?)
-% COMMENT: ALSO THIS FOLLOWS THE OSTEP WAY TOO MUCH:
-We can measure different aspects of a Scheduler Policy. There is however a differentiation between fairness and performance. It is often a tradeoff between the two. For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
+% TODO: MAYBE JUST LEAVING THIS OUT AND LOOKING AT THIS DURING A LATER TIME (WHEN THE METRICS ARE MENTIONNED OR LINK AS A FOOTNOTE?)
+% TODO: ALSO THIS FOLLOWS THE OSTEP WAY TOO MUCH:
+We can measure different aspects of a "scheduler policy". There is however a differentiation between fairness and performance. It is often a tradeoff between the two. % TODO: Lateron mention, where it is obvious
+For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
 
 \begin{defi}[Turnaround Time]{dfn:turnaround}
 The turnaround time is a performance metric. It measures how long a task took to be completed from the time it arrived.
@@ -218,7 +222,7 @@ In the best case scenario a single jobs turnaround time is equivalent to the run
 Another really important thing for us is Response Time.
 We want to move our mouse around.
 If we type we want the letter to appear in an instant and the Microsoft suite should start without much delay.
-Of course the startup time of a program depends on many other factors, however if we never even start to work on it, it'll take a good while.
+Of course the startup time of a program depends on many other factors, however if we never even start working on it, it'll take a good while.
 
 
 \begin{defi}[Response Time]{dfn:response}
@@ -232,7 +236,7 @@ $$T_{Response} = T_{First\_Run} - T_{Arrival}$$
 
 \part{The ABCs of CPU Scheduling}
 
-% COMMENT: MAYBE HERE THE METRICS PART?
+% TODO: MAYBE HERE THE METRICS PART?
 
 \chapter{Basic Algorithms}
 
@@ -244,31 +248,30 @@ There are also some example code snippets to each policy.
 These are just so you can understand the algorithm and they don't really work in a real life scenario.
 First of all they can't handle interrupts and therefore don't work in a real system.
 In addition to that Python is a high level language and is absolutely not made to handle low level stuff!
-Later on we'll switch to C++, because it fits better, however a "real" OS is written mostly in C.
 
 \section{First In, First Out (FIFO)}
 
 Probably the most basic of them all.
 The "First In, First Our" is just as the name suggests it. 
 Usually we humans know it as first come, first served. 
-This policies runs into problems really quickly if the discard the possibility of all tasks requiring the same amount of run time. 
+This policies runs into problems really quickly if we discard the possibility of all tasks requiring the same amount of run time. 
 A so called "Convoy Effect" takes place. 
 Just imagen how annoying it is, when you're at a store and a family of five cuts into the line in front of you. 
 They have two full carts loaded. You have to wait until they finish. 
 In addition to that they also send back their kid to get an extra bottle of ketchup. 
-Wouldn't it be overall much faster if they let you in front, before the cashier starts scanning the items?
+Wouldn't it be overall much faster if they let you in front before the cashier starts scanning the items?
 
 \begin{lstlisting}[language=Python, style=colorEX, label=cd:fifo-python]
 # Simple implementation of FIFO in Python
-list = []
+queue = []
 
 # Adding a new process
 def add_process(process):
-  list.append(process)
+  queue.append(process)
 
 # Decide which process is next
 def allocate():
-  next = list.pop(0)
+  next = queue.pop(0)
   use_resource(next) # function that will allow "next" to use the CPU
 \end{lstlisting}
 
@@ -278,39 +281,39 @@ As you can see the implementation is itself pretty easy.
 \section{Shortest Job First (SJF)}
 
 Now the situation changes a bit. 
-The infamous family of five wants to go first, however the cashier picks you first after seeing, that you only have a few items.
+The infamous family of five wants to go first, however the cashier picks you after seeing that you only have a few items.
 This is the "Shortest Job First" (SJF). 
 
 \begin{lstlisting}[language=Python, style=colorEX, label=cd:sjf-python]
 # Simple implementation of SJF in Python
 
-# Define process class and list
+# Define process class and queue
 class Process:
   def __init__(self, burst): # burst time is the time required for the process to finish
     self.burst = burst
     # other stuff that is relevant for the process class
 
-list = []
+queue = []
 
 # Adding a new process
 process = Process(burst) 
 def add_process(process): 
-  list.append(process)
+  queue.append(process)
 
 # Decide which process is next
 def allocate():
-  list.sort(key=lambda a: a.burst) # sort according to burst
-  next = list.pop(0)
+  queue.sort(key=lambda a: a.burst) # sort according to burst
+  next = queue.pop(0)
   use_resource(next) # function that will allow "next" to use the CPU
 \end{lstlisting}
 
-There are two notable changes in this code snippet, when compared to FIFO. One of them is relevant.
+There are two notable changes in this code snippet when compared to FIFO. One of them is relevant.
 First, the less exiting part is that I actually took my time to write out some of the process class definition.
-Second and the real difference to FIFO is that we sort the according to the burst time\footnote{Burst time is basically the runtime needed until the process finishes. This variable can be only predicted}. 
+Second and the real difference to FIFO is that we sort the queue according to the burst time\footnote{Burst time is basically the runtime needed until the process finishes. This variable can be only predicted}. 
 This means that we will choose the task with the shortest time to completion.
-% COMMENT: AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
-% COMMENT: => Sorting algorithm input?
-% COMMENT: THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
+% TODO: AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
+% TODO: => Sorting algorithm input?
+% TODO: THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
 The only problem is when you arrive late. The scanning of products already started and you'll have to wait.
 This policy is a so called non-preemptive policy.
 "Non-preemptive" just means that once a task will run until it finishes.
@@ -321,7 +324,8 @@ This policy is a so called non-preemptive policy.
 If SJF and FIFO are cousins that STCF is the brother.
 Here we will make SJF "preemptive", meaning that our cashier can now "save" the state of the previously scanned items. 
 Therefore STCF is also called "Preemptive Shortest Job First (PSJF)".
-Although the switching costs some time, you'd have to wait anyways until our little boy returns with the ketchup\footnote{If you don't know what I am talking about read Chapter 1.1 (FIFO)}
+Although the switching costs some time it does not matter here, because one would have to wait until the little boy returns with the ketchup\footnote{If you don't know what I am talking about read Chapter 1.1 (FIFO)}
+% TODO: Pretty change perspective switch, should revisit it later
 The option of saving a state comes in handy, especially if a program has to wait for I/O.
 The state of waiting is usually called "blocked" and the technique of running something else during the task is blocked is called overlapping.
 Preemptiveness also makes the computer much more response, because now you can really do certain things "at the same time".
@@ -330,13 +334,13 @@ The best part is that we don't even have to change much of the previous code.
 \begin{lstlisting}[language=Python, style=colorEX, label=cd:stcf-python]
   # Simple implementation of STCF in Python
   
-  # definition of process class and list go here
+  # definition of process class and queue go here
   current = Process(burst)
   current_runtime = 0
   
   # Adding a new process
   def add_process(process): 
-    list.append(process)
+    queue.append(process)
     allocate()
   
   # Decide which process is next
@@ -346,12 +350,13 @@ The best part is that we don't even have to change much of the previous code.
     current.burst -= current_runtime # first update burst
     current_runtime = 0
 
-    list.sort(key=lambda a: a.burst) # sort according to burst
-    current = list.pop(0)
+    queue.sort(key=lambda a: a.burst) # sort according to burst
+    current = queue.pop(0)
 
     use_resource(current) # function that will allow "next" to use the CPU (also tracks runtime)
 \end{lstlisting}
-% COMMENT: IDK ABOUT THE CODE; IT IS JUST KINDA HACKED TOGETHER; IT IS DEFINITELY NOT SECURE WHATSOEVER! 
+% TODO: IDK ABOUT THE CODE; IT IS JUST KINDA HACKED TOGETHER; IT IS DEFINITELY NOT SECURE WHATSOEVER! Also should explain it more in words!
+% TODO: GENErally code is trash. should do a more RR style, with after every allotment new scheduling
 Whenever a new process "joins", the "allocation" function gets run.
 In addition to that, whenever the process finishes, or it voluntarily gives up the CPU, the same "allocation" function can be run.
 
@@ -359,8 +364,10 @@ In addition to that, whenever the process finishes, or it voluntarily gives up t
 \section{Round Robin (RR)}
 
 Now, why don't we just scan one item for everyone? 
+% TODO: Exlain how that would make it better...
 This would mean that, even though slow but progress is being constantly made.
-At this point the item scanning doesn't really work anymore\footnote{You can't scan a fraction of a product, or can you?} but let's just make the so called "quanta" (quantum in singular) even smaller.
+Even if at this point the item scanning doesn't really work anymore\footnote{You can't scan a fraction of a product, or can you?}, let's just make the so called "quanta" (quantum in singular) even smaller.
+% TODO: Explain term quantum better
 As already mentionned in the previous chapter, the cashier needs some time to "save" the state of the current purchases. 
 This effectively mean that after the quantum shrinks to a certain extent, the "context switching"\footnote{Context switch saves the state of a process so that it can be restored later} would get too expensive. 
 The goal is to reach a balance, where we have enough responsibility, but the price for it is not too high.
@@ -369,18 +376,19 @@ Notice how by treating the processes more "fairly" by don't caring about their o
 \begin{lstlisting}[language=Python, style=colorEX, label=cd:rr-python]
   # Simple implementation of RR in Python
 
-  list = []
+  queue = []
   quantum = 1 # Adjust the time slice here
 
   def add_process(process):
-    list.append(process)
+    queue.append(process)
 
   def use_resource(process, quanta):
     # definition of use_resource
     # now it also takes an amount of quanta that the process can run for
     # after that it saves the state and returns.
 
-  for process in list:
+while true:
+  for process in queue:
     use_resource(process, quantum)
 
 \end{lstlisting}
@@ -395,10 +403,10 @@ At this point it is time to advance to move onto more advanced policies.
 \section{Abstract Rules}
 
 \subsubsection{Introduction}
-Here we'll look at policies doesn't "just invent".
+Here we'll look at policies that one doesn't "just invent".
 These are usually more sophisticated and can be hypothetically used in a real system (at least with some adjustemts). 
 First we'll look at the Multi-Level Feedback Queue, short MLFQ. 
-This is one of the most known ones an is used in Solaris.
+This is one of the most known ones and is used in Solaris.
 The creator Fernando J. Corbató even recieved a Turing Award for it in 1990.
 First I'll write down some abstract rules. These are usually complemented with an example. 
 After that there will be a quick implementation of the policy in Python.
@@ -407,6 +415,7 @@ Please feel free to jump around to get a better grasp of the (theory).
 \subsubsection{Basics}
 
 The most basic principle of MLFQ are the so called "Priority Queues". These are priorities that a program can belong into.
+% TODO: SIMILAR TO PREVIOUS QUEUES??? MAKE A CONNECTINjjjjkk
 They can change over time and these changes reflect the action/state of a program.
 The changing of the priority is done as followed: every task has a certain amount of "allotment" for each priority.
 If this CPU time is used up, than the process will be moved down once and recieve a new set of allotment.
@@ -423,7 +432,7 @@ As you can see in the figure \ref{mlfq-diag-1}, we have 5 queues. They are repre
 Although there are usually more than just five, too many queues would just make things more complicated. 
 The x axis represents the time.
 After a while process 1, gets demoted from the current queue. This happens, because it used up it's allotment.
-None the less, process one keeps running, because there is no other competing. 
+None the less, process one keeps running, because there is no one other competing. 
 However if the add another process 2, than the situation changes.
 
 \begin{figure}[h]
@@ -437,10 +446,11 @@ However if the add another process 2, than the situation changes.
 As you can see processes at a higher priority are preferred over processes lower down. 
 This effectively means that once process 2 joins the comptetition it can monopolize the CPU until they end up on the same level.
 Once they are there Round Robin is used to give them both a fair share of allotment.
-With each process starting in the highest queue, this means that the shorter tasks are generally preferred, because they can finish quickly, before they end up on a lower queue. Therefore the system becomes more responsive.
+With each process starting in the highest queue, this means that the shorter tasks are generally preferred, because they can finish quickly before they end up on a lower queue. Therefore the system becomes more responsive.
 Keep in mind that if a process gives up it's CPU before the allotment is used up (for example if they wait for I/O), than they will "stay" in the same priority and can use up the rest of the CPU time, before getting demoted.
+% TODO: INSERT WATING TIEM EXAMPLE HERE
 Therefore not the actual time spent there matters, but the time spent using the resource.
-As you might have to already noticed poor process 1 didn't get any runtime while process 2 was getting their priority prioperly adjusted. Note: for simplicity there are only 4 queues.
+As you might have to already noticed poor process 1 didn't get any runtime while process 2 was getting their priority prioperly adjusted. Note: for simplicity there are now only 4 queues.
 
 \begin{figure}[h]
   \begin{center}
@@ -462,7 +472,7 @@ If however the processes do not finish than they get promoted together to the bo
   \end{center}
 \end{figure}
 
-\noindent So as "OSTEP REFERENCE HERE" would summarize it: % COMMENT: DO I EVEN NEED THIS?
+\noindent So as "OSTEP REFERENCE HERE" would summarize it: % TODO: DO I EVEN NEED THIS?
 \begin{enumerate}
   \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs \& B doesn't
   \item If Priority (A) = Priority (B) $\Rightarrow$ A \& B run in RR
@@ -473,10 +483,11 @@ If however the processes do not finish than they get promoted together to the bo
 
 \subsubsection{Voo-Doo Constants}
 
-Even though MLFQ introduces multiple Voo-Doo Constant, like the scheduling quantum, amount of queues, period S, allotment size (constant or changing?), we still gain an advantage over just simply unknown constant like the burst time or a predetermined priority and effort. These are huge improvements, because this means that we could actually implement it properly and the use case is not just purely a though experiment. 
+Even though MLFQ introduces multiple Voo-Doo Constant, like the scheduling quantum, amount of queues, period S, allotment size (constant or changing?), % TODO: EXPALIN CONSTAND OR CHANGIN
+we still gain an advantage over just simply unknown constant like the burst time or a predetermined priority and effort. These are huge improvements, because this means that we could actually implement it properly and the use case is not just purely a though experiment. 
 It makes sense to find some sensible defaults for these constants and let the system admin adjust it, if they feel like it. One could find these magic numbers through machine learning, however that is out of scope of the topic?.
-% COMMENT: LINK THE ONE LINK HERE ABOUT ADJUSTING WITH MACHINE LEARNING
-
+% TODO: LINK THE ONE LINK HERE ABOUT ADJUSTING WITH MACHINE LEARNING
+% TODO: ADD AN EXAMPLE WITH I/O WAITNG TIME AND EARLY FINISH
 \section{Implementation}
 
 For the whole script, please checkout my Github.

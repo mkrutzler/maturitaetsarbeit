@@ -9,30 +9,12 @@
 #########################################
 
 import sys
+import process
 
 
 class CustomError(Exception):
     def __init__(self, msg):
         self.msg = msg
-
-
-class Process:
-    def __init__(self, pid, burst_time):
-        # TODO: Limit each of these to max 99
-        self.pid = pid
-        self.priority = 0  # Processes start at Priority 0
-        self.burst_time = burst_time
-
-    def __str__(self):
-        str_pid = makeTwoDigit(self.pid)
-        str_priority = makeTwoDigit(self.priority)
-        str_burst_time = makeTwoDigit(self.burst_time)
-
-        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
-        print("| Process:    ", str_pid, " |")
-        print("| Priority:   ", str_priority, " |")
-        print("| Burst Time: ", str_burst_time, " |")
-        print("|__________________|")
 
 
 class Queue:
@@ -57,7 +39,7 @@ def print_state():
 
 
 def main():
-    process1 = Process(1, 10)
+    process1 = process.Process(1, 10)
     print(process1.__str__())
     print("main")
 
