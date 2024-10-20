@@ -276,15 +276,15 @@ scheduler(void)
     acquire(&ptable.lock);
 
 
-      // Priority boost
-      if(xticks % 100 == 0){
+    // Priority boost
+    if(xticks % 100 == 0){
         for(j = 0; j < NPROC; ++j){
-          if(j == lastScheduled || ptable.proc[j].state != RUNNABLE) continue;
-          if(ptable.proc[j].priority > 0 && xticks - ptable.proc[j].lastScheduledOnTick >= 100){
-            ptable.proc[j].priority--;
-          }
+            if(j == lastScheduled || ptable.proc[j].state != RUNNABLE) continue;
+            if(ptable.proc[j].priority > 0 && xticks - ptable.proc[j].lastScheduledOnTick >= 100){
+                ptable.proc[j].priority--;
+            }
         }
-      }
+    }
 
     struct proc *procToSchedForPriority[4] = {0};
     for(i = (lastScheduled + 1) % NPROC, j = 0; i != lastScheduled && j < NPROC; i = (i + 1) % NPROC, ++j){

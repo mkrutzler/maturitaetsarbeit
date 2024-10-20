@@ -400,7 +400,7 @@ First we'll look at the Multi-Level Feedback Queue, short MLFQ.
 This is one of the most known ones an is used in Solaris.
 The creator Fernando J. Corbató even recieved a Turing Award for it in 1990.
 First I'll write down some abstract rules. These are usually complemented with an example. 
-After that there will be a quick implementation of the policy in C++.
+After that there will be a quick implementation of the policy in Python.
 Please feel free to jump around to get a better grasp of the (theory).
 
 \subsubsection{Basics}
@@ -461,7 +461,7 @@ If however the processes do not finish than they get promoted together to the bo
   \end{center}
 \end{figure}
 
-\noindent So as "OSTEP REFERENCE HERE" would summarize it:
+\noindent So as "OSTEP REFERENCE HERE" would summarize it: DO I EVEN NEED THIS?
 \begin{enumerate}
   \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs \& B doesn't
   \item If Priority (A) = Priority (B) $\Rightarrow$ A \& B run in RR
@@ -477,6 +477,14 @@ It makes sense to find some sensible defaults for these constants and let the sy
 LINK THE ONE LINK HERE ABOUT ADJUSTING WITH MACHINE LEARNING
 
 \section{Implementation}
+
+For the whole script, please checkout my Github. There you can find
+
+\begin{lstlisting}[language=Python, style=colorEX]
+    # Implementation of MLFQ in Python
+    
+  
+  \end{lstlisting}
 
 \chapter{Lottery and Stride Scheduling}
 
