@@ -201,8 +201,8 @@ With this in mind the let's get to a quick introduction of the metrics, so that 
 
 
 \section{Metrics}
-MAYBE JUST LEAVING THIS OUT AND LOOKING AT THIS DURING A LATER TIME (WHEN THE METRICS ARE MENTIONNED OR LINK AS A FOOTNOTE?)
-ALSO THIS FOLLOWS THE OSTEP WAY TOO MUCH:
+% COMMENT: MAYBE JUST LEAVING THIS OUT AND LOOKING AT THIS DURING A LATER TIME (WHEN THE METRICS ARE MENTIONNED OR LINK AS A FOOTNOTE?)
+% COMMENT: ALSO THIS FOLLOWS THE OSTEP WAY TOO MUCH:
 We can measure different aspects of a Scheduler Policy. There is however a differentiation between fairness and performance. It is often a tradeoff between the two. For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
 
 \begin{defi}[Turnaround Time]{dfn:turnaround}
@@ -232,7 +232,7 @@ $$T_{Response} = T_{First\_Run} - T_{Arrival}$$
 
 \part{The ABCs of CPU Scheduling}
 
-MAYBE HERE THE METRICS PART?
+% COMMENT: MAYBE HERE THE METRICS PART?
 
 \chapter{Basic Algorithms}
 
@@ -258,13 +258,13 @@ They have two full carts loaded. You have to wait until they finish.
 In addition to that they also send back their kid to get an extra bottle of ketchup. 
 Wouldn't it be overall much faster if they let you in front, before the cashier starts scanning the items?
 
-\begin{lstlisting}[language=Python, style=colorEX]
+\begin{lstlisting}[language=Python, style=colorEX, label=cd:fifo-python]
 # Simple implementation of FIFO in Python
 list = []
 
 # Adding a new process
-def add_client(client):
-  list.append(client)
+def add_process(process):
+  list.append(process)
 
 # Decide which process is next
 def allocate():
@@ -281,21 +281,21 @@ Now the situation changes a bit.
 The infamous family of five wants to go first, however the cashier picks you first after seeing, that you only have a few items.
 This is the "Shortest Job First" (SJF). 
 
-\begin{lstlisting}[language=Python, style=colorEX]
+\begin{lstlisting}[language=Python, style=colorEX, label=cd:sjf-python]
 # Simple implementation of SJF in Python
 
-# Define client class and list
-class Client:
+# Define process class and list
+class Process:
   def __init__(self, burst): # burst time is the time required for the process to finish
     self.burst = burst
-    # other stuff that is relevant for the client class
+    # other stuff that is relevant for the process class
 
 list = []
 
 # Adding a new process
-client = Client(burst) 
-def add_client(client): 
-  list.append(client)
+process = Process(burst) 
+def add_process(process): 
+  list.append(process)
 
 # Decide which process is next
 def allocate():
@@ -305,11 +305,12 @@ def allocate():
 \end{lstlisting}
 
 There are two notable changes in this code snippet, when compared to FIFO. One of them is relevant.
-First, the less exiting part is that I actually took my time to write out some of the client class definition.
+First, the less exiting part is that I actually took my time to write out some of the process class definition.
 Second and the real difference to FIFO is that we sort the according to the burst time\footnote{Burst time is basically the runtime needed until the process finishes. This variable can be only predicted}. 
 This means that we will choose the task with the shortest time to completion.
-AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
-THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
+% COMMENT: AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
+% COMMENT: => Sorting algorithm input?
+% COMMENT: THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
 The only problem is when you arrive late. The scanning of products already started and you'll have to wait.
 This policy is a so called non-preemptive policy.
 "Non-preemptive" just means that once a task will run until it finishes.
@@ -326,16 +327,16 @@ The state of waiting is usually called "blocked" and the technique of running so
 Preemptiveness also makes the computer much more response, because now you can really do certain things "at the same time".
 The best part is that we don't even have to change much of the previous code.
 \pagebreak
-\begin{lstlisting}[language=Python, style=colorEX]
+\begin{lstlisting}[language=Python, style=colorEX, label=cd:stcf-python]
   # Simple implementation of STCF in Python
   
-  # definition of client class and list go here
-  current = Client(burst)
+  # definition of process class and list go here
+  current = Process(burst)
   current_runtime = 0
   
   # Adding a new process
-  def add_client(client): 
-    list.append(client)
+  def add_process(process): 
+    list.append(process)
     allocate()
   
   # Decide which process is next
@@ -350,8 +351,8 @@ The best part is that we don't even have to change much of the previous code.
 
     use_resource(current) # function that will allow "next" to use the CPU (also tracks runtime)
 \end{lstlisting}
-IDK ABOUT THE CODE; IT IS JUST KINDA HACKED TOGETHER; IT IS DEFINITELY NOT SECURE WHATSOEVER! 
-Whenever a new client "joins", the "allocation" function gets run.
+% COMMENT: IDK ABOUT THE CODE; IT IS JUST KINDA HACKED TOGETHER; IT IS DEFINITELY NOT SECURE WHATSOEVER! 
+Whenever a new process "joins", the "allocation" function gets run.
 In addition to that, whenever the process finishes, or it voluntarily gives up the CPU, the same "allocation" function can be run.
 
 
@@ -365,22 +366,22 @@ This effectively mean that after the quantum shrinks to a certain extent, the "c
 The goal is to reach a balance, where we have enough responsibility, but the price for it is not too high.
 Notice how by treating the processes more "fairly" by don't caring about their overall burst time, we get rid of a variable, which can only be predicted and replace it with another one, which is more abstract and global.
 \pagebreak
-\begin{lstlisting}[language=Python, style=colorEX]
+\begin{lstlisting}[language=Python, style=colorEX, label=cd:rr-python]
   # Simple implementation of RR in Python
 
   list = []
   quantum = 1 # Adjust the time slice here
 
-  def add_client(client):
-    list.append(client)
+  def add_process(process):
+    list.append(process)
 
-  def use_resource(client, quanta):
+  def use_resource(process, quanta):
     # definition of use_resource
     # now it also takes an amount of quanta that the process can run for
     # after that it saves the state and returns.
 
-  for client in list:
-    use_resource(client, quantum)
+  for process in list:
+    use_resource(process, quantum)
 
 \end{lstlisting}
 
@@ -461,7 +462,7 @@ If however the processes do not finish than they get promoted together to the bo
   \end{center}
 \end{figure}
 
-\noindent So as "OSTEP REFERENCE HERE" would summarize it: DO I EVEN NEED THIS?
+\noindent So as "OSTEP REFERENCE HERE" would summarize it: % COMMENT: DO I EVEN NEED THIS?
 \begin{enumerate}
   \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs \& B doesn't
   \item If Priority (A) = Priority (B) $\Rightarrow$ A \& B run in RR
@@ -474,17 +475,16 @@ If however the processes do not finish than they get promoted together to the bo
 
 Even though MLFQ introduces multiple Voo-Doo Constant, like the scheduling quantum, amount of queues, period S, allotment size (constant or changing?), we still gain an advantage over just simply unknown constant like the burst time or a predetermined priority and effort. These are huge improvements, because this means that we could actually implement it properly and the use case is not just purely a though experiment. 
 It makes sense to find some sensible defaults for these constants and let the system admin adjust it, if they feel like it. One could find these magic numbers through machine learning, however that is out of scope of the topic?.
-LINK THE ONE LINK HERE ABOUT ADJUSTING WITH MACHINE LEARNING
+% COMMENT: LINK THE ONE LINK HERE ABOUT ADJUSTING WITH MACHINE LEARNING
 
 \section{Implementation}
 
-For the whole script, please checkout my Github. There you can find
+For the whole script, please checkout my Github.
 
-\begin{lstlisting}[language=Python, style=colorEX]
-    # Implementation of MLFQ in Python
-    
+\begin{lstlisting}[language=Python, style=colorEX, label=cd:mlfq-python]
+  # Implementation of MLFQ in Python
   
-  \end{lstlisting}
+\end{lstlisting}
 
 \chapter{Lottery and Stride Scheduling}
 
@@ -506,6 +506,7 @@ For the whole script, please checkout my Github. There you can find
     \item \url{https://wiki.osdev.org/Context_Switching}
     \item \url{https://en.wikipedia.org/wiki/Fernando_J._Corbató}
     \item \url{https://github.com/jkoritzinsky/xv6-MLFQ}
+    \item Obviously this is not complete and the main sources are not even here yet
 \end{itemize}
 
 

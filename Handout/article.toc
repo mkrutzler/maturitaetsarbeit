@@ -2,21 +2,21 @@
 \contentsline {section}{\numberline {0.1}Introduction}{3}{section.0.1}%
 \contentsline {section}{\numberline {0.2}Metrics}{3}{section.0.2}%
 \contentsline {part}{II\hspace {1em}The ABCs of CPU Scheduling}{5}{part.2}%
-\contentsline {chapter}{\numberline {1}Basic Algorithms}{7}{chapter.1}%
-\contentsline {section}{\numberline {1.1}First In, First Out (FIFO)}{7}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Shortest Job First (SJF)}{8}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Shortest Time-to-Completion First(STCF)}{8}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Round Robin (RR)}{9}{section.1.4}%
-\contentsline {part}{III\hspace {1em}Advanced Policies}{11}{part.3}%
-\contentsline {chapter}{\numberline {2}Multi-Level Feedback Queue}{12}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Abstract Rules}{12}{section.2.1}%
-\contentsline {subsubsection}{Introduction}{12}{subsubsection*.2}%
-\contentsline {subsubsection}{Basics}{12}{subsubsection*.3}%
-\contentsline {subsubsection}{Voo-Doo Constants}{14}{subsubsection*.4}%
-\contentsline {section}{\numberline {2.2}Implementation}{14}{section.2.2}%
-\contentsline {chapter}{\numberline {3}Lottery and Stride Scheduling}{15}{chapter.3}%
-\contentsline {part}{IV\hspace {1em}Real Life Usecases}{16}{part.4}%
-\contentsline {chapter}{\numberline {4}Solaris Scheduling}{17}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Linux 2.6 Fair Scheduler}{18}{chapter.5}%
-\contentsline {part}{V\hspace {1em}Conclusion}{19}{part.5}%
-\contentsline {chapter}{Sources}{20}{chapter*.5}%
+\contentsline {chapter}{\numberline {1}Basic Algorithms}{6}{chapter.1}%
+\contentsline {section}{\numberline {1.1}First In, First Out (FIFO)}{6}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Shortest Job First (SJF)}{7}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Shortest Time-to-Completion First(STCF)}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Round Robin (RR)}{8}{section.1.4}%
+\contentsline {part}{III\hspace {1em}Advanced Policies}{10}{part.3}%
+\contentsline {chapter}{\numberline {2}Multi-Level Feedback Queue}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Abstract Rules}{11}{section.2.1}%
+\contentsline {subsubsection}{Introduction}{11}{subsubsection*.2}%
+\contentsline {subsubsection}{Basics}{11}{subsubsection*.3}%
+\contentsline {subsubsection}{Voo-Doo Constants}{13}{subsubsection*.4}%
+\contentsline {section}{\numberline {2.2}Implementation}{13}{section.2.2}%
+\contentsline {chapter}{\numberline {3}Lottery and Stride Scheduling}{14}{chapter.3}%
+\contentsline {part}{IV\hspace {1em}Real Life Usecases}{15}{part.4}%
+\contentsline {chapter}{\numberline {4}Solaris Scheduling}{16}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Linux 2.6 Fair Scheduler}{17}{chapter.5}%
+\contentsline {part}{V\hspace {1em}Conclusion}{18}{part.5}%
+\contentsline {chapter}{Sources}{19}{chapter*.5}%
