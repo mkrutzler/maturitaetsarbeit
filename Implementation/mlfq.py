@@ -22,8 +22,12 @@ def mlfq(queues):
     for queue_index in range(len(queues)-1):
         while queues[queue_index].processes != []:
             queues[queue_index].__str__()
+            inp = input("press enter to continue")
             for process in queues[queue_index].processes:
+                process.allotment += quantum
+                process.runtime += quantum
                 if process.is_finished() == True:
+                    print("process", process.pid, "finished")
                     queues[queue_index].remove_process(process)
                     continue
                 else:
@@ -32,8 +36,7 @@ def mlfq(queues):
                         queues[queue_index].remove_process(process)
                         queues[queue_index + 1].add_process(process)
                     else:
-                        process.allotment += quantum
-                        process.runtime += quantum
+                        continue
 
 
                     
@@ -49,7 +52,7 @@ if __name__ == "__main__":
         i = 0
         for queue in queues:
             i += 1
-            queue.add_process(process.Process(i,i*2+3))
+            queue.add_process(process.Process(i,i*4+3))
         mlfq(queues)
     except CustomError as e:
         print("An Exception occured: ", e.msg)

@@ -12,6 +12,7 @@ class Queue:
         print("|                  |")
         for process in self.processes:
             process.__str__()
+        print("\n")
     
     def add_process(self, process):
         process.priority = self.priority
