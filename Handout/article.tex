@@ -170,13 +170,13 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \section{Introduction}
 
 
-% TODO: Explain why a CPU can only do one operation at the time
 We all use computers.
 The modern person couldn't do half of the things that is expected from him without an instance of Windows, MacOs or any other Operating System.
 We surf the web, write emails, documents and have a video call at the same time.
 The question is: "How does CPU achieve all of this?" The things listed are only the parts of the OS that we come in contact with on a daily basis.
-What about all the other things hidden under the hood? If it comes down to doing one thing than it's fine.
-The problem arises then we have multiple tasks: The CPU can only do one thing at a time and yet we all multitask on our machines.
+What about all the other things hidden under the hood?
+If simplified, a simple CPU is like a simple production line. It does one things at a time.
+Therefore a problem arises then we have multiple tasks: The CPU can only do one thing at a time\footnote{When talking about a single-core CPU for simplification} and yet we all multitask on our machines.
 This Black Box effect of taking multiple jobs and working on them in a proper order is what I will disect in this "Maturarbeit".
 
 The art of scheduling tasks could seem easy for us humans.
@@ -209,6 +209,7 @@ With this in mind the let's get to a quick introduction of the metrics, so that 
 We can measure different aspects of a "scheduler policy". There is however a differentiation between fairness and performance. It is often a tradeoff between the two. % TODO: Lateron mention, where it is obvious
 For example the concept of everybody getting a same sized piece of cake is fair. However, it would be faster to give more to the fast eaters than to those who like to talk during eating. In this scenario we can't have both fairness and performance. In reality it is really difficult to predict, who'll eat faster.
 
+% TODO: WAY TOO DEEP, BECAUSE WILL NEVER REALLY USE IT AGAIN THAT DEEPLY (EXCEPT IF A PROPER EXPLANATION IS DONE FOR EACH POLICY)
 \begin{defi}[Turnaround Time]{dfn:turnaround}
 The turnaround time is a performance metric. It measures how long a task took to be completed from the time it arrived.
 It is calculated as follows:
@@ -235,8 +236,6 @@ $$T_{Response} = T_{First\_Run} - T_{Arrival}$$
 
 
 \part{The ABCs of CPU Scheduling}
-
-% TODO: MAYBE HERE THE METRICS PART?
 
 \chapter{Basic Algorithms}
 
@@ -311,24 +310,24 @@ There are two notable changes in this code snippet when compared to FIFO. One of
 First, the less exiting part is that I actually took my time to write out some of the process class definition.
 Second and the real difference to FIFO is that we sort the queue according to the burst time\footnote{Burst time is basically the runtime needed until the process finishes. This variable can be only predicted}. 
 This means that we will choose the task with the shortest time to completion.
-% TODO: AT THIS PART THE KNOWLEDGE OF PROPER SORTING ALGORITHMS IS MISSING: MAYBE A REVERSE BUBBLE SORT? 
-% TODO: => Sorting algorithm input?
-% TODO: THE LIST SHOULD BE ALREADY SOMEWHAT ORDERED AND THE LAST MEMBER HAS TO BE SORTED
-The only problem is when you arrive late. The scanning of products already started and you'll have to wait.
+At this point one could go into which sort algorithm to use and which one is the most efficient, however that is not something I will touch upon here.
+The reason is that I don't think that it is necessary to understand those in order to grasp the concept of SJF.
+
+Back to our story, now you only have a problem when you arrive late. The scanning of products has already started and you'll have to wait.
 This policy is a so called non-preemptive policy.
 "Non-preemptive" just means that once a task will run until it finishes.
 
 
 \section{Shortest Time-to-Completion First(STCF)}
 
-If SJF and FIFO are cousins that STCF is the brother.
-Here we will make SJF "preemptive", meaning that our cashier can now "save" the state of the previously scanned items. 
+If SJF and FIFO are cousins than STCF is the brother.
+To fix the issue from before, we'll make SJF "preemptive", meaning that our cashier can now "save" the state of the previously scanned items. 
 Therefore STCF is also called "Preemptive Shortest Job First (PSJF)".
-Although the switching costs some time it does not matter here, because one would have to wait until the little boy returns with the ketchup\footnote{If you don't know what I am talking about read Chapter 1.1 (FIFO)}
-% TODO: Pretty change perspective switch, should revisit it later
 The option of saving a state comes in handy, especially if a program has to wait for I/O.
+Although the switching costs some time, this can be disregarded, because one would have to wait until the little boy returns with the ketchup\footnote{If you don't know what I am talking about read Chapter 1.1 (FIFO)} anyways.
 The state of waiting is usually called "blocked" and the technique of running something else during the task is blocked is called overlapping.
-Preemptiveness also makes the computer much more response, because now you can really do certain things "at the same time".
+% TODO: explain blocked and overlapping with the cashier in a better way
+Preemptiveness also makes the computer much more responsive, because now you can really do certain things "at the same time".
 The best part is that we don't even have to change much of the previous code.
 \pagebreak
 \begin{lstlisting}[language=Python, style=colorEX, label=cd:stcf-python]
@@ -355,8 +354,6 @@ The best part is that we don't even have to change much of the previous code.
 
     use_resource(current) # function that will allow "next" to use the CPU (also tracks runtime)
 \end{lstlisting}
-% TODO: IDK ABOUT THE CODE; IT IS JUST KINDA HACKED TOGETHER; IT IS DEFINITELY NOT SECURE WHATSOEVER! Also should explain it more in words!
-% TODO: GENErally code is trash. should do a more RR style, with after every allotment new scheduling
 Whenever a new process "joins", the "allocation" function gets run.
 In addition to that, whenever the process finishes, or it voluntarily gives up the CPU, the same "allocation" function can be run.
 
@@ -364,9 +361,8 @@ In addition to that, whenever the process finishes, or it voluntarily gives up t
 \section{Round Robin (RR)}
 
 Now, why don't we just scan one item for everyone? 
-% TODO: Exlain how that would make it better...
-This would mean that, even though slow but progress is being constantly made.
-Even if at this point the item scanning doesn't really work anymore\footnote{You can't scan a fraction of a product, or can you?}, let's just make the so called "quanta" (quantum in singular) even smaller.
+This could mean that every one sees progress and that same sized jobs finish at almost the same time
+Even if at this point the item scanning explanation doesn't really work anymore\footnote{You can't scan a fraction of a product, or can you?}, let's just make the so called "quanta" (quantum in singular) even smaller.
 % TODO: Explain term quantum better
 As already mentionned in the previous chapter, the cashier needs some time to "save" the state of the current purchases. 
 This effectively mean that after the quantum shrinks to a certain extent, the "context switching"\footnote{Context switch saves the state of a process so that it can be restored later} would get too expensive. 
@@ -415,10 +411,12 @@ Please feel free to jump around to get a better grasp of the (theory).
 \subsubsection{Basics}
 
 The most basic principle of MLFQ are the so called "Priority Queues". These are priorities that a program can belong into.
-% TODO: SIMILAR TO PREVIOUS QUEUES??? MAKE A CONNECTINjjjjkk
 They can change over time and these changes reflect the action/state of a program.
 The changing of the priority is done as followed: every task has a certain amount of "allotment" for each priority.
 If this CPU time is used up, than the process will be moved down once and recieve a new set of allotment.
+This way you could have a fast lane checkout, where you can only scan a few items.
+A separation of small and bulk purchases would occur making the experience overall faster.
+There is still only one cashier though, so there are some pitfall that one must avoid.
 
 \begin{figure}[h]
   \begin{center}
@@ -448,7 +446,7 @@ This effectively means that once process 2 joins the comptetition it can monopol
 Once they are there Round Robin is used to give them both a fair share of allotment.
 With each process starting in the highest queue, this means that the shorter tasks are generally preferred, because they can finish quickly before they end up on a lower queue. Therefore the system becomes more responsive.
 Keep in mind that if a process gives up it's CPU before the allotment is used up (for example if they wait for I/O), than they will "stay" in the same priority and can use up the rest of the CPU time, before getting demoted.
-% TODO: INSERT WATING TIEM EXAMPLE HERE
+% TODO: INSERT WATING TIEM EXAMPLE HERE meaning a sketch
 Therefore not the actual time spent there matters, but the time spent using the resource.
 As you might have to already noticed poor process 1 didn't get any runtime while process 2 was getting their priority prioperly adjusted. Note: for simplicity there are now only 4 queues.
 
@@ -472,7 +470,7 @@ If however the processes do not finish than they get promoted together to the bo
   \end{center}
 \end{figure}
 
-\noindent So as "OSTEP REFERENCE HERE" would summarize it: % TODO: DO I EVEN NEED THIS?
+\noindent So as "OSTEP REFERENCE HERE" would summarize it: % TODO: find and insert reference
 \begin{enumerate}
   \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs \& B doesn't
   \item If Priority (A) = Priority (B) $\Rightarrow$ A \& B run in RR
