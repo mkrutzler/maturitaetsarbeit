@@ -21,3 +21,7 @@ Another thing that I could do is a C++ implementation of one of the algorithms. 
   - multi CPU
   - adjusting parameters using machine learning (prob won't touch it)
 
+## 2024-11-11
+as of today I've decided to completely scape the entire "article.tex" and the previous notes, because it was just a mess and had no real concept.
+continuing that would've only made things more difficult later on. 
+even though this means practically starting from the beginning i still think that it makes more sense
