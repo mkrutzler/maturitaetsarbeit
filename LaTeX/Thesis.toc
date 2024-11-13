@@ -1,15 +1,5 @@
 \babel@toc {english}{}\relax 
-\contentsline {part}{\numberline {I}A good part}{1}{part.1}%
-\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Why?}{3}{section.1.1}%
-\contentsline {section}{\numberline {1.2}How?}{3}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Making this template \emph {yours}}{3}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Features}{4}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Typesetting mathematics}{5}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Typesetting text}{5}{subsection.1.4.2}%
-\babel@toc {ngerman}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {french}{}\relax 
-\babel@toc {english}{}\relax 
-\contentsline {section}{\numberline {1.5}Changing things}{6}{section.1.5}%
+\contentsline {part}{\numberline {I}The ABC's of CPU scheduling}{1}{part.1}%
+\contentsline {chapter}{\numberline {1}Example}{3}{chapter.1}%
+\contentsline {chapter}{\nonumberline Sources}{5}{chapter*.2}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

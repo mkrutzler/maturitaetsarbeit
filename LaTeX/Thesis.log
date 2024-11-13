@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Homebrew) (preloaded format=pdflatex 2024.10.6)  12 NOV 2024 19:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Homebrew) (preloaded format=pdflatex 2024.10.6)  13 NOV 2024 18:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -894,7 +894,7 @@ Package glossaries Info: Writing glossary file Thesis.glo on input line 94.
 Package glossaries Info: Writing glossary file Thesis.acn on input line 94.
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
-(/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.aux (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Title.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Abstract.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Introduction.aux))
+(/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.aux (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Title.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Abstract.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Basics.aux))
 \openout1 = `Thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
@@ -1004,10 +1004,7 @@ LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/it' will be
 {/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}{/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/enc/dvips/ebgaramond/ebg_xoskhe.enc}{/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/enc/dvips/ebgaramond/ebg_ldtcgl.enc}{/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/enc/dvips/ebgaramond/ebg_utfkrl.enc}] [2])
 \openout2 = `Sources/Abstract.aux'.
 
- (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Abstract.tex
-LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 7.
-)
+ (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Abstract.tex)
 LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/sl' in size <10.95> not available
 (Font)              Font shape `T1/EBGaramond-LF/m/it' tried instead on input line 126.
 LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/it' will be
@@ -1040,86 +1037,64 @@ LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/n' will be
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 151.
+(scrkbase)              on input line 149.
 LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/n' will be
-(Font)              scaled to size 20.74pt on input line 151.
+(Font)              scaled to size 20.74pt on input line 149.
 [1
 
 
 ] [2]
-\openout2 = `Sources/Introduction.aux'.
+\openout2 = `Sources/Basics.aux'.
 
- (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Introduction.tex
+ (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Basics.tex
 chapter 1.
 LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/sc' will be
 (Font)              scaled to size 50.0pt on input line 2.
-LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 7.
-LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/sc' will be
-(Font)              scaled to size 14.4pt on input line 21.
-LaTeX Font Info:    Font shape `T1/EBGaramond-LF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 26.
-
-LaTeX Warning: Citation `Bringhurst12' on page 3 undefined on input line 26.
+) [3
 
 
-LaTeX Warning: Citation `Tufte90' on page 3 undefined on input line 27.
+
+] [4
 
 
-LaTeX Warning: Citation `Tufte01' on page 3 undefined on input line 27.
 
-LaTeX Font Info:    Trying to load font information for T1+SourceCodePro-TOsF on input line 40.
-(/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/tex/latex/sourcecodepro/T1SourceCodePro-TOsF.fd
-File: T1SourceCodePro-TOsF.fd 2018/02/18 (autoinst) Font definitions for T1/SourceCodePro-TOsF.
+
+]
+chapter without number
+LaTeX Font Info:    Trying to load font information for TS1+EBGaramond-LF on input line 160.
+(/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/tex/latex/ebgaramond/TS1EBGaramond-LF.fd
+File: TS1EBGaramond-LF.fd 2023/03/19 (autoinst) Font definitions for TS1/EBGaramond-LF.
 )
-LaTeX Font Info:    Font shape `T1/SourceCodePro-TOsF/m/n' will be
-(Font)              scaled to size 7.66496pt on input line 40.
-LaTeX Font Info:    Font shape `T1/EBGaramond-LF/m/scit' will be
-(Font)              scaled to size 14.4pt on input line 50.
- [3
+LaTeX Font Info:    Font shape `TS1/EBGaramond-LF/m/n' will be
+(Font)              scaled to size 10.95pt on input line 160.
 
 
+Package glossaries Warning: No \printglossary or \printglossaries found. 
+(Remove \makeglossaries if you don't want any glossaries.) 
+This document will not have a glossary.
 
-{/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/enc/dvips/sourcecodepro/a_beydf2.enc}]
-Underfull \vbox (badness 2261) has occurred while \output is active []
-
- [4]
-LaTeX Font Info:    Trying to load font information for U+dsrom on input line 160.
- (/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/tex/latex/doublestroke/Udsrom.fd
-File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-)
-Underfull \vbox (badness 2443) has occurred while \output is active []
-
- [5]) [6]
-No file Thesis.gls.
-(/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.ind) [7
+[5
 
 
-
-
-] (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.aux (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Title.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Abstract.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Introduction.aux))
+{/opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/enc/dvips/ebgaramond/ebg_yod6vr.enc}] (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.aux (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Title.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Abstract.aux) (/Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Sources/Basics.aux))
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 30883 strings out of 474116
- 667919 string characters out of 5732613
- 1941187 words of memory out of 5000000
- 52727 multiletter control sequences out of 15000+600000
- 629542 words of font info for 94 fonts, out of 8000000 for 9000
+ 30745 strings out of 474116
+ 664200 string characters out of 5732613
+ 1932187 words of memory out of 5000000
+ 52619 multiletter control sequences out of 15000+600000
+ 604913 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 122i,20n,121p,10964b,1149s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/ebgaramond/EBGaramond-Bold.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/ebgaramond/EBGaramond-Italic.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/ebgaramond/EBGaramond-Regular.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/adobe/sourcecodepro/SourceCodePro-Regular.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb>
-Output written on /Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.pdf (13 pages, 190298 bytes).
+ 122i,20n,121p,10964b,1048s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/ebgaramond/EBGaramond-Italic.pfb></opt/homebrew/Cellar/texlive/20240312_2/share/texmf-dist/fonts/type1/public/ebgaramond/EBGaramond-Regular.pfb>
+Output written on /Users/markkrutzler/Documents/KsImLee/Maturitätsarbeit/LaTeX/Thesis.pdf (11 pages, 49408 bytes).
 PDF statistics:
- 197 PDF objects out of 1000 (max. 8388607)
- 154 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 95 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
+ 16 named destinations out of 1000 (max. 500000)
+ 25 words of extra memory for PDF output out of 10000 (max. 10000000)
 
