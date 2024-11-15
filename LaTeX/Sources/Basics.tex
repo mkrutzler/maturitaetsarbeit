@@ -1,9 +1,51 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{How do we compare policies}
+\chapter{Initial Problem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+The main problem we face can be simplified down into a really easy to formulate but hard to answer question.
+How can we order the queued tasks, so that they run in the most optimal way?
+What optimal really means is a whole discussion itself not to mention search for the perfect algorithm to achieve that "best" solution.
+In this chapter I will give you a quick introduction to the main terms.
+In addition to that I will also try to make it as easy as possible to understand by using a situation that most of us already suffered through.
+
+Have you ever wondered why so many people buy already prebottled water? 
+How they could eat those snack that you despise?
+Why they have a whole plate full of milk in their shopping cart?
+Maybe these question seem rather sudden they have two things in common:
+One, you never get the answer to them and two, which is the relevant part, you ask them while standing in line at a supermarket.
+You ask yourself them while staring at the family of five with two shopping carts and while questioning, whether or not you should have queued at another line.
+Also wouldn't it be much better if you, with your two items, went before them?
+What is the best order to queue up these people?
+As you can already see this is the original, simplified question just reformulated.
+We are seaching for the best algorithm that arranges people at the supermarket.
+Matter of fact let's just call it by its real name: policy.
+In CPU-Scheduling we call the "algorithms" policies or disciplines.
+A single customer / shopper is called a job or a process.
+In the real world a process can be anything from your drivers to the web browser showing cute cat images.
+A queue is a line of people waiting to get their items scanned and the cashier is the "CPU".
+
+\begin{figure}[h]
+\begin{minted}[mathescape,
+    linenos,
+    numbersep=5pt,
+    gobble=2,
+    frame=lines,
+    framesep=2mm,
+    ]{python}
+  # test
+  print("Hello World!")
+  variable = 1
+  print(variable)
+\end{minted}
+\caption{Python: First in, First out}
+\label{code:fifo}
+\end{figure}
+
+
+Here is a reference to \hyperref[code:fifo]{code block}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Initial Problem}
+\chapter{How do we compare policies}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -11,5 +53,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Example}
+\chapter{Conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
