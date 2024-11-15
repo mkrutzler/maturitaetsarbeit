@@ -1,5 +1,0 @@
-\babel@toc {english}{}\relax 
-\contentsline {part}{\numberline {I}The ABC's of CPU scheduling}{1}{part.1}%
-\contentsline {chapter}{\numberline {1}Example}{3}{chapter.1}%
-\contentsline {chapter}{\nonumberline Sources}{5}{chapter*.2}%
-\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -78,6 +78,10 @@
 \fi
 
 
+\newacronym[description={Principal component analysis}]{PCA}{PCA}{principal component analysis}
+\newacronym                                            {SNF}{SNF}{Smith normal form}
+\newacronym[description={Topological data analysis}]   {TDA}{TDA}{topological data analysis}
+
 \newglossaryentry{LaTeX}{%
   name        = {\LaTeX},
   description = {A document preparation system},
@@ -92,6 +96,8 @@
 
 \makeindex
 \makeglossaries
+
+\makeindex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ordinals
@@ -142,7 +148,7 @@
       \begin{singlespace*}
         \onehalfspacing
         %
-        Introduciton to Basics
+        Introduciton to Basics \gls{LaTeX}
       \end{singlespace*}
     }
     \end{minipage}
@@ -155,10 +161,16 @@
 \bookmarksetup{startatroot}
 \backmatter
 
-\chapter{Sources}
-\begin{itemize}
-    \item source 1
-    \item source 2 
-\end{itemize}
+\include{Sources/Sources}
+
+\begingroup
+\let\clearpage\relax
+\glsaddall
+\printglossary[type=\acronymtype]
+\printglossary
+\endgroup
+
+\printindex
+
 
 \end{document}
