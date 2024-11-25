@@ -2,14 +2,16 @@
 \chapter{Initial Problem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The main problem we face can be simplified down into a really easy to formulate but hard to answer question.
+\section{Welcome to Costco}
+
+The main problem we face can be broken down into a really easy to formulate but hard to answer question.
 How can we order the queued tasks, so that they run in the most optimal way?
 What optimal really means is a whole discussion itself not to mention search for the perfect algorithm to achieve that "best" solution.
 In this chapter I will give you a quick introduction to the main terms.
-In addition to that I will also try to make it as easy as possible to understand by using a situation that most of us already suffered through.
+In addition, I will also try to make it as easy as possible to understand by using a situation that most of us already suffered through.
 
-Have you ever wondered why so many people buy already prebottled water? 
-How they could eat those snack that you despise?
+Have you ever wondered why so many people buy prebottled water? 
+How they could eat those nasty snack that you despise?
 Why they have a whole plate full of milk in their shopping cart?
 Maybe these question seem rather sudden they have two things in common:
 One, you never get the answer to them and two, which is the relevant part, you ask them while standing in line at a supermarket.
@@ -24,6 +26,34 @@ A single customer / shopper is called a job or a process.
 In the real world a process can be anything from your drivers to the web browser showing cute cat images.
 A queue is a line of people waiting to get their items scanned and the cashier is the "CPU".
 
+
+
+\section{How we compare policies}
+
+Before we dive deeper into theory it is important to note that there is a huge difference between fairness and performance.
+Fairness usually makes sure that everyone recieves the same amount of CPU time.
+This kind of policy turn out to be cyclic, which usually leads to a more responsive system, because each job gets a bit of activity every so often.
+On the other hand if we want to optimize for performance we should look at the so called "average turnaround time".
+Turnaround time is nothing more than the time that a person has to stand in line.
+Therefore if the take the average we'll have average waiting time until you exit the supermarket.
+
+\section{First lines of code}
+
+During the next Section we'll asume that one knows the amount of time that a process will take to finish.
+In a real world this is almost impossible, except if you can time travel.
+With this and setting aside the optimization part, one of the most straightforward policy is called "first comes, first served".
+This is what we usually suffer through in the queue to pay.
+The policy disregards how many item one has in the cart.
+The only important part is the time you arrive.
+The sooner the better.
+In the world of computer science the policy is better refered to as "first in, first out" and abbriviated as "FIFO".
+Here is a \hyperref[code:fifo]{simple python implementation}.
+
+We recieve the queue of people as a "list".
+If any other job joins, it will just get appended to the end.
+As for the scheduling it self:
+We just loop through the list until everyone is finished.
+
 \begin{figure}[h]
 \begin{minted}[mathescape,
     linenos,
@@ -32,21 +62,26 @@ A queue is a line of people waiting to get their items scanned and the cashier i
     frame=lines,
     framesep=2mm,
     ]{python}
-  # test
-  print("Hello World!")
-  variable = 1
-  print(variable)
+  # FIFO implementation in python
+  queue = [] # initialize empty queue
+
+  # Adding a new process
+  def add_process(process):
+    queue.append(process)
+
+  # Schedule the processes
+  while queue != []:
+    if new_process = true: # check if there is a new process
+        add_process(process)
+    
+    next = queue.pop(0) # picks next process
+    use_resource(next) # uses resources until finished
 \end{minted}
 \caption{Python: First in, First out}
 \label{code:fifo}
 \end{figure}
 
 
-Here is a reference to \hyperref[code:fifo]{code block}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{How do we compare policies}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evolving Supermarket}

@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} FIFO implementation in python}
+\PYG{n}{queue} \PYG{o}{=} \PYG{p}{[]} \PYG{c+c1}{\PYGZsh{} initialize empty queue}
+
+\PYG{c+c1}{\PYGZsh{} Adding a new process}
+\PYG{k}{def} \PYG{n+nf}{add\PYGZus{}process}\PYG{p}{(}\PYG{n}{process}\PYG{p}{):}
+  \PYG{n}{queue}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{process}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Schedule the processes}
+\PYG{k}{while} \PYG{n}{queue} \PYG{o}{!=} \PYG{p}{[]:}
+  \PYG{k}{if} \PYG{n}{new\PYGZus{}process} \PYG{o}{=} \PYG{n}{true}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} check if there is a new process}
+      \PYG{n}{add\PYGZus{}process}\PYG{p}{(}\PYG{n}{process}\PYG{p}{)}
+
+  \PYG{n+nb}{next} \PYG{o}{=} \PYG{n}{queue}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} picks next process}
+  \PYG{n}{use\PYGZus{}resource}\PYG{p}{(}\PYG{n+nb}{next}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} uses resources until finished}
+\end{Verbatim}
