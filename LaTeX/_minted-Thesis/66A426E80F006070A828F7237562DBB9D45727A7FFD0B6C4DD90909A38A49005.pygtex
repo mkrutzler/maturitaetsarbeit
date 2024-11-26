@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
-\PYG{c+c1}{test}
-\PYG{n+nb}{int}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello World!\PYGZdq{}}\PYG{p}{)}
-\end{Verbatim}

@@ -1,4 +1,5 @@
 rm Sources/*.aux
+rm Sources/*.log
 rm *.acn
 rm *.aux
 rm *.glo
