@@ -8,3 +8,4 @@ rm *.ist
 rm *.log
 rm *.toc
 rm *.synctex.gz
+rm -rf _minted-Thesis
