@@ -35,7 +35,7 @@ On the other hand if we want to optimize for performance we should look at the s
 Turnaround time is nothing more than the time that a person has to stand in line.
 Therefore the average of it is the average waiting time until you exit the supermarket.
 
-\section{First lines of code}
+\section{First lines of code} \label{sec:first-lines-of-code}
 
 During the next few chapters and sections we'll assume that one knows the amount of time that a process will take to finish, also known as burst time.
 Like bursting out of joy, when you finally finish the weekly shopping.
@@ -81,11 +81,72 @@ We just loop through the list until everyone is finished.
 \end{figure}
 In this example we just assume that the use\_resource function on line 14 is already written.
 Also it is important to mention that the new\_process variable is just a bool, which gets update if a new process is waiting to join the queue.
+In addition to that the empty queue initialization is purely symbolic, because if the queue is already empty, there will be no scheduling happening. 
+In general python is not really meant for low level programming anyways, so take it with a grain of salt.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evolving Supermarket}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Now that the scene is set, we return the original question. 
+How can we reduce our waiting time?
+To give an answer we will first take a step back.
+While the previous chapter talked about the initial situation and proper terms, this one will first loosen up some of the requirements in order to ensure that the policies are as easy to understand as possible.
+
+\section{Shorterst Job First}
+
+As the name already says it, the shortest job will be run first.
+In order to achieve this we assume that the cashier knows, who has the least amount of items.
+This buyer will be than handeled before anybody else. As you can already tell, this is not really a fair way to treat your customers.
+Still if it comes down to pure turnaround time it is far better than the basic First In, First Out.
+
+\begin{figure}[h]
+    \begin{minted}[mathescape,
+        linenos,
+        numbersep=5pt,
+        gobble=2,
+        frame=lines,
+        framesep=2mm,
+        ]{python}
+      # Shortest Job First implementation in python
+      class Process:
+        def __init__(self, burst):
+            self.burst = burst
+
+      # Adding a new process
+      def add_process(process):
+        queue.append(process)
+
+      # Schedule the processes
+      while queue != []:
+        if new_process == True: # check if there is a new process
+            add_process(process)
+        
+        queue.sort(key=lambda a: a.burst) # sort according to burst time
+        next = queue.pop(0) # picks next process
+        use_resource(next) # uses resources until finished
+    \end{minted}
+    \label{code:sjf}
+    \caption{Python: First in, First out}
+\end{figure}
+
+As already mentionned in the section \ref{sec:first-lines-of-code}, python is not really meant for this type of task and therefore it should only be looked at as a simple way of expressing logic.
+
+\section{Upgrading the Cashier}
+
+In this section our cashier recieves a significant upgrade: it can save the state of one buyer and switch to another one.
+In technical terms a policy that can do that is is called a preemtive policy. 
+The switching itself is called a content switch.
+While previously if another customer came with just a single item, it would not get the priviledge to cut infront of the line. 
+He would only recieve the priority boost, if the current person is finished.
+However now with the preemptive capabilities the cashier can just save and put aside the people.
+This feature is not only useful if there is someone that has a shorter time to completion.
+Imagen that someone forgot to put something into their basket.
+Now they desparately send back their kid to get that time. While he returns the cashier can save the state and do a context switch.
+While processes wait for I/O others can run at their place.
+This waiting state is called being blocked and the technique of running another process is overlapping.
+At this stage it does not really make sense to present some code, because it is just too out of place, however in theory one would to the sorting of the processes everytime a job finished, gets blocked or another process joins.
 
 
 
