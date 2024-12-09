@@ -148,10 +148,26 @@ While processes wait for I/O others can run at their place.
 This waiting state is called being blocked and the technique of running another process is overlapping.
 At this stage it does not really make sense to present some code, because it is just too out of place, however in theory one would to the sorting of the processes everytime a job finished, gets blocked or another process joins.
 
+\section{What about fairness?}
+
+All of the policies we looked at so far disregarded the emotions of humans.
+Most of us wanted to be treated at least as well as others.
+It does not matter whether in a supermarket or at home before the computer, we want fairness and responsiveness.
+A fair scheduler like the Round Robin does exactly just that. 
+It is the most simple to implement for a dynamic system, because all it does is goes around and gives every one contestant a bit of CPU time.
+The so called quantum or quanta in plural determines how long a single process can run, before it gets replace by another one.
+In supermarket terms: How many items get scanned per customer per cycle.
+The logical next step would be to make these quanta as small as possible making the system as fair as possible.
+This however has a heavy drawback.
+The context switching itself takes up resources, meaning that after a while the performance degrades, because of too many context switches.
 
 
 
+ \section{Conclusion}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Conclusion}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+During this chapter we learned about the basic methodology of scheduling.
+The next step is to move to more sophisticated approches, which act as a whole system rather than just as a solution to a specific problem.
+We will also need to figure out the burst time.
+To be more precise we need to figure out how to avoid using it.
+Most of the above mentionned policies, except the Round Robin, rely on the fact that we know, when one process finishes.
+Take Shortest Job First for example: How can we order it according to the time to finish if we don't know when it finishes?
