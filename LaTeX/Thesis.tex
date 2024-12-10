@@ -114,6 +114,8 @@
 
 \usepackage{hyperref}
 
+% SVG support
+\usepackage{svg}
 
 \begin{document}
 
@@ -145,6 +147,27 @@
   }
 
   \include{Sources/Basics}
+
+  \part[Advanced Policies]{%
+    Advanced Policies\\
+    %
+    \vspace{1cm}
+    %
+    \begin{minipage}[l]{\textwidth}
+    %
+    \textnormal{%
+      \normalsize
+      %
+      \begin{singlespace*}
+        \onehalfspacing
+        %
+        After looking at the Basics it is time to dive deeper. Here we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however they are usually first modified to fit the environment and the needs better.
+      \end{singlespace*}
+    }
+    \end{minipage}
+  }
+
+  \include{Sources/Advanced}
 
 % This ensures that the subsequent sections are being included as root
 % items in the bookmark structure of your PDF reader.
