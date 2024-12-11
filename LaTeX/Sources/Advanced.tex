@@ -1,8 +1,8 @@
-\chapter{Predicting the Future based on the Past}
+\chapter{Predicting the Future}
 
 \section{Idea}
 
-The first policy we look at is formerly called Multi-Level Feedback Queue or MLFQ short. The create Fernando J. Corbató recieved a Turning Awaard for it in 1990. 
+The first policy we look at is formerly called Multi-Level Feedback Queue or MLFQ short. The create Fernando J. Corbató recieved a Turning Award for it in 1990. 
 As the title already says, this policy tries to predict the future behaviour of the processes based on the past.
 A job can be generally act in two ways.
 Either it is a resources intensive crunching problem (think about exporting a video or compiling code) or it is a program, which needs quick response time (think about your text editor).
@@ -18,7 +18,7 @@ If the allotment is used up the process get demoted into a queue below.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{Assets/MLFQ-Example-1.pdf}
+    \includegraphics[width=0.7\textwidth]{Assets/MLFQ-Example-1.pdf}
     \caption{Simple working of MLFQ}
     \label{fig:mlfq-example-1}
 \end{figure}
@@ -29,4 +29,30 @@ Also the lower the queue is, the higher the allotment time.
 This is because we hope that all of the responsive focused finish before demoting.
 Once these are filtered out we have only resource heavy tasks left.
 These require more time anyways, so the allotment time is stretched out.
+
+\section{Multiple Processes}
+
+What happens if we introduce another process?
+Well, it depends on the priorities. 
+Higher priority recieves the CPU time.
+If they are on the same queue, than they run using Round Robin, see section \ref{sec:rr}.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Assets/MLFQ-Example-2.pdf}
+    \caption{Running multiple processes in MLFQ}
+    \label{fig:mlfq-example-2}
+\end{figure}
+
+As you can see in figure \ref{fig:mlfq-example-2} once process two is introduced process one is temporarily starved. The problem is solved once they land on the same queue.
+There they run alternately.
+Still the more tasks we introduce the more prevalent the starving issue gets.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Assets/MLFQ-Example-3.pdf}
+    \caption{Starving Processes in MLFQ}
+    \label{fig:mlfq-example-3}
+\end{figure}
 
