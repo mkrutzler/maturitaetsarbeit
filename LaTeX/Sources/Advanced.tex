@@ -75,4 +75,26 @@ This chapter showed us, how one could approach a scheduling policy that works wi
 In the end we still end up with many variable like the allotment time per queue, the amount of queues, the quanta for the Round Robin and others.
 If used in a real system the best approach would be to set some sensible defaults and let the administrator to adjust the parameters when needed.
 
-\chapter{Using Lottery to Schedule Processes}
+\chapter{Scheduling Based on Tickets}
+
+\section{How do tickets work?}
+
+Tickets are a form of currency for the computer.
+These can be handed out by the scheduler and give a process the right to use a resource.
+Usually this is done proportianally to the amount of tickets.
+Meaning a higher share of tickets will lead to a higher amount of CPU time.
+Logically the response time is reverse proportianal.
+These tickets enable easy comparison between processes and their resources.
+One important difference between a currency in real life and tickets is that tickets are consumed when used.
+Practically this means that if you buy something you won't lose your bill.
+This property leads to the tickets representing the share of the CPU that the job has.
+
+\section{Operations of Tickets}
+
+You can do two notable things with tickets. First you can transfer them. 
+This does exactly what it means. You decrease your amount of tickets and increase someone else's. 
+With this you could temporarily boost other processes.
+Say, for example, you have a server and a client.
+If the client needs something from the server, than it could temporarily boost the servers resources by transfering some of his own tickets.
+If course this would require that the server is trusted or else it could just scam you out of your tickets.
+The second way to operate with tickets is ticket inflation and deflation. This can only be done by the owner of the currency and it is only something that we will look at the next section.
