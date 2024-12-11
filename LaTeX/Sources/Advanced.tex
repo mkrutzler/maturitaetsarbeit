@@ -56,3 +56,23 @@ Still the more tasks we introduce the more prevalent the starving issue gets.
     \label{fig:mlfq-example-3}
 \end{figure}
 
+\section{Solving the Starving Problem}
+
+Solving starvation is actually easy.
+All we have to make sure that once in a while everybody gets their deserved CPU time.
+To do that we introduce a priority boost. All it does is just put every process into priority one every so often.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Assets/MLFQ-Example-4.pdf}
+    \caption{Solving Starvation in MLFQ}
+    \label{fig:mlfq-example-4}
+\end{figure}
+
+\section{Wrapping Up}
+
+This chapter showed us, how one could approach a scheduling policy that works without needing to know the burst time.
+In the end we still end up with many variable like the allotment time per queue, the amount of queues, the quanta for the Round Robin and others.
+If used in a real system the best approach would be to set some sensible defaults and let the administrator to adjust the parameters when needed.
+
+\chapter{Using Lottery to Schedule Processes}
