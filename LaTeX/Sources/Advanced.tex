@@ -141,70 +141,34 @@ If the randomization is fair, than the more tickets you have the more you will w
 There is a downside though.
 The randomizer algorithm can get pretty expensive.
 There is a way to reuse one random seed though, but we will only quickly touch upon it later.
+For an example implementation in C take a look at phd-mit-tr677.pdf (CITATION).
 
-For an example implementation in C take a look at figure \ref{code:lottery-sched}
-This is taken from phd-mit-tr677.pdf (CITATION)
+\subsection{Binary Search}
 
-\begin{figure}[h]
-    \begin{minted}[mathescape,
-        linenos,
-        numbersep=5pt,
-        gobble=2,
-        frame=lines,
-        framesep=2mm,
-        ]{cpp}
-  /* Implementation of List-Based Lottery Scheduling Algorithm (Written by: pdh-mit-tr667.pdf CITATION) */
+Basing the datastructure on a list is quite inefficient, because of the long search time.
+Everytime you want to reschedule, you have to create a random number and loop through the list.
+However you could use a balanced binary tree to make it much faster.
+This is because a list search time scales with n. 
+Therefore if you add one more element you will have to search through one more element.
+In contrast a binary search scales not with n.
+To be more precise it takes on $O(log(n))$ to find a specific value.
+On average, with each decision we can eliminate half of the remaining candidates.
+Therefore overall it is much faster, especially the more values the list contains.
 
-  /*per-client state */
-  typedef struct {
-    ...
-    int tickets;
-  } *client_t;
-
-  /* current resource owner */
-  client_t current;
-
-  /* list of clients competing for resource */
-  list_t list;
-
-  /*global tick et sum */
-  int global_tickets= 0;
-
-  /* initialize client withspecified allocation */
-  void client_init(client_t c, int tickets)
-  {
-    /*initialize client state, updateglobal sum */
-    c->tickets = tickets;
-    global_tickets += tickets;
-    /*join competition for resource */
-    list_insert(list, c);
-  }
-
-  void allocate()
-  {
-    int winner, sum;
-    client_t c;
-    /* randomly select winning tick et */
-    winner = fast_random() % global_tickets;
-    /* searchlist to find client with winning tick et */
-    sum = 0;
-    for (c = list_first(list);
-         c != NULL;
-         c = list_next(list, c))
-    {
-        /*update running sum, stop at winner */
-        sum += c->tickets;
-        if (sum > winner)
-            break;
-    }
-    /*grant resource to winner forquantum */
-    current = c;
-    use_resource(current);
-  }
-    \end{minted}
-    \label{code:lottery-sched}
-    \caption{C: Lottery Scheduling}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Assets/Binary-Search.pdf}
+    \caption{Binary Search Example}
+    \label{fig:binary-search}
 \end{figure}
 
+To understand it more, let's go through an example. Let's say there are 48 tickets and our winning one is 25.
+To understand the decision better, feel free to look at figure \ref{fig:binary-search}.
+For our first decision we need to choose if 25 is above 10 or not.
+It is above ten, so we choose the right path.
+At this point we have only 38 tickets left and we have to readjust our winning ticket.
+We took away 10 tickets from the front so our new winning tickets is 15.
+15 is smaller than 20, so we take a left turn and there is no readjusting needed.
+In the next step we compare 12 and 15.
+15 is larger, which means we take the right path and arrive at our winner process.
 
-One could also use Binary trees...

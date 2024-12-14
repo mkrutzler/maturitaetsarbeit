@@ -76,8 +76,8 @@ We just loop through the list until everyone is finished.
     next = queue.pop(0) # picks next process
     use_resource(next) # uses resources until finished
 \end{minted}
-\label{code:fifo}
 \caption{Python: First in, First out}
+\label{code:fifo}
 \end{figure}
 In this example we just assume that the use\_resource function on line 14 is already written.
 Also it is important to mention that the new\_process variable is just a bool, which gets update if a new process is waiting to join the queue.
@@ -127,8 +127,8 @@ Still if it comes down to pure turnaround time it is far better than the basic F
         next = queue.pop(0) # picks next process
         use_resource(next) # uses resources until finished
     \end{minted}
-    \label{code:sjf}
     \caption{Python: First in, First out}
+    \label{code:sjf}
 \end{figure}
 
 As already mentionned in the section \ref{sec:first-lines-of-code}, python is not really meant for this type of task and therefore it should only be looked at as a simple way of expressing logic.
