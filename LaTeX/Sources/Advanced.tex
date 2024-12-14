@@ -83,7 +83,7 @@ Tickets are a form of currency for the computer.
 These can be handed out by the scheduler and give a process the right to use a resource.
 Usually this is done proportianally to the amount of tickets.
 Meaning a higher share of tickets will lead to a higher amount of CPU time.
-Logically the response time is reverse proportianal.
+Logically the response time is reverse proportional.
 These tickets enable easy comparison between processes and their resources.
 One important difference between a currency in real life and tickets is that tickets are consumed when used.
 Practically this means that if you buy something you won't lose your bill.
@@ -119,15 +119,92 @@ If however it does not have a custom currency than the process has to transfer t
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{Assets/Ticket-Currency.pdf}
+    \includegraphics[width=\textwidth]{Assets/Ticket-Currency.pdf}
     \caption{Example of a Custom Ticket Currency}
     \label{fig:ticket-currencies}
 \end{figure}
  
-
-
-Another benefit comes with the ticket inflation or deflation operation, which can only be used by the owner of the currency.
-This is the case, because it involves creating or destroying tickets. 
+Another benefit comes with custom currencies: the ticket inflation or deflation operation.
+One needs a custom currency, because it involves creating or destroying tickets. 
 Still unlike the ticket transfer, ticket inflation does not need a sender and reciever.
 The selected process just get more tickets assigned.
 With this the parent process changes the ration of ownership and therefore boosts the selected job.
+
+
+\section{Lottery Scheduling}
+
+Like other things in computer science the name already says a lot. 
+Here randomization is exploited to achieve the proportianal share in runtime.
+The concept that if even over a small scale there will be unavoidable errors, the longer the scheduler runs the more accurate the share becomes.
+Think of the tickets as lottery tickets.
+If the randomization is fair, than the more tickets you have the more you will win.
+There is a downside though.
+The randomizer algorithm can get pretty expensive.
+There is a way to reuse one random seed though, but we will only quickly touch upon it later.
+
+For an example implementation in C take a look at figure \ref{code:lottery-sched}
+This is taken from phd-mit-tr677.pdf (CITATION)
+
+\begin{figure}[h]
+    \begin{minted}[mathescape,
+        linenos,
+        numbersep=5pt,
+        gobble=2,
+        frame=lines,
+        framesep=2mm,
+        ]{cpp}
+  /* Implementation of List-Based Lottery Scheduling Algorithm (Written by: pdh-mit-tr667.pdf CITATION) */
+
+  /*per-client state */
+  typedef struct {
+    ...
+    int tickets;
+  } *client_t;
+
+  /* current resource owner */
+  client_t current;
+
+  /* list of clients competing for resource */
+  list_t list;
+
+  /*global tick et sum */
+  int global_tickets= 0;
+
+  /* initialize client withspecified allocation */
+  void client_init(client_t c, int tickets)
+  {
+    /*initialize client state, updateglobal sum */
+    c->tickets = tickets;
+    global_tickets += tickets;
+    /*join competition for resource */
+    list_insert(list, c);
+  }
+
+  void allocate()
+  {
+    int winner, sum;
+    client_t c;
+    /* randomly select winning tick et */
+    winner = fast_random() % global_tickets;
+    /* searchlist to find client with winning tick et */
+    sum = 0;
+    for (c = list_first(list);
+         c != NULL;
+         c = list_next(list, c))
+    {
+        /*update running sum, stop at winner */
+        sum += c->tickets;
+        if (sum > winner)
+            break;
+    }
+    /*grant resource to winner forquantum */
+    current = c;
+    use_resource(current);
+  }
+    \end{minted}
+    \label{code:lottery-sched}
+    \caption{C: Lottery Scheduling}
+\end{figure}
+
+
+One could also use Binary trees...
