@@ -141,11 +141,65 @@ If the randomization is fair, than the more tickets you have the more you will w
 There is a downside though.
 The randomizer algorithm can get pretty expensive.
 There is a way to reuse one random seed though, but we will only quickly touch upon it later.
-For an example implementation in C take a look at phd-mit-tr677.pdf (CITATION).
+For an example implementation in C take a look at figure \ref{code:lottery-sched}, which is written by (CITATION).
+
+\newpage
+
+\begin{figure}[H]
+    \begin{minted}[mathescape,
+        linenos,
+        numbersep=5pt,
+        gobble=2,
+        frame=lines,
+        framesep=2mm,
+        ]{cpp}
+  typedef struct { /*per-client state */
+    ...
+    int tickets;
+  } *client_t;
+
+  client_t current; /* current resource owner */
+  list_t list; /* list of clients competing for resource */
+  int global_tickets = 0; /* global ticket sum */
+
+  /* initialize client withspecified allocation */
+  void client_init(client_t c, int tickets) {
+    c->tickets = tickets; /* initialize client state */ 
+    global_tickets += tickets; /* update global sum */
+    list_insert(list, c); /* join competition for resource */
+  }
+
+  void allocate() {
+    int winner, sum;
+    client_t c;
+    winner = fast_random() % global_tickets; /* randomly select winning ticket */
+    /* search list to find client with winning ticket */
+    sum = 0;
+    for (c = list_first(list);
+         c != NULL;
+         c = list_next(list, c))
+    {
+        /* update running sum, stop at winner */
+        sum += c->tickets;
+        if (sum > winner)
+            break;
+    }
+    current = c;
+    use_resource(current); /* grant resource to winner for quantum */
+  }
+    \end{minted}
+    \caption{Implementation of List-Based Lottery Scheduling Algorithm\\Written by: pdh-mit-tr667.pdf CITATION}
+    \label{code:lottery-sched}
+\end{figure}
+
+In general implementing dynamic operations is not hard, because the only part that changes is the scheduling part, like choosing a winning ticket.
+The clients structure does not need to be modified.
+In a List-Based system adding and removing clients can be as easy as adding them to the list and adjusting the global max tickets.
+
 
 \subsection{Binary Search}
 
-Basing the datastructure on a list is quite inefficient, because of the long search time.
+Even though it is easy to implement, basing the datastructure on a list is quite inefficient, because of the long search time.
 Everytime you want to reschedule, you have to create a random number and loop through the list.
 However you could use a balanced binary tree to make it much faster.
 This is because a list search time scales with n. 
@@ -163,7 +217,7 @@ Therefore overall it is much faster, especially the more values the list contain
 \end{figure}
 
 To understand it more, let's go through an example. Let's say there are 48 tickets and our winning one is 25.
-To understand the decision better, feel free to look at figure \ref{fig:binary-search}.
+To understand the though process better, feel free to look at figure \ref{fig:binary-search}.
 For our first decision we need to choose if 25 is above 10 or not.
 It is above ten, so we choose the right path.
 At this point we have only 38 tickets left and we have to readjust our winning ticket.
@@ -171,4 +225,6 @@ We took away 10 tickets from the front so our new winning tickets is 15.
 15 is smaller than 20, so we take a left turn and there is no readjusting needed.
 In the next step we compare 12 and 15.
 15 is larger, which means we take the right path and arrive at our winner process.
+
+\subsection{Multiwinner Lottery}
 
