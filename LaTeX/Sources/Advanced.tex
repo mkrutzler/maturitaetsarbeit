@@ -209,7 +209,7 @@ To be more precise it takes on $O(log(n))$ to find a specific value.
 On average, with each decision we can eliminate half of the remaining candidates.
 Therefore overall it is much faster, especially the more values the list contains.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{Assets/Binary-Search.pdf}
     \caption{Binary Search Example}
@@ -227,4 +227,26 @@ In the next step we compare 12 and 15.
 15 is larger, which means we take the right path and arrive at our winner process.
 
 \subsection{Multiwinner Lottery}
+
+Multiwinner Lottery Scheduling is a semi randomized semi deterministic scheduling method.
+It is a method to try to minimize the cost of the randomization algorithm.
+The basic idea is to reuse the winner.
+After you select your winner you take a specific offset to determine the other winners.
+One of these lotteries is called a superquantum.
+
+\section{Stride Scheduling}
+
+Another approach to implement a proportional-share policy is the so called stride scheduling.
+The tickets are used to assign so called strides to the processes.
+This stride value will be than used to increment a counter called pass.
+The process with the lowest pass value than gets run.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Assets/Stride-Scheduling.pdf}
+    \caption{Stride Scheduling Example}
+    \label{fig:stride-scheduling}
+\end{figure}
+
+The benefit of stride scheduling is that one doesn't need a randomizer and the policy itself is much simpler to implement. With such good benefits there comes some disadvantages as well: The processes have global values, meaning that if a new job wants to join, than it has to be adjusted to the current global circumstances. In contrast all you have to do in the lottery is add the assigned tickets to the global maximum tickets.
 
