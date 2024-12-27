@@ -6,47 +6,48 @@
 
 The main problem we face can be broken down into a really easy to formulate but hard to answer question.
 How can we order the queued tasks, so that they run in the most optimal order?
-What optimal really means is a whole discussion itself not to mention search for the perfect algorithm to achieve that desired best solution.
+What optimal really means is a whole discussion itself (not to mention the search for the perfect algorithm to achieve that desired best solution).
 In this chapter I will give you a quick introduction to the main terms.
 In addition, I will also try to make it as easy as possible to understand by using a situation that most of us have already suffered through.
 
 Have you ever wondered why so many people buy prebottled water? 
 How they can eat those nasty snack that you despise?
 Why they have the whole cart full of milk?
-Maybe these question seem rather sudden they have two things in common:
-One, you never get the answer to them, and two, which is the relevant part, you ask them while standing in line at a supermarket.
-You ask yourself them while staring at the family of five with two shopping carts and while questioning, whether or not you should have queued at another line.
+Maybe these question seem rather sudden, but they have two things in common:
+One, you never get them answered, and two, which is the relevant part, you ask them while standing in line at a supermarket.
+You ask them while staring at the family of five with two shopping carts and while questioning, whether or not you should have queued at another line.
 Also wouldn't it be much better if you, with your two items, went before them?
 What is the best order to queue up these people?
-As you can already see this is the original, simplified question just reformulated.
-We are seaching for the best algorithm that arranges people at the supermarket.
-Matter of fact let's just call it by its real name: policy.
+As you can already see this is the original, simplified question, just reformulated.
+We are searching for the best algorithm that arranges people at the supermarket.
+Matter of fact, let's just call it by its real name: policy.
 In CPU-Scheduling we call the algorithms policies or disciplines.
 A single customer / shopper is called a job or a process.
-In the real world a process can be anything from your drivers to the web browser showing cute cat images.
+In the real world a process can be anything from your drivers to the web browser showing the cute cat images.
 A queue is a line of people waiting to get their items scanned and the cashier is the CPU.
 
-\section{How we compare policies}
+\section{How We Compare Policies}
 
-Before we dive deeper into theory, it is important to note that there is a huge difference between fairness and performance.
+Before we dive deeper into the theory, it is important to note that there is a huge difference between fairness and performance.
 Fairness usually makes sure that everyone recieves the same amount of CPU time.
 This kind of policy turns out to be cyclic, which usually leads to a more responsive system, because each job gets a bit of activity every so often.
 On the other hand if we want to optimize for performance we should look at the so called average turnaround time.
 Turnaround time is nothing more than the time that a person has to stand in line.
 Therefore the average of it is the average waiting time until you exit the supermarket.
+Note that when we compare the different policies, we assume that they have the same clients queuing at the same time. 
+This is common sense, because if you have more jobs to process then naturally you will take more time.
 
-\section{First lines of code} \label{sec:first-lines-of-code}
+\section{First lines of Code} \label{sec:first-lines-of-code}
 
 During the next few chapters and sections we'll assume that one knows the amount of time that a process will take to finish, also known as burst time.
 Like bursting out of joy, when you finally finish the weekly shopping.
 In a real world this is almost impossible\footnote{Here I mean knowning the burst time and not escaping the supermarket.}, except if you can time travel.
-With this and setting aside the optimization part, one of the most straightforward policy is called first come, first served.
+One of the most straightforward policy is called first come, first served.
 This is what we usually suffer through in the queue to pay.
 The policy disregards how many item one has in the cart.
-The only important part is the time you arrive.
+The only important attribute is the time you arrive.
 The sooner the better.
 In the world of computer science the policy is better refered to as First In, First Out (FIFO).
-Here is a \hyperref[code:fifo]{simple python implementation}.
 
 We save the queue of people as a python list.
 If any other job joins, it will just get appended to the end.
@@ -69,7 +70,7 @@ We just loop through the list until everyone is finished.
     queue.append(process)
 
   # Schedule the processes
-  while queue != []:
+  while True:
     if new_process == True: # check if there is a new process
         add_process(process)
     
@@ -79,20 +80,19 @@ We just loop through the list until everyone is finished.
 \caption{Python: First in, First out}
 \label{code:fifo}
 \end{figure}
-In this example we just assume that the use\_resource function on line 14 is already written.
-Also it is important to mention that the new\_process variable is just a bool, which gets update if a new process is waiting to join the queue.
-In addition to that the empty queue initialization is purely symbolic, because if the queue is already empty, there will be no scheduling happening. 
+In the example above we assume that the use\_resource function on line 14 is already written.
+Also it is important to mention that the new\_process variable is just a bool, which gets updated if a new process is waiting to join the queue.
 In general python is not really meant for low level programming anyways, so take it with a grain of salt.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Evolving Supermarket}
+\chapter{Evolving the Supermarket}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Now that the scene is set, we return the original question. 
 How can we reduce our waiting time?
 To give an answer we will first take a step back.
-While the previous chapter talked about the initial situation and proper terms, this one will first loosen up some of the requirements in order to ensure that the policies are as easy to understand as possible.
+While the previous chapter talked about the initial situation and proper terms, this one will first loosen up some of the rules in order to ensure that the policies are as easy to understand as possible.
 
 \section{Shorterst Job First}
 
@@ -132,6 +132,8 @@ Still if it comes down to pure turnaround time it is far better than the basic F
 \end{figure}
 
 As already mentionned in the section \ref{sec:first-lines-of-code}, python is not really meant for this type of task and therefore it should only be looked at as a simple way of expressing logic.
+Even though there were some major improvements, the fact remains that if a client is too late than it will have to wait at least  until the previous shortest customer finishes. This can take a long time and it would be in our best interest to give these newcomers a fair chance. 
+It would be great if a rescheduling happens, every time someone joins the queue.
 
 \section{Upgrading the Cashier}
 
@@ -142,32 +144,33 @@ While previously if another customer came with just a single item, it would not 
 He would only recieve the priority boost, if the current person is finished.
 However now with the preemptive capabilities the cashier can just save and put aside the people.
 This feature is not only useful if there is someone that has a shorter time to completion.
-Imagen that someone forgot to put something into their basket.
-Now they desparately send back their kid to get that time. While he returns the cashier can save the state and do a context switch.
+Imagine that someone forgot to put something into their basket.
+Now they desparately send back their kid to get that item. While he returns the cashier can save the state and do a context switch.
 While processes wait for I/O others can run at their place.
 This waiting state is called being blocked and the technique of running another process is overlapping.
 At this stage it does not really make sense to present some code, because it is just too out of place, however in theory one would to the sorting of the processes everytime a job finished, gets blocked or another process joins.
 
-\section{What about fairness?} \label{sec:rr}
+\section{What about Fairness?} \label{sec:rr}
 
 All of the policies we looked at so far disregarded the emotions of humans.
-Most of us wanted to be treated at least as well as others.
+Most of us want to be treated at least as well as others.
 It does not matter whether in a supermarket or at home before the computer, we want fairness and responsiveness.
 A fair scheduler like the Round Robin does exactly just that. 
 It is the most simple to implement for a dynamic system, because all it does is goes around and gives every one contestant a bit of CPU time.
-The so called quantum or quanta in plural determines how long a single process can run, before it gets replace by another one.
+The so called quantum or quanta in plural determines how long a single process can run before it gets replaced by another one.
 In supermarket terms: How many items get scanned per customer per cycle.
 The logical next step would be to make these quanta as small as possible making the system as fair as possible.
 This however has a heavy drawback.
 The context switching itself takes up resources, meaning that after a while the performance degrades, because of too many context switches.
+Therefore the goal is find a quantum, which balances responsiveness and fairness with the performance loss.
 
 
 
  \section{Conclusion}
 
-During this chapter we learned about the basic methodology of scheduling.
-The next step is to move to more sophisticated approches, which act as a whole system rather than just as a solution to a specific problem.
+During this chapter we learned the basic methodology of scheduling.
+The next step is to move to more sophisticated policies, which act as a whole system rather than just as a solution to a specific problem.
 We will also need to figure out the burst time.
 To be more precise we need to figure out how to avoid using it.
-Most of the above mentionned policies, except the Round Robin, rely on the fact that we know, when one process finishes.
-Take Shortest Job First for example: How can we order it according to the time to finish if we don't know when it finishes?
+Most of the above mentioned policies, except the Round Robin, rely on the fact that we know, when one process finishes.
+Take Shortest Job First for example: How can we order the processes according to the time to finish if we don't even know when they finish?

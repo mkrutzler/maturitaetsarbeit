@@ -27,29 +27,17 @@
   ]{hyperref}
 
 \usepackage{bookmark}
-%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% I like the bibliography to be extremely plain, showing only a numeric
-%% identifier and citing everything in simple brackets. The first names,
-%% if present, will be initialized. DOIs and URLs will be preserved.
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%\usepackage[%
-%  autocite     = plain,
-%  backend      = biber,
-%  doi          = true,
-%  url          = true,
-%  giveninits   = true,
-%  hyperref     = true,
-%  maxbibnames  = 99,
-%  maxcitenames = 99,
-%  sortcites    = true,
-%  style        = numeric,
-%  ]{biblatex}
-%
-%
+% I like the bibliography to be extremely plain, showing only a numeric
+% identifier and citing everything in simple brackets. The first names,
+% if present, will be initialized. DOIs and URLs will be preserved.
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fonts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,7 +91,7 @@
 
 \title{{CPU-Scheduling}}
 \subtitle{What waiting in line at the supermarket and your computer have in common}
-\author{Mark Krutzler}
+\author{Mark Krutzler 4a}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,7 +109,7 @@
 
 \frontmatter
   \include{Sources/Title}
-  \include{Sources/Abstract}
+  %\include{Sources/Abstract}
 
   \tableofcontents
 
@@ -161,7 +149,7 @@
       \begin{singlespace*}
         \onehalfspacing
         %
-        After looking at the Basics it is time to dive deeper. Here we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however they are usually first modified to fit the environment and the needs better.
+        After looking at the basics, it is time to dive deeper. Next, we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however they are usually first modified to fit the environment and the needs better.
       \end{singlespace*}
     }
     \end{minipage}
@@ -174,7 +162,25 @@
 \bookmarksetup{startatroot}
 \backmatter
 
-\include{Sources/Sources}
+\begin{thebibliography}{99}
+    \bibitem{ostep}
+    Remzi Hussein Arpaci-Dusseau \& Andrea Carol Arpaci-Dusseau (2018) \emph{Operating Systems: Three Easy Pieces}, CreateSpace Independent Publishing Platform.
+    \bibitem{coffman68}
+    Edward G. Coffman \& Leonard Kleinrock (1968) \emph{Computer scheduling methods and their countermeasures}, Association for Computing Machinery.
+    \bibitem{waldspurger95}
+    Carl A. Waldspurger (1995) \emph{Lottery and Stride Scheduling: Flexible Proportional-Share Resource Management}, Massachusetts Institute of Technology.
+    \bibitem{waldspurger94}
+    Carl A. Waldspurger \& William E. Weihl (1994) \emph{Lottery scheduling: Flexible proportional-share resource management}, Massachusetts Institute of Technology.
+    \bibitem{solaris}
+    Andrea Carol Arpaci-Dusseau (2000) \emph{Multilevel Feedback Queue Scheduling in Solaris}, available at: \url{https://pages.cs.wisc.edu/~remzi/OSTEP/Citations/notes-solaris.pdf}
+\end{thebibliography}
 
+\section*{Further Sources}
+\begin{itemize}
+    \item \url{https://github.com/Pseudomanifold/latex-mimosis}
+    \item \url{https://en.wikipedia.org/wiki/Binary_search}
+    \item \url{https://www.quora.com/Why-is-look-up-faster-for-a-Binary-Tree-than-a-Linked-List}
+    \item \url{https://ceunican.github.io/aos/09.Scheduling_Proportional_Share.pdf}
+\end{itemize}
 
 \end{document}
