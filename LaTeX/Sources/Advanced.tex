@@ -111,16 +111,16 @@ To summarize the Multi-Level Feedback Queue, I would like to quote its rules of 
 In this chapter we will look at proportional-share scheduling. This type of policy works with weights and assigns them to the processes. For us these weights will take the form of tickets.
 Tickets are a form of currency for the computer. Think of it like money.
 These can be handed out by the scheduler and give a process the right to use a resource.
-Usually, the rigth to a resource is reflected proportianally by the amount of tickets.
+Usually, the right to a resource is reflected proportionally by the amount of tickets.
 Meaning a higher share of tickets will lead to a higher amount of CPU time.
 Logically, the response time is inversely proportional. The more tickets you have the less time you have to wait until you run.
 These tickets enable easy comparison between processes.
 One important difference between money in real life and tickets is that tickets are not consumed when used.
 Practically this means that if you buy something you won't lose your bill.
 This property leads to the tickets representing the share of the CPU that the job has.
-Higher priority processes are weighted more heavily, meaning that they get more tickets
+Higher priority processes are weighted more heavily, meaning that they get more tickets.
 
-One could imagen these tickets like reservation places in a restaurant. For now it does not matter how the restaurant assigns the places, like it does not matter how the scheduler policy implements the transition from tickets to CPU time. The only thing that is important is that in the end you will have your places and can eat at the restaurant.
+One could imagine these tickets like reservation places in a restaurant. For now it does not matter how the restaurant assigns the places, like it does not matter how the scheduler policy implements the transition from tickets to CPU time. The only thing that is important is that in the end you will have your places and can eat at the restaurant.
 
 
 \subsection{Operating with Tickets}
@@ -129,7 +129,7 @@ You can do two notable things with tickets. First you can transfer them.
 This does exactly what it means. You decrease your amount of tickets and increase someone else's. 
 With this you could temporarily boost other processes.
 Say, for example, you have a server and a client.
-If the client needs something from the server, then it could temporarily boost the servers resources by transfering some of his own tickets.
+If the client needs something from the server, then it could temporarily boost the servers resources by transferring some of his own tickets.
 Of course this requires that the server is trusted or else it could just scam you out of your tickets.
 The second way to operate with tickets is ticket inflation and deflation. This can only be done by the owner of the currency and it is only something that we will look at the next section.
 
@@ -168,7 +168,7 @@ With this the parent process changes the ration of ownership and therefore boost
 \subsection{Lottery Scheduling}
 
 Like other things in computer science the name already says a lot. 
-Here randomization is exploited to achieve the proportianal share in runtime.
+Here randomization is exploited to achieve the proportional share in runtime.
 The concept is, that even if over a small scale there will be unavoidable errors, the longer the scheduler runs the more accurate it becomes.
 Think of the tickets as lottery tickets.
 If the randomization is fair, than the more tickets you have the more you will win.
@@ -196,7 +196,7 @@ For an example implementation in C take a look at listing \ref{code:lottery-sche
   list_t list; /* list of clients competing for resource */
   int global_tickets = 0; /* global ticket sum */
 
-  /* initialize client withspecified allocation */
+  /* initialize client with specified allocation */
   void client_init(client_t c, int tickets) {
     c->tickets = tickets; /* initialize client state */ 
     global_tickets += tickets; /* update global sum */
@@ -234,8 +234,8 @@ In a List-Based system adding and removing clients can be as easy as adding them
 
 \subsubsection{Binary Search}
 
-Even though it is easy to implement, basing the datastructure on a list is quite inefficient, because of the long search time.
-Everytime you want to reschedule, you have to create a random number and loop through the list.
+Even though it is easy to implement, basing the datas tructure on a list is quite inefficient, because of the long search time.
+Every time you want to reschedule, you have to create a random number and loop through the list.
 However you could use a balanced binary tree to make it much faster.
 This is because a list search time scales with n. 
 Therefore if you add one more element you will have to search through one more element.
@@ -261,13 +261,13 @@ We took away 10 tickets from the front so our new winning tickets is 10.
 In the next step we compare 12 and 10.
 12 is larger, which means we take the right path and arrive at our winner process, because 10 is contained in 12.
 
-\subsubsection{Multiwinner Lottery}
+\subsubsection{Multi-Winner Lottery}
 
-Multiwinner Lottery Scheduling is a semi-randomized, semi-deterministic scheduling method.
+Multi-winner Lottery Scheduling is a semi-randomized, semi-deterministic scheduling method.
 It is a method to try to minimize the cost of the randomization algorithm.
 The basic idea is to reuse the winner.
 After you select your winner you take a specific offset to determine the other winners.
-One of these lotteries is called a superquantum.
+One of these lotteries is called a super-quantum.
 
 \subsection{Stride Scheduling}
 
@@ -284,7 +284,7 @@ The process with the lowest pass value than gets run.
 \end{figure}
 
 To understand the policy better, let's loot at the example in figure \ref{fig:stride-scheduling}.
-We have three processes. Process A has a stride of 160, Process B 320 and Process C has 30. At $t_0$ process A runs. Afterwards its B's turn. C has a much smaller stride, that's why it will have more turns before it catches up to A.
+We have three processes. Process A has a stride of 160, Process B 320 and Process C has 30. At $t_0$ process A runs. Afterwards it's B's turn. C has a much smaller stride, that's why it will have more turns before it catches up to A.
 After a while it gets to cyclic pattern.
 
 
@@ -292,6 +292,6 @@ The benefit of stride scheduling is that one doesn't need a randomizer and the p
 
 To solve this, one needs to introduce a constant global pass value, because otherwise the joining processes will monopolize the CPU. 
 Look at figure \ref{fig:stride-scheduling} for example.
-If a process D joins at the last time interval, than it has to catch up to atleast C. During that time it will have a unreasonable priority over everybody else.
+If a process D joins at the last time interval, then it has to catch up to at least C. During that time it will have a unreasonable priority over everybody else.
 A promised global pass value would eliminate the problem, because one can adjust the entry pass value according to the current situation.
 If a task goes into a blocked state or leaves the competition temporarily and than rejoins than its pass value will be global stride plus the stride of the process. The same goes for a brand new job that joins.
