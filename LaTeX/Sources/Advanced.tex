@@ -1,7 +1,8 @@
 \chapter{Advanced Policies}
 After looking at the basics, it is time to dive deeper. Next, we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however, they are usually first modified to fit the environment and the needs better.
+We will get to know two subclasses of schedulers: real-time and proportional-share.
 
-\section{Predicting the Future}
+\section{Real-Time Scheduling}
 
 
 The first policy we look at is officially called Multi-Level Feedback Queue, or MLFQ in short. The creator Fernando J. Corbató received a Turning Award for it in 1990. 
@@ -10,6 +11,8 @@ A job can generally act in two ways:
 Either it is a resource-intensive crunching problem (think about exporting a video or compiling code) or it is a program, which needs quick response time (think about your text editor).
 In reality most jobs jump between these two states.
 We usually want to give the response-focused processes priority, because that is what the user interacts with and it is here that he primarily feels a delay.
+The \emph{MLFQ} is used in the Solaris 2.6 Time-Sharing scheduler.
+It is part of the time sharing subclass, meaning that it schedules based on an event-driven model, which is usually periodic.
 
 \subsection{Basic Idea}
 
@@ -82,6 +85,7 @@ Even though this introduces another unknown variable that has to be configured, 
 
 \newpage
 
+
 \subsection{Wrapping Up}
 
 This chapter showed us, how one could approach a scheduling policy that works without needing to know the burst time.
@@ -102,8 +106,9 @@ To summarize the Multi-Level Feedback Queue, I would like to quote its rules of 
 
 \newpage
 
-\section{Scheduling Based on Tickets}
+\section{Proportional-Share Scheduling}
 
+In this chapter we will look at proportional-share scheduling. This type of policy works with weights and assigns them to the processes. For us these weights will take the form of tickets.
 Tickets are a form of currency for the computer. Think of it like money.
 These can be handed out by the scheduler and give a process the right to use a resource.
 Usually, the rigth to a resource is reflected proportianally by the amount of tickets.
@@ -113,6 +118,7 @@ These tickets enable easy comparison between processes.
 One important difference between money in real life and tickets is that tickets are not consumed when used.
 Practically this means that if you buy something you won't lose your bill.
 This property leads to the tickets representing the share of the CPU that the job has.
+Higher priority processes are weighted more heavily, meaning that they get more tickets
 
 One could imagen these tickets like reservation places in a restaurant. For now it does not matter how the restaurant assigns the places, like it does not matter how the scheduler policy implements the transition from tickets to CPU time. The only thing that is important is that in the end you will have your places and can eat at the restaurant.
 
