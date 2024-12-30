@@ -1,18 +1,22 @@
-\chapter{Predicting the Future}
+\chapter{Advanced Policies}
+After looking at the basics, it is time to dive deeper. Next, we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however, they are usually first modified to fit the environment and the needs better.
 
-\section{Basic Idea}
+\section{Predicting the Future}
 
-The first policy we look at is formerly called Multi-Level Feedback Queue, or MLFQ short. The creator Fernando J. Corbató recieved a Turning Award for it in 1990. 
-As the title already says, this policy tries to predict the future behaviour of the processes based on the past.
-A job can generally act in two ways.
-Either it is a resources intensive crunching problem (think about exporting a video or compiling code) or it is a program, which needs quick response time (think about your text editor).
+
+The first policy we look at is officially called Multi-Level Feedback Queue, or MLFQ in short. The creator Fernando J. Corbató received a Turning Award for it in 1990. 
+As the title already says, this policy tries to predict the future behavior of the processes based on the past.
+A job can generally act in two ways:
+Either it is a resource-intensive crunching problem (think about exporting a video or compiling code) or it is a program, which needs quick response time (think about your text editor).
 In reality most jobs jump between these two states.
 We usually want to give the response-focused processes priority, because that is what the user interacts with and it is here that he primarily feels a delay.
 
+\subsection{Basic Idea}
+
 The policy introduces multiple queues, which each have different priorities.
-Each process gets assigned to a queue. There are however not set in stone
+Each process is assigned to a queue. There are, however, not set in stone.
 Based on the reasons above we want to assume that a new process is responsive, because in the worst case scenario, we just need to demote the non-responsive ones.
-If, however a process turns out to be interactive, then the user does not feel any lag. 
+If however, a process turns out to be interactive, then the user does not feel any lag. 
 Each process can run a certain amount of time (also called allotment time) before it is deemed as unworthy of the current priority.
 If the allotment is used up, the process gets demoted into a lower queue.
 
@@ -25,19 +29,19 @@ If the allotment is used up, the process gets demoted into a lower queue.
 
 
 As you can see in figure \ref{fig:mlfq-example-1} process one gets demoted after a while.
-The lower the queue is, the higher the allotment time. 
+The lower the queue is, the longer the allotment time. 
 This is because we hope that all of the responsive-oriented jobs finish before demoting.
 Once these are filtered out we will only have resource heavy tasks left.
 These require more time anyways, so the allotment time is stretched out.
 After a while the process just ends up at the bottom, at which point it runs until it is finished.
 Keep in mind that if the process gets blocked, meaning that it gives up its CPU before the allotment is used up, then they will stay in the same queue and can use up the rest of the allotment before they get demoted. Therefore not the actual time spent in a priority matters but the time spent using the resource.
 
-\section{Multiple Processes}
+\subsection{Multiple Processes}
 
 What happens if we introduce another process?
 Well, it depends on the priorities. 
-Higher priority recieves the CPU time.
-If they are on the same queue, then they run using Round Robin (see section \ref{sec:rr}).
+Higher priority receives the CPU time.
+If they are on the same queue, then they run using \emph{Round Robin} (see section \ref{sec:rr}).
 
 
 \begin{figure}[h]
@@ -47,12 +51,12 @@ If they are on the same queue, then they run using Round Robin (see section \ref
     \label{fig:mlfq-example-2}
 \end{figure}
 
-As you can see in figure \ref{fig:mlfq-example-2}, once process two is introduced process one is temporarily starved. The problem is solved once they land on the same queue.
+As you can see in figure \ref{fig:mlfq-example-2}, once process two is introduced, process one is temporarily starved. The problem is solved once they land on the same queue.
 There they run alternately.
 Still the more tasks we introduce the more prevalent the starving issue gets.
 Take a look at figure \ref{fig:mlfq-example-3} for example. 
 Here we have four processes instead of two, which results in process 1 being completely left out.
-It could only start running again if the processes 2 to 4 either finish or get demoted into priority 5.
+It could only start running again if processes 2 to 4 either finish or get demoted into priority 5.
 That takes quite a lot of time and requires that we don't introduce new tasks during the time waiting.
 
 \begin{figure}[h]
@@ -62,14 +66,12 @@ That takes quite a lot of time and requires that we don't introduce new tasks du
     \label{fig:mlfq-example-3}
 \end{figure}
 
-\newpage
-
-\section{Solving Starvation}
+\subsection{Solving Starvation}
 
 Solving starvation is actually pretty easy.
 All we have to do is to make sure that once in a while everybody gets their deserved CPU time.
 To do that we introduce a priority boost. All it does is just put every process into priority one every so often.
-Even though this introduces another unknown variable that has to be configured, it is just such a crucial element that we have to live with that.
+Even though this introduces another unknown variable that has to be configured, it is just such a crucial element that we have to live with it.
 
 \begin{figure}[h]
     \centering
@@ -78,55 +80,59 @@ Even though this introduces another unknown variable that has to be configured, 
     \label{fig:mlfq-example-4}
 \end{figure}
 
-\section{Wrapping Up}
+\newpage
+
+\subsection{Wrapping Up}
 
 This chapter showed us, how one could approach a scheduling policy that works without needing to know the burst time.
-In the end we still end up with many variables like the allotment time per queue, the amount of queues, the quanta for the Round Robin and others.
-If used in a real system the best approach would be to set some sensible defaults and let the administrator to adjust the parameters when needed.
-To summarize the Multi-Level Feedback Queue I would like to quote the rules of it from the book OStep \cite{ostep}:
+In the end we still end up with many parameters like the allotment time per queue, the number of queues, the quanta for the Round Robin and others.
+If used in a real system, the best approach would be to set some sensible defaults and let the administrator adjust the parameters when needed.
+To summarize the Multi-Level Feedback Queue, I would like to quote its rules of it from the book OStep \cite{ostep}:
 \begin{quote}
 \emph{
 \begin{enumerate}
         \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs and B doesn't
         \item If Priority (A) $=$ Priority (B) $\Rightarrow$ A and B run in Round Robin
-        \item When a job enters the system, it si placed at the highest priority
+        \item When a job enters the system, it is placed at the highest priority
         \item Once a job uses up its time allotment at a given level, its priority is reduced
         \item After some period S, move all the jobs in the system to the topmost queue
 \end{enumerate}
 }
 \end{quote}
 
+\newpage
 
-\chapter{Scheduling Based on Tickets}
+\section{Scheduling Based on Tickets}
 
-\section{How Do Tickets Work?}
-
-Tickets are a form of currency for the computer.
+Tickets are a form of currency for the computer. Think of it like money.
 These can be handed out by the scheduler and give a process the right to use a resource.
-Usually this is done proportianally to the amount of tickets.
+Usually, the rigth to a resource is reflected proportianally by the amount of tickets.
 Meaning a higher share of tickets will lead to a higher amount of CPU time.
-Logically the response time is reverse proportional.
+Logically, the response time is inversely proportional. The more tickets you have the less time you have to wait until you run.
 These tickets enable easy comparison between processes.
-One important difference between a currency in real life and tickets is that tickets are not consumed when used.
+One important difference between money in real life and tickets is that tickets are not consumed when used.
 Practically this means that if you buy something you won't lose your bill.
 This property leads to the tickets representing the share of the CPU that the job has.
 
-\section{Operating with Tickets}
+One could imagen these tickets like reservation places in a restaurant. For now it does not matter how the restaurant assigns the places, like it does not matter how the scheduler policy implements the transition from tickets to CPU time. The only thing that is important is that in the end you will have your places and can eat at the restaurant.
+
+
+\subsection{Operating with Tickets}
 
 You can do two notable things with tickets. First you can transfer them. 
 This does exactly what it means. You decrease your amount of tickets and increase someone else's. 
 With this you could temporarily boost other processes.
 Say, for example, you have a server and a client.
-If the client needs something from the server, than it could temporarily boost the servers resources by transfering some of his own tickets.
-If course this requires that the server is trusted or else it could just scam you out of your tickets.
+If the client needs something from the server, then it could temporarily boost the servers resources by transfering some of his own tickets.
+Of course this requires that the server is trusted or else it could just scam you out of your tickets.
 The second way to operate with tickets is ticket inflation and deflation. This can only be done by the owner of the currency and it is only something that we will look at the next section.
 
-\section{Ticket Currencies}
+\subsection{Ticket Currencies}
 
 Ticket currencies are a way for parent processes to manage their child processes.
 Yes, that's right, not all processes are built the same.
 A child process is a process that is created by another process.
-A parent process is a process, which has atleast one child process.
+A parent process is a process, which has at least one child process.
 A job can be both a parent and a child at the same time.
 
 The idea behind ticket currencies is that a parent process creates its own unique currency. Therefore he himself can distribute as many bills as he wants. 
@@ -136,8 +142,8 @@ Therefore the overall runtime that A$_1$ has is:
 
 $$\frac{20\text{T}_\text{G}}{50\text{T}_\text{G}} * \frac{40\text{T}_\text{A}}{100\text{T}_\text{A}} = 0.16 \Rightarrow 16\%$$
 
-There is another hidden benefit. If the parent process recieves more global tickets, then if it has a custom currency, there are no further things to do.
-If however it does not have a custom currency than the process has to transfer these new tickets to the child processes. Overall it can get very messy all too quickly.
+There is another hidden benefit. If the parent process receives more global tickets, then if it has a custom currency, there are no further things to do.
+If, however, it does not have a custom currency than the process has to transfer these new tickets to the child processes. Overall it can get very messy all too quickly.
 
 \begin{figure}[h]
     \centering
@@ -148,12 +154,12 @@ If however it does not have a custom currency than the process has to transfer t
  
 Another benefit comes with custom currencies: the ticket inflation or deflation operation.
 One needs a custom currency, because it involves creating or destroying tickets. 
-Unlike the ticket transfer, ticket inflation does not need a sender and reciever.
+Unlike the ticket transfer, ticket inflation does not need a sender and receiver.
 A selected process just gets more tickets assigned.
 With this the parent process changes the ration of ownership and therefore boosts the selected job.
 
 
-\section{Lottery Scheduling}
+\subsection{Lottery Scheduling}
 
 Like other things in computer science the name already says a lot. 
 Here randomization is exploited to achieve the proportianal share in runtime.
@@ -163,7 +169,7 @@ If the randomization is fair, than the more tickets you have the more you will w
 There is a downside though.
 The randomizer algorithm can get pretty expensive.
 There is a way to reuse one random seed though, but we will only quickly touch upon it later.
-For an example implementation in C take a look at figure \ref{code:lottery-sched}, which is written by Carl A. Waldspurger \cite{waldspurger95}.
+For an example implementation in C take a look at listing \ref{code:lottery-sched}, which is written by Carl A. Waldspurger \cite{waldspurger95}.
 
 \newpage
 
@@ -216,11 +222,11 @@ For an example implementation in C take a look at figure \ref{code:lottery-sched
 
 In general implementing dynamic operations is not hard, because the only part that changes is the scheduling part, like choosing a winning ticket.
 The clients structure does not need to be modified.
-This is because there are no global states. The processes are kept completely isolated from each other and just by alooking at the next scheduling you couldn't know how long the scheduler has been running.
+This is because there are no global states. The processes are kept completely isolated from each other and just by looking at the next scheduling you couldn't know how long the scheduler has been running.
 In a List-Based system adding and removing clients can be as easy as adding them to the list and adjusting the global max tickets.
 
 
-\subsection{Binary Search}
+\subsubsection{Binary Search}
 
 Even though it is easy to implement, basing the datastructure on a list is quite inefficient, because of the long search time.
 Everytime you want to reschedule, you have to create a random number and loop through the list.
@@ -249,7 +255,7 @@ We took away 10 tickets from the front so our new winning tickets is 10.
 In the next step we compare 12 and 10.
 12 is larger, which means we take the right path and arrive at our winner process, because 10 is contained in 12.
 
-\subsection{Multiwinner Lottery}
+\subsubsection{Multiwinner Lottery}
 
 Multiwinner Lottery Scheduling is a semi-randomized, semi-deterministic scheduling method.
 It is a method to try to minimize the cost of the randomization algorithm.
@@ -257,7 +263,7 @@ The basic idea is to reuse the winner.
 After you select your winner you take a specific offset to determine the other winners.
 One of these lotteries is called a superquantum.
 
-\section{Stride Scheduling}
+\subsection{Stride Scheduling}
 
 Another approach to implement a proportional-share policy is the so called stride scheduling.
 The tickets are used to assign so called strides to the processes.
@@ -278,7 +284,7 @@ After a while it gets to cyclic pattern.
 
 The benefit of stride scheduling is that one doesn't need a randomizer and the policy itself is much simpler to implement. With such good benefits there comes some disadvantages as well: The processes have global values, meaning that if a new job wants to join, than it has to be adjusted to the current global circumstances. In contrast all you have to do in the lottery is add the assigned tickets to the global maximum tickets.
 
-To solve this, one needs to introduce a constant global pass, because otherwise the joining processes will monopolize the CPU. 
+To solve this, one needs to introduce a constant global pass value, because otherwise the joining processes will monopolize the CPU. 
 Look at figure \ref{fig:stride-scheduling} for example.
 If a process D joins at the last time interval, than it has to catch up to atleast C. During that time it will have a unreasonable priority over everybody else.
 A promised global pass value would eliminate the problem, because one can adjust the entry pass value according to the current situation.

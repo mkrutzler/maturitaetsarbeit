@@ -26,23 +26,23 @@
   unicode,
   ]{hyperref}
 
-\usepackage{bookmark}
+  \usepackage{bookmark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% I like the bibliography to be extremely plain, showing only a numeric
-% identifier and citing everything in simple brackets. The first names,
-% if present, will be initialized. DOIs and URLs will be preserved.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Bibliography
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %
+  % I like the bibliography to be extremely plain, showing only a numeric
+  % identifier and citing everything in simple brackets. The first names,
+  % if present, will be initialized. DOIs and URLs will be preserved.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Fonts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Fonts
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifxetexorluatex
+  \ifxetexorluatex
   \usepackage{unicode-math}
   \setmainfont{EB Garamond}
   \setmathfont{Garamond Math}
@@ -57,130 +57,94 @@
       \spadesuit,
       \checkmark
     }
-  ]
-  \setmonofont[Scale=MatchLowercase]{Source Code Pro}
-\else
-  \usepackage[lf]{ebgaramond}
-  \usepackage[oldstyle,scale=0.7]{sourcecodepro}
-  \singlespacing
-\fi
+    ]
+    \setmonofont[Scale=MatchLowercase]{Source Code Pro}
+    \else
+    \usepackage[lf]{ebgaramond}
+    \usepackage[oldstyle,scale=0.7]{sourcecodepro}
+    \singlespacing
+    \fi
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Ordinals
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Ordinals
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makeatletter
-\@ifundefined{st}{%
-  \newcommand{\st}{\textsuperscript{\textup{st}}\xspace}
-}{}
-\@ifundefined{rd}{%
-  \newcommand{\rd}{\textsuperscript{\textup{rd}}\xspace}
-}{}
-\@ifundefined{nd}{%
-  \newcommand{\nd}{\textsuperscript{\textup{nd}}\xspace}
-}{}
-\makeatother
+    \makeatletter
+    \@ifundefined{st}{%
+      \newcommand{\st}{\textsuperscript{\textup{st}}\xspace}
+      }{}
+      \@ifundefined{rd}{%
+        \newcommand{\rd}{\textsuperscript{\textup{rd}}\xspace}
+        }{}
+        \@ifundefined{nd}{%
+          \newcommand{\nd}{\textsuperscript{\textup{nd}}\xspace}
+          }{}
+          \makeatother
 
-\renewcommand{\th}{\textsuperscript{\textup{th}}\xspace}
+          \renewcommand{\th}{\textsuperscript{\textup{th}}\xspace}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Incipit
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          % Incipit
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{{CPU-Scheduling}}
-\subtitle{What waiting in line at the supermarket and your computer have in common}
-\author{Mark Krutzler 4a}
+          \title{{CPU-Scheduling}}
+          \subtitle{What waiting in line at the supermarket and your computer have in common}
+          \author{Mark Krutzler 4a}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Code Blocks
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          % Code Blocks
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{minted}
+          \usepackage{minted}
 
-\usepackage{hyperref}
+          \usepackage{hyperref}
 
-% SVG support
-\usepackage{svg}
+          % SVG support
+          \usepackage{svg}
 
-\begin{document}
+          \begin{document}
 
-\frontmatter
-  \include{Sources/Title}
-  %\include{Sources/Abstract}
+          \frontmatter
+          \include{Sources/Title}
+          %\include{Sources/Abstract}
 
-  \tableofcontents
+          \tableofcontents
 
-\mainmatter
+          \mainmatter
 
-  \part[The ABC's of CPU scheduling]{%
-    The ABC's of CPU scheduling\\
-    %
-    \vspace{1cm}
-    %
-    \begin{minipage}[l]{\textwidth}
-    %
-    \textnormal{%
-      \normalsize
-      %
-      \begin{singlespace*}
-        \onehalfspacing
-        %
-        In this chapter I will give a quick introduction to the basics of CPU scheduling. We will look at the proper terms and common approaches to solving the problem of how one should schedule the processes waiting to be run.
-      \end{singlespace*}
-    }
-    \end{minipage}
-  }
 
-  \include{Sources/Basics}
+          \include{Sources/Basics}
 
-  \part[Advanced Policies]{%
-    Advanced Policies\\
-    %
-    \vspace{1cm}
-    %
-    \begin{minipage}[l]{\textwidth}
-    %
-    \textnormal{%
-      \normalsize
-      %
-      \begin{singlespace*}
-        \onehalfspacing
-        %
-        After looking at the basics, it is time to dive deeper. Next, we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however they are usually first modified to fit the environment and the needs better.
-      \end{singlespace*}
-    }
-    \end{minipage}
-  }
+          \include{Sources/Advanced}
 
-  \include{Sources/Advanced}
+          % This ensures that the subsequent sections are being included as root
+          % items in the bookmark structure of your PDF reader.
+          \bookmarksetup{startatroot}
+          \backmatter
 
-% This ensures that the subsequent sections are being included as root
-% items in the bookmark structure of your PDF reader.
-\bookmarksetup{startatroot}
-\backmatter
+          \begin{thebibliography}{99}
+            \bibitem{ostep}
+              Remzi Hussein Arpaci-Dusseau \& Andrea Carol Arpaci-Dusseau (2018) \emph{Operating Systems: Three Easy Pieces}, CreateSpace Independent Publishing Platform.
+            \bibitem{coffman68}
+              Edward G. Coffman \& Leonard Kleinrock (1968) \emph{Computer scheduling methods and their countermeasures}, Association for Computing Machinery.
+            \bibitem{waldspurger95}
+              Carl A. Waldspurger (1995) \emph{Lottery and Stride Scheduling: Flexible Proportional-Share Resource Management}, Massachusetts Institute of Technology.
+            \bibitem{waldspurger94}
+              Carl A. Waldspurger \& William E. Weihl (1994) \emph{Lottery scheduling: Flexible proportional-share resource management}, Massachusetts Institute of Technology.
+            \bibitem{solaris}
+              Andrea Carol Arpaci-Dusseau (2000) \emph{Multilevel Feedback Queue Scheduling in Solaris}, available at: \url{https://pages.cs.wisc.edu/~remzi/OSTEP/Citations/notes-solaris.pdf}
+          \end{thebibliography}
 
-\begin{thebibliography}{99}
-    \bibitem{ostep}
-    Remzi Hussein Arpaci-Dusseau \& Andrea Carol Arpaci-Dusseau (2018) \emph{Operating Systems: Three Easy Pieces}, CreateSpace Independent Publishing Platform.
-    \bibitem{coffman68}
-    Edward G. Coffman \& Leonard Kleinrock (1968) \emph{Computer scheduling methods and their countermeasures}, Association for Computing Machinery.
-    \bibitem{waldspurger95}
-    Carl A. Waldspurger (1995) \emph{Lottery and Stride Scheduling: Flexible Proportional-Share Resource Management}, Massachusetts Institute of Technology.
-    \bibitem{waldspurger94}
-    Carl A. Waldspurger \& William E. Weihl (1994) \emph{Lottery scheduling: Flexible proportional-share resource management}, Massachusetts Institute of Technology.
-    \bibitem{solaris}
-    Andrea Carol Arpaci-Dusseau (2000) \emph{Multilevel Feedback Queue Scheduling in Solaris}, available at: \url{https://pages.cs.wisc.edu/~remzi/OSTEP/Citations/notes-solaris.pdf}
-\end{thebibliography}
+          \section*{Further Sources}
+          \begin{itemize}
+            \item \url{https://github.com/Pseudomanifold/latex-mimosis}
+            \item \url{https://en.wikipedia.org/wiki/Binary_search}
+            \item \url{https://www.quora.com/Why-is-look-up-faster-for-a-Binary-Tree-than-a-Linked-List}
+            \item \url{https://ceunican.github.io/aos/09.Scheduling_Proportional_Share.pdf}
+            \item \url{https://courses.cs.washington.edu/courses/cse451/12au/l11.pdf}
+          \end{itemize}
 
-\section*{Further Sources}
-\begin{itemize}
-    \item \url{https://github.com/Pseudomanifold/latex-mimosis}
-    \item \url{https://en.wikipedia.org/wiki/Binary_search}
-    \item \url{https://www.quora.com/Why-is-look-up-faster-for-a-Binary-Tree-than-a-Linked-List}
-    \item \url{https://ceunican.github.io/aos/09.Scheduling_Proportional_Share.pdf}
-\end{itemize}
-
-\end{document}
+          \end{document}
