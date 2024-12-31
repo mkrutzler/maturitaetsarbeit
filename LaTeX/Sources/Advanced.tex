@@ -295,3 +295,63 @@ Look at figure \ref{fig:stride-scheduling} for example.
 If a process D joins at the last time interval, then it has to catch up to at least C. During that time it will have a unreasonable priority over everybody else.
 A promised global pass value would eliminate the problem, because one can adjust the entry pass value according to the current situation.
 If a task goes into a blocked state or leaves the competition temporarily and than rejoins than its pass value will be global stride plus the stride of the process. The same goes for a brand new job that joins.
+
+\newpage
+
+\section{THe Linux 2.6 Completely Fair Scheduler}
+
+As of 2023, this scheduler was replaced in the Linux kernel 6.6 by another scheduler based on the \emph{EEVDF}.
+The CFS is therefore technically retired, however it was used for a very long time, more than 15 years in fact.
+The goal of the policy was to be fair. To do this it was based on a proportional-share algorithm.
+
+\subsection{How it works}
+
+The aim is to divide the CPU time completely fairly.
+This means that each process gets a $\frac{100\%}{N}$ share of runtime, where $N$ is the total number of jobs competing.
+The policy turns out to be periodic and in each cycle everyone runs the same amount of time. 
+This is the ideal outcome of course.
+To do this we measure a so called vruntime.
+This is pretty similar to the pass value in stride scheduling, with the main difference being how this value is incremented.
+While in stride scheduling we use strides, in the CFS we increment the vruntime by the time that the process ran.
+If we have to make a scheduling decision, we just choose the process with the smallest vruntime.
+New jobs just receive the lowest vruntime value, so that they get a "priority" in the beginning.
+
+\subsection{Red-Black Binary Trees}
+
+Here I will quickly mention, why a red black binary tree is used, but not how it is implemented.
+That concept is out of the scope of this paper, because the goal is to explain the scheduling policies and not data structures.
+The CFS uses a special Red-Black Binary tree as its data structure.
+The Red-Black Binary tree is a Balanced Binary Search tree.
+This means that it is sorted from lowest vruntime to highest vruntime.
+In addition to that the smallest branch is no smaller than half the size of the longest branch.
+The lowest vruntime is on the left of the tree.
+This is useful, because it is really easy to find the next job to run: It is on the outer most left leaf.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{Assets/Red-Black-Tree.png}
+    \caption{Red-Black Binary Tree\\Source: \url{https://en.wikipedia.org/wiki/Red\%E2\%80\%93black_tree}}
+    \label{fig:stride-scheduling}
+\end{figure}
+
+After the process finished running, we just need to put it back into the right place.
+To do so, we first adjust it's vruntime value by adding the time it ran and than use the insertion algorithm.
+Due to the properties of red-black binary trees, all operations are O(log(n)) expensive.
+
+\subsection{Priorities}
+
+There isn't a special priority queue. The priority is adjusted by weighing the vruntime.
+$$ \text{vruntime}_k = \text{vruntime}_{k-1} + t_{\text{ran}}*\text{weight} $$
+If a process is more important, we adjust the weight, so that the time that it ran is counted as less. 
+This means that even though it ran for the same amount of time as the other, it didn't receive the same "penalty".
+Therefore it runs sooner than any other task.
+In linux the weight is called "niceness" and the $t_{\text{ran}}$ is multiplied by $\frac{1}{\text{niceness}}$
+
+
+\section*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+In this paper we went from taking the first steps to trying to understand the real use application. 
+I hoped to make it easy to get started by using relatable a analogy.
+However, there is a point, where one has to abandon old beliefs to grasp newer ones.
+As time went on the algorithms became more and more complex. 
