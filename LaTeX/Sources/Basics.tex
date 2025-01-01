@@ -8,27 +8,27 @@ In this chapter, I will give a quick introduction to the basics of CPU schedulin
 
 \subsection{Welcome to Costco}
 
-The main problem we face can be broken down into a really easy to formulate but hard to answer question.
+The main problem we face can be broken down into a really easy to formulate but hard to answer question:
 How can we order the queued tasks so that they run in the most optimal order?
 What optimal really means is a whole discussion itself (not to mention the search for the perfect algorithm to achieve that desired best solution).
 In this chapter I will give you a quick introduction to the main terms.
-In addition, I will also try to make the entry into the world of CPU scheduling as easy as possible to understand by using a situation that most of us have already suffered through.
+I will also try to make the entry into the world of CPU scheduling as easy as possible to understand by using a situation that most of us have already suffered through.
 
 Have you ever wondered why so many people buy bottled water? 
 How they can eat those nasty snacks that you despise?
 Why they have the whole cart full of milk?
 Maybe these questions seem rather sudden, but they have two things in common:
-One, you never get them answered, and two, which is the relevant part, you ask them while standing in line at a supermarket.
+One, you never get them answered, and two, which is the relevant part, you ask them while standing in line at the supermarket.
 You ask them while staring at the family of five with two shopping carts and while questioning, whether or not you should have queued at another line.
-Also, wouldn't it be much better if you, with your two items, went before them?
+Also, would not it be much better if you, with your two items, went before them?
 What is the best order to queue up these people?
-As you can already see, this is the original, simplified question, just reformulated.
+As you can see, this is the original, simplified question, just reformulated.
 We are searching for the best algorithm that arranges people at the supermarket.
-As a matter of fact, let's just call it by its real name: policy.
-In CPU-Scheduling we call the algorithms policies or disciplines.
-A single customer / shopper is called a job or a process.
-In the real world, a process can be anything from your drivers to the web browser showing the cute cat images.
-A queue is a line of people waiting to get their items scanned and the cashier is the CPU.
+As a matter of fact, let us just call the algorithm by its real name: policy.
+In the field of CPU-Scheduling we call these algorithms policies or disciplines.
+A single customer / shopper is called a job, process or task.
+In the real world, a process can be anything from your drivers to the web browser showing cute cat images.
+If the queue is a line of people waiting to get their items scanned, then the cashier is the CPU.
 
 \subsection{How We Compare Policies}
 
@@ -37,33 +37,29 @@ Fairness usually ensures that everyone receives the same amount of CPU time.
 This kind of policy usually leads to a more responsive system, because each job gets a bit of activity every so often.
 The response time is defined as:
 $$T_{\text{Response}} = T_{\text{First Run}} - T_{\text{Arrival}}$$
-As already mentioned the other measurable aspect is "performance".
+$T_{\text{Response}}$ measures the time it takes until a process is run for the first time.
+The average response time is a metric, which tends to be lower in fair systems.
+This comes from the fact that every task is treated equally and therefore get to run in a reasonable time.
+As already mentioned the other measurable aspect is ``performance''.
 Performance is usually measured using the turnaround time.
+The turnaround time is the time it takes until a task is finished. This also includes the time that the process has to wait while others run.
 $$T_{\text{Turnaround}} = T_{\text{Completion}} - T_{\text{Arrival}}$$
-There is always a tradeoff between performance and responsiveness, because to achieve the best average turnaround time, the tasks can't be interrupted, or else the time of completion is dragged out.
-Think of the average turnaround time like the predicted time that you have to wait in line until you finish with the payment of your groceries. If you constantly get interrupted then this time will go up.
-To achieve the best fairness the tasks need to be interrupted, because else new processes have to wait until the previous finishes.
-
-The two formulas above are for a single process. To get a feeling of the overall system, we will look at the average. This average highly depends on the system, because the length of the jobs scales with the average turnaround time proportionally.
+The two formulas above are for a single process. To get a feeling of the overall system, we will look at the average. This highly depends on the system, because the average turnaround time scales proportionally with the length of the jobs.
 If on average there are more items for the cashier to scan, then the average time until he is finished will go up.
 Therefore we’ll have to look at the measurements for a predetermined set of jobs.
 If we do not have the same system, we cannot compare the policies.
 
-\subsection{First lines of Code} \label{sec:first-lines-of-code}
+There is always a tradeoff between ``performance'' and fairness.
+To achieve the best average turnaround time, the tasks can not be interrupted, or else the time of completion is dragged out.
+Think of the average turnaround time like the predicted time that you have to wait in line until you finish with the payment of your groceries. If you constantly get interrupted then this average will go up.
+To achieve the best fairness the tasks need to be interrupted, because else new processes have to wait until the previous finishes.
+This is clearly a contradiction.
 
-During the next few chapters and sections we'll assume that one knows the amount of time that a process will take to finish, also known as burst time.
-Burst time is the time that a process has to run until it is finished.
-Like bursting out of joy, when you finally finish your weekly shopping.
-In a real world this is almost impossible\footnote{Here I mean knowing the burst time and not escaping the supermarket.}, unless you can time travel.
-One of the most straightforward policy is called first come, first served.
-This is what we usually suffer through in the queue to pay.
-The policy disregards how many item one has in the cart.
-The only important attribute is the time you arrive.
-The sooner the better.
-In the world of computer science, the policy is better referred to as \emph{First In, First Out (FIFO)}.
-Take a look at listing \ref{code:fifo} for a basic python implementation.
 
-\begin{figure}[h]
+\subsection{First Lines of Code} \label{sec:first-lines-of-code}
+
+
+\begin{listing}[h]
 \begin{minted}[mathescape,
     linenos,
     numbersep=5pt,
@@ -82,50 +78,64 @@ Take a look at listing \ref{code:fifo} for a basic python implementation.
   while True:
     if new_process == True: # check if there is a new process
         add_process(process)
-    
+
     next = queue.pop(0) # picks next process
     use_resource(next) # uses resources until finished
 \end{minted}
 \caption{Python: First in, First out}
 \label{code:fifo}
-\end{figure}
+\end{listing}
 
-We save the queue of people as a python list.
+During the next few chapters and sections we will assume that one knows the amount of time that a process will take to finish.
+This time is known as burst time.
+Burst time is the time that a process has to run until it is finished.
+In contrast to the turnaround time, the burst time only measures the time that the process runs and does not include waiting.
+Like bursting out of joy, when you finally finish your weekly shopping.
+In a real world this is almost impossible\footnote{Here I mean knowing the burst time and not escaping the supermarket.}, unless you can time travel.
+One of the most straightforward policies is called first come, first served.
+This is what we usually suffer through in the queue to pay.
+The policy disregards how many items one has in the cart.
+The only important attribute is the time you arrive.
+The sooner the better.
+In the world of computer science, the policy is better referred to as \emph{First In, First Out (FIFO)}.
+Take a look at listing~\ref{code:fifo} for a basic python implementation.
+
+We will save the queue of people as a python list.
 If any other job joins, it will just get appended to the end.
 As for the scheduling itself:
 We just loop through the list until everyone is finished.
 
 
 In the example above we assume that the use\_resource function on line 14 is already written.
-Also it is important to mention that the new\_process variable is just a bool, which gets updated if a new process is waiting to join the queue.
-In general python is not really meant for low level programming anyways, so take it with a grain of salt.
+Also, it is important to mention that the new\_process variable is just a bool, which gets updated if a new process is waiting to join the queue.
+In general python is not really meant for low level programming anyways, so take the code with a grain of salt.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Evolving the Supermarket}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Now that the scene is set, we return the original question. 
-How can we reduce our waiting time?
+Now that the scene is set, we return to the original question.
+How can we reduce our turnaround time?
 To give an answer, we will first take a step back.
-While the previous chapter talked about the initial situation and proper terms, this one will first loosen up some of the rules in order to ensure that the policies are as easy to understand as possible.
+While the previous chapter talked about the initial situation and proper terms, this one will propose new policies, which improve our metrics in one way or another.
 
 \subsection{Shortest Job First}
 
 As the name already says, the shortest job will be run first.
-In order to achieve this, we assume that the cashier knows, who has the least amount of items.
-This buyer will be then handled before anybody else. As you can already tell, this is not really a fair way to treat your customers.
+In order to achieve this, we assume that the cashier knows, who the person is with the least amount of items.
+This customer will be then handled before anybody else. As you can already tell, this is not really a fair way to treat your customers.
 Still if it comes down to pure turnaround time it is in most cases far better\footnote{With the assumption that the tasks arrive at the same time.} than the basic \emph{First In, First Out}.
 Waiting for shortest jobs to finish first is far less severe for longer jobs, because they already have a long burst time. However making the short processes wait out the long ones increases the turnaround time by a lot.
-For example let's take process A with a burst time of 10 second and process B with 100 seconds. In case of letting A run first we will have $T_A = 10$ and $T_B = 110$.
+For example let us take process A with a burst time of 10 second and process B with 100 seconds. In case of letting A run first, we will have $T_A = 10$ and $T_B = 110$.
 Therefore, the average turnaround time is:
 $$\frac{10 + 110}{2} = \frac{120}{2} = 60 \text{ seconds}$$
-In contrast to that if we let process B run first, we will have the turnaround time of 100 and 110. Therefore, the average is:
+In contrast to that if we let process B run first, we will have the turnaround time of $T_A = 110$ and $T_B = 100$. Therefore, the average is:
 $$\frac{110 + 100}{2} = \frac{210}{2} = 105 \text{ seconds}$$
 
 
 
-\begin{figure}[h]
+\begin{listing}[h]
     \begin{minted}[mathescape,
         linenos,
         numbersep=5pt,
@@ -143,7 +153,7 @@ $$\frac{110 + 100}{2} = \frac{210}{2} = 105 \text{ seconds}$$
         queue.append(process)
 
       # Schedule the processes
-      while queue != []:
+      while True:
         if new_process == True: # check if there is a new process
             add_process(process)
         
@@ -153,40 +163,41 @@ $$\frac{110 + 100}{2} = \frac{210}{2} = 105 \text{ seconds}$$
     \end{minted}
     \caption{Python: First in, First out}
     \label{code:sjf}
-\end{figure}
+\end{listing}
 
-As already mentioned in the section \ref{sec:first-lines-of-code}, python is not really meant for writing low level code and therefore it should only be looked at as a simple way of expressing logic.
-Even though there were some major improvements, the fact remains that if a client is too late then it will have to wait at least  until the previous shortest customer finishes. This can take a long time and it would be in our best interest to give these newcomers a fair chance. 
-It would be great if a rescheduling happens, every time someone joins the queue.
+As already mentioned in the Section~\ref{sec:first-lines-of-code}, python is not really meant for writing low level code and therefore listing~\ref{code:sjf} should only be looked at as a simple way of expressing logic.
+Even though there were some major improvements, the fact remains that if a client is too late then it will have to wait at least  until the previous customer finishes. This can take a long time and it would be in our best interest to give these newcomers a chance to compete.
+It would be great, if a rescheduling happens every time someone joins the queue.
 
 \subsection{Upgrading the Cashier}
 
 In this section our cashier receives a significant upgrade: it can save the state of one buyer and switch to another one.
-In technical terms a policy that can do that is called a preemptive policy. 
+In technical terms a policy that can do this is called a preemptive policy.
 The switching itself is called a content switch.
-While previously, if another customer came with just a single item, it would not get the privilege of cutting in front of the line. 
+Previously, if another customer came with just a single item, it would not get the privilege of cutting in front of the line.
 He would only receive the priority boost, if the current person is finished.
-However, now with the preemptive capabilities the cashier can just save and put aside the people.
+However, now with the preemptive capabilities the cashier can just save and put aside people.
 This feature is not only useful if there is someone that has a shorter time to completion.
 Imagine that someone forgot to put something into their basket.
 Now they desperately send back their kid to get that item. While he returns the cashier can save the state and do a context switch.
 While processes wait for I/O, others can run in their place.
 This waiting state is called being blocked and the technique of running another process is overlapping.
-At this stage it does not really make sense to present some code, because it is just too out of place, however, in theory, one would do the sorting of the processes every time a job finishes, gets blocked or another process joins.
+The evolved version of \emph{SJF} is called \emph{Preemptive Shortest Job First}, or \emph{PSJF}.
+If we are talking about implementation, then in theory, one would do the sorting of the processes every time a job finishes, gets blocked or another process joins.
 
 \subsection{What about Fairness?} \label{sec:rr}
 
 All of the policies we looked at so far disregarded the emotions of humans.
 Most of us want to be treated at least as well as others.
 It does not matter whether in a supermarket or at home before the computer, we want fairness and responsiveness.
-A fair scheduler like the Round Robin does exactly that. 
-It is the most simple to implement for a dynamic system, because all it does is goes around and gives every one contestant a bit of CPU time.
-The so called quantum or quanta in plural determines how long a single process can run before it gets replaced by another one.
+A fair scheduler like \emph{Round Robin} gives exactly that.
+It is the simplest to implement for a dynamic system, because all it does is that it goes around and gives every one of the contestant a bit of CPU time.
+The so called quantum (quanta in plural) determines how long a single process can run before it gets replaced by another one.
 In supermarket terms: How many items get scanned per customer per cycle.
 The logical next step would be to make these quanta as small as possible making the system as fair as possible.
 This, however, has a heavy drawback.
-The context switching itself takes up resources, meaning that after a while the performance degrades, because of too many context switches.
-Therefore the goal is find a quantum, which balances responsiveness and fairness with the performance loss.
+The context switching itself takes up resources, meaning that after a while the performance degrades, due to too many context switches.
+Therefore the goal is finding a quantum, which balances responsiveness and fairness with the performance loss.
 
 
 
@@ -196,5 +207,5 @@ During this chapter we learned the basic methodology of scheduling.
 The next step is to move to more sophisticated policies, which act as a whole system rather than just as a solution to a specific problem.
 We will also need to figure out the burst time.
 To be more precise, we need to figure out how to avoid using it.
-Most of the above mentioned policies, except the Round Robin, rely on the fact that we know, when one process finishes.
-Take \emph{Shortest Job First} for example: How can we order the processes according to the time to finish if we don't even know when they will finish?
+Most of the above mentioned policies, except the \emph{Round Robin}, rely on the fact that we know, when the processes finish.
+Take \emph{Shortest Job First} for example: How can we order the processes according to the time they finish if we do not even know when they will finish?

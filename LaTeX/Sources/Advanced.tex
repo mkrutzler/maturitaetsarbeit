@@ -1,24 +1,24 @@
 \chapter{Advanced Policies}
-After looking at the basics, it is time to dive deeper. Next, we will learn about policies that do not rely on the burst time to function. This means that technically they can be used in a real world application. In reality however, they are usually first modified to fit the environment and the needs better.
-We will get to know two subclasses of schedulers: real-time and proportional-share.
+After looking at the basics, it is time to dive deeper. Next, we will learn about policies that do not rely on burst time to function. This means that technically they can be used in a real world application. In reality however, they are usually first modified to fit the environment and the needs better.
+Finally, we will look at the \emph{Linux 2.6 Completely Fair Scheduler}, so that we know how a real world application could look like.
 
-\section{Real-Time Scheduling}
+\section{Predicting the Future}
 
 
-The first policy we look at is officially called Multi-Level Feedback Queue, or MLFQ in short. The creator Fernando J. Corbató received a Turning Award for it in 1990. 
+The first policy we look at is officially called \emph{Multi-Level Feedback Queue (MLFQ)}. The creator Fernando J. Corbató received a Turning Award for it in 1990.
 As the title already says, this policy tries to predict the future behavior of the processes based on the past.
 A job can generally act in two ways:
 Either it is a resource-intensive crunching problem (think about exporting a video or compiling code) or it is a program, which needs quick response time (think about your text editor).
 In reality most jobs jump between these two states.
-We usually want to give the response-focused processes priority, because that is what the user interacts with and it is here that he primarily feels a delay.
-The \emph{MLFQ} is used in the Solaris 2.6 Time-Sharing scheduler.
-It is part of the time sharing subclass, meaning that it schedules based on an event-driven model, which is usually periodic.
+We usually want to give the response-focused processes priority, because that is what the user interacts with and it is here that he feels a delay.
+The \emph{MLFQ} is used in the Solaris 2.6 Time-Sharing Scheduler.
 
 \subsection{Basic Idea}
 
-The policy introduces multiple queues, which each have different priorities.
-Each process is assigned to a queue. There are, however, not set in stone.
-Based on the reasons above we want to assume that a new process is responsive, because in the worst case scenario, we just need to demote the non-responsive ones.
+The policy introduces multiple queues, each with different priorities.
+Each process is assigned to a queue. These are, however, not set in stone.
+Based on the reasons above we want to assume that a new process is responsive.
+If it is not, we just need to demote it.
 If however, a process turns out to be interactive, then the user does not feel any lag. 
 Each process can run a certain amount of time (also called allotment time) before it is deemed as unworthy of the current priority.
 If the allotment is used up, the process gets demoted into a lower queue.
@@ -31,11 +31,12 @@ If the allotment is used up, the process gets demoted into a lower queue.
 \end{figure}
 
 
-As you can see in figure \ref{fig:mlfq-example-1} process one gets demoted after a while.
+As you can see in figure~\ref{fig:mlfq-example-1}, process one gets demoted after a while.
 The lower the queue is, the longer the allotment time. 
 This is because we hope that all of the responsive-oriented jobs finish before demoting.
 Once these are filtered out we will only have resource heavy tasks left.
-These require more time anyways, so the allotment time is stretched out.
+These do not need a special priority, because the user does not interact them directly.
+They require more time anyways, so the allotment time is stretched out.
 After a while the process just ends up at the bottom, at which point it runs until it is finished.
 Keep in mind that if the process gets blocked, meaning that it gives up its CPU before the allotment is used up, then they will stay in the same queue and can use up the rest of the allotment before they get demoted. Therefore not the actual time spent in a priority matters but the time spent using the resource.
 
@@ -43,8 +44,8 @@ Keep in mind that if the process gets blocked, meaning that it gives up its CPU 
 
 What happens if we introduce another process?
 Well, it depends on the priorities. 
-Higher priority receives the CPU time.
-If they are on the same queue, then they run using \emph{Round Robin} (see section \ref{sec:rr}).
+Higher priority receives the CPU.
+If they are on the same queue, then they run using \emph{Round Robin} (see Section~\ref{sec:rr}).
 
 
 \begin{figure}[h]
@@ -54,13 +55,13 @@ If they are on the same queue, then they run using \emph{Round Robin} (see secti
     \label{fig:mlfq-example-2}
 \end{figure}
 
-As you can see in figure \ref{fig:mlfq-example-2}, once process two is introduced, process one is temporarily starved. The problem is solved once they land on the same queue.
+As you can see in figure~\ref{fig:mlfq-example-2}, once process two is introduced, process one is temporarily starved. The problem is solved once they land on the same queue.
 There they run alternately.
-Still the more tasks we introduce the more prevalent the starving issue gets.
-Take a look at figure \ref{fig:mlfq-example-3} for example. 
+Still, the more tasks we introduce the more prevalent the starving issue gets.
+Take a look at figure~\ref{fig:mlfq-example-3} for example.
 Here we have four processes instead of two, which results in process 1 being completely left out.
 It could only start running again if processes 2 to 4 either finish or get demoted into priority 5.
-That takes quite a lot of time and requires that we don't introduce new tasks during the time waiting.
+That takes quite a lot of time and requires that we do not introduce new tasks during the time waiting.
 
 \begin{figure}[h]
     \centering
@@ -71,10 +72,10 @@ That takes quite a lot of time and requires that we don't introduce new tasks du
 
 \subsection{Solving Starvation}
 
-Solving starvation is actually pretty easy.
+Solving starvation is pretty easy.
 All we have to do is to make sure that once in a while everybody gets their deserved CPU time.
-To do that we introduce a priority boost. All it does is just put every process into priority one every so often.
-Even though this introduces another unknown variable that has to be configured, it is just such a crucial element that we have to live with it.
+To do that we introduce a priority boost. Priority boost puts every process into priority one every so often.
+Even though this introduces another unknown variable that has to be configured, namely when to priority boost, it is such a crucial element that we will have to live with it.
 
 \begin{figure}[h]
     \centering
@@ -91,17 +92,17 @@ Even though this introduces another unknown variable that has to be configured, 
 This chapter showed us, how one could approach a scheduling policy that works without needing to know the burst time.
 In the end we still end up with many parameters like the allotment time per queue, the number of queues, the quanta for the Round Robin and others.
 If used in a real system, the best approach would be to set some sensible defaults and let the administrator adjust the parameters when needed.
-To summarize the Multi-Level Feedback Queue, I would like to quote its rules of it from the book OStep \cite{ostep}:
+To summarize the \emph{Multi-Level Feedback Queue}, I would like to quote its rules from the book OStep~\cite{ostep}:
 \begin{quote}
-\emph{
+\emph{``
 \begin{enumerate}
-        \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs and B doesn't
+        \item If Priority (A) $>$ Priority (B) $\Rightarrow$ A runs and B does not
         \item If Priority (A) $=$ Priority (B) $\Rightarrow$ A and B run in Round Robin
         \item When a job enters the system, it is placed at the highest priority
         \item Once a job uses up its time allotment at a given level, its priority is reduced
         \item After some period S, move all the jobs in the system to the topmost queue
 \end{enumerate}
-}
+''}
 \end{quote}
 
 \newpage
@@ -116,40 +117,41 @@ Meaning a higher share of tickets will lead to a higher amount of CPU time.
 Logically, the response time is inversely proportional. The more tickets you have the less time you have to wait until you run.
 These tickets enable easy comparison between processes.
 One important difference between money in real life and tickets is that tickets are not consumed when used.
-Practically this means that if you buy something you won't lose your bill.
+Practically, this means that if you buy something you will not lose your bill.
 This property leads to the tickets representing the share of the CPU that the job has.
 Higher priority processes are weighted more heavily, meaning that they get more tickets.
 
-One could imagine these tickets like reservation places in a restaurant. For now it does not matter how the restaurant assigns the places, like it does not matter how the scheduler policy implements the transition from tickets to CPU time. The only thing that is important is that in the end you will have your places and can eat at the restaurant.
+One could imagine these tickets like a reservation in a restaurant. For now it does not matter how the restaurant assigns the seats.
+The same way it does not matter how the scheduler policy implements the transition from tickets to CPU time. The only thing that is important is that in the end you will have your place and can eat at the restaurant.
 
 
 \subsection{Operating with Tickets}
 
-You can do two notable things with tickets. First you can transfer them. 
+You can do two notable things with tickets. First, you can transfer them.
 This does exactly what it means. You decrease your amount of tickets and increase someone else's. 
-With this you could temporarily boost other processes.
+With the transfer you could temporarily boost other processes.
 Say, for example, you have a server and a client.
-If the client needs something from the server, then it could temporarily boost the servers resources by transferring some of his own tickets.
+If the client needs something from the server, then it could temporarily boost the servers resources by transferring some of its own tickets.
 Of course this requires that the server is trusted or else it could just scam you out of your tickets.
-The second way to operate with tickets is ticket inflation and deflation. This can only be done by the owner of the currency and it is only something that we will look at the next section.
+The second way to operate with tickets is ticket inflation and deflation. This can only be done by the owner of the currency and it is something that we will look at in next section.
 
 \subsection{Ticket Currencies}
 
 Ticket currencies are a way for parent processes to manage their child processes.
-Yes, that's right, not all processes are built the same.
+Yes, that is right, not all processes are built the same.
 A child process is a process that is created by another process.
 A parent process is a process, which has at least one child process.
 A job can be both a parent and a child at the same time.
 
-The idea behind ticket currencies is that a parent process creates its own unique currency. Therefore he himself can distribute as many bills as he wants. 
-However more custom bills does not equal to a higher share of CPU time in the whole system.
-Take figure \ref{fig:ticket-currencies} for example. Even though process A had created 100 tickets and gave 40 to process A$_1$ in the end it is all about ratios.
+The idea behind ticket currencies is that a parent can create its own unique currency. Therefore he himself can distribute as many bills as he wants.
+However more custom bills do not equal to a higher share of CPU time.
+Take figure~\ref{fig:ticket-currencies} for example. Even though process A has created 100 tickets and gave 40 to process A$_1$ in the end it is all about ratios.
 Therefore the overall runtime that A$_1$ has is: 
 
 $$\frac{20\text{T}_\text{G}}{50\text{T}_\text{G}} * \frac{40\text{T}_\text{A}}{100\text{T}_\text{A}} = 0.16 \Rightarrow 16\%$$
 
 There is another hidden benefit. If the parent process receives more global tickets, then if it has a custom currency, there are no further things to do.
-If, however, it does not have a custom currency than the process has to transfer these new tickets to the child processes. Overall it can get very messy all too quickly.
+If, however, it does not have a custom currency than the process has to transfer these new tickets to the child processes. Overall it gets very messy all too quickly.
 
 \begin{figure}[h]
     \centering
@@ -158,28 +160,33 @@ If, however, it does not have a custom currency than the process has to transfer
     \label{fig:ticket-currencies}
 \end{figure}
  
-Another benefit comes with custom currencies: the ticket inflation or deflation operation.
-One needs a custom currency, because it involves creating or destroying tickets. 
-Unlike the ticket transfer, ticket inflation does not need a sender and receiver.
+Another benefit comes with custom currencies: the ticket inflation and deflation operations.
+One needs a custom currency, because it involves creating and destroying tickets.
+Unlike the ticket transfer, ticket inflation does not need a sender.
 A selected process just gets more tickets assigned.
-With this the parent process changes the ration of ownership and therefore boosts the selected job.
+With this the parent process changes the ratio of ownership and therefore boosts the selected job.
 
 
 \subsection{Lottery Scheduling}
 
-Like other things in computer science the name already says a lot. 
+Like with other things in computer science the name already says a lot.
 Here randomization is exploited to achieve the proportional share in runtime.
-The concept is, that even if over a small scale there will be unavoidable errors, the longer the scheduler runs the more accurate it becomes.
 Think of the tickets as lottery tickets.
+The policy works by having a global tickets counter, which keeps track of all the jobs that compete for the CPU.
+At every scheduling stop a lottery is held, which chooses a winning ticket. The process with the winning ticket will use the resource for a specified quantum.
 If the randomization is fair, than the more tickets you have the more you will win.
+Say for example that process A has three times as many tickets as B. This means that over a time period process A will run three times as often as B.
+Later, while looking at binary search trees, we look at how such a winner is optimally found.
+The fact is, that even if over a small scale there will be unavoidable errors, the longer the scheduler runs the more accurate it becomes.
+Just like how in probability theory the distribution of winners in a larger dataset will more accurately represent the theoretical calculations.
 There is a downside though.
 The randomizer algorithm can get pretty expensive.
 There is a way to reuse one random seed though, but we will only quickly touch upon it later.
-For an example implementation in C take a look at listing \ref{code:lottery-sched}, which is written by Carl A. Waldspurger \cite{waldspurger95}.
+For an example implementation in C take a look at listing~\ref{code:lottery-sched}, which is written by Carl A. Waldspurger~\cite{waldspurger95}.
 
 \newpage
 
-\begin{figure}[H]
+\begin{listing}[H]
     \begin{minted}[mathescape,
         linenos,
         numbersep=5pt,
@@ -222,19 +229,19 @@ For an example implementation in C take a look at listing \ref{code:lottery-sche
     use_resource(current); /* grant resource to winner for quantum */
   }
     \end{minted}
-    \caption{Implementation of List-Based Lottery Scheduling Algorithm\\Written by: Carl A. Waldspurger \cite{waldspurger95}}
+    \caption{Implementation of List-Based Lottery Scheduling Algorithm\\Written by: Carl A. Waldspurger~\cite{waldspurger95}}
     \label{code:lottery-sched}
-\end{figure}
+\end{listing}
 
-In general implementing dynamic operations is not hard, because the only part that changes is the scheduling part, like choosing a winning ticket.
+Implementing dynamic operations is not hard, because the only part that changes is the scheduling part, like choosing a winning ticket.
 The clients structure does not need to be modified.
-This is because there are no global states. The processes are kept completely isolated from each other and just by looking at the next scheduling you couldn't know how long the scheduler has been running.
-In a List-Based system adding and removing clients can be as easy as adding them to the list and adjusting the global max tickets.
+This is because there are no global states. The processes are kept completely isolated from each other and just by looking at the next scheduling stop you could not know how long the scheduler has been running.
+In a List-Based system adding and removing clients can be as easy as adding them to the list of competition and adjusting the global max tickets.
 
 
-\subsubsection{Binary Search}
+\subsubsection{Binary Search} \label{sec:bin-sea}
 
-Even though it is easy to implement, basing the datas tructure on a list is quite inefficient, because of the long search time.
+Even though it is easy to implement, basing the data structure on a list is quite inefficient, because of a long search time.
 Every time you want to reschedule, you have to create a random number and loop through the list.
 However you could use a balanced binary tree to make it much faster.
 This is because a list search time scales with n. 
@@ -243,6 +250,7 @@ In contrast a binary search scales not with n.
 To be more precise it takes $O(log(n))$ to find a specific value.
 On average, with each decision we can eliminate half of the remaining candidates.
 Therefore overall it is much faster, especially the more values the list contains.
+In Section~\ref{sec:rb-tree} we will look at how the red black tree works. The red black tree is a special binary search tree, which is balanced. More about that later on.
 
 \begin{figure}[h]
     \centering
@@ -251,21 +259,21 @@ Therefore overall it is much faster, especially the more values the list contain
     \label{fig:binary-search}
 \end{figure}
 
-To understand it more, let's go through an example. Let's say there are 48 tickets and our winning one is 20.
-To understand the though process better, feel free to look at figure \ref{fig:binary-search}.
+To understand it more, let us go through an example. Say there are 48 tickets and our winning one is 20.
+To understand the though process better, feel free to look at figure~\ref{fig:binary-search}.
 For our first decision we need to choose if 20 is above 10 or not.
-It is above ten, so we choose the right path.
-At this point we have only 38 tickets left and we have to readjust our winning ticket.
+It is above 10, so we choose the right path.
+At this point we have only 38 tickets left and we have to readjust our winning ticket, because we choose the right path.
 We took away 10 tickets from the front so our new winning tickets is 10.
 10 is smaller than 20, so we take a left turn and there is no readjusting needed.
 In the next step we compare 12 and 10.
-12 is larger, which means we take the right path and arrive at our winner process, because 10 is contained in 12.
+12 is larger, which means we take the left path and arrive at our winner process.
 
 \subsubsection{Multi-Winner Lottery}
 
-Multi-winner Lottery Scheduling is a semi-randomized, semi-deterministic scheduling method.
-It is a method to try to minimize the cost of the randomization algorithm.
-The basic idea is to reuse the winner.
+Multi-Winner Lottery Scheduling is a semi-randomized, semi-deterministic scheduling method.
+It is a method that tries to minimize the cost of the randomization algorithm.
+The basic idea is to reuse the previous random winner.
 After you select your winner you take a specific offset to determine the other winners.
 One of these lotteries is called a super-quantum.
 
@@ -274,34 +282,33 @@ One of these lotteries is called a super-quantum.
 Another approach to implement a proportional-share policy is the so called stride scheduling.
 The tickets are used to assign so called strides to the processes.
 This stride value will then be used to increment a counter called pass.
-The process with the lowest pass value than gets run.
+The process with the lowest pass value gets to run.
+To understand the policy better, let us look at the example in figure 2.7.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{Assets/Stride-Scheduling.pdf}
-    \caption{Stride Scheduling Example}
-    \label{fig:stride-scheduling}
+    \caption{Stride Scheduling Example}\label{fig:stride-scheduling}
 \end{figure}
 
-To understand the policy better, let's loot at the example in figure \ref{fig:stride-scheduling}.
-We have three processes. Process A has a stride of 160, Process B 320 and Process C has 30. At $t_0$ process A runs. Afterwards it's B's turn. C has a much smaller stride, that's why it will have more turns before it catches up to A.
-After a while it gets to cyclic pattern.
+We have three processes. Process A has a stride of 160, Process B 320 and Process C has 30. At $t_0$ process A runs. Afterwards it is B's turn. C has a much smaller stride, that is why it will have more turns before it catches up to A.
+After a while it gets to periodic pattern.
 
 
-The benefit of stride scheduling is that one doesn't need a randomizer and the policy itself is much simpler to implement. With such good benefits there comes some disadvantages as well: The processes have global values, meaning that if a new job wants to join, than it has to be adjusted to the current global circumstances. In contrast all you have to do in the lottery is add the assigned tickets to the global maximum tickets.
+The benefit of stride scheduling is that one does not need a randomizer and the policy itself is much simpler to implement. With such good benefits there comes some disadvantages as well: The processes have global values, meaning that if a new job wants to join, than it has to be adjusted to the current global circumstances. In contrast all you have to do in lottery scheduling is add the assigned tickets to the global maximum tickets.
 
 To solve this, one needs to introduce a constant global pass value, because otherwise the joining processes will monopolize the CPU. 
-Look at figure \ref{fig:stride-scheduling} for example.
+Look at figure 2.7 for example.
 If a process D joins at the last time interval, then it has to catch up to at least C. During that time it will have a unreasonable priority over everybody else.
 A promised global pass value would eliminate the problem, because one can adjust the entry pass value according to the current situation.
-If a task goes into a blocked state or leaves the competition temporarily and than rejoins than its pass value will be global stride plus the stride of the process. The same goes for a brand new job that joins.
+If a task goes into a blocked state or leaves the competition temporarily and than rejoins than its pass value will be global pass plus the stride of the process. The same goes for a brand new job that joins.
 
 \newpage
 
-\section{THe Linux 2.6 Completely Fair Scheduler}
+\section{The Linux 2.6 Completely Fair Scheduler}
 
-As of 2023, this scheduler was replaced in the Linux kernel 6.6 by another scheduler based on the \emph{EEVDF}.
-The CFS is therefore technically retired, however it was used for a very long time, more than 15 years in fact.
+In 2023, this scheduler was replaced in the Linux kernel 6.6 by another scheduler based on the \emph{EEVDF}.
+The \emph{CFS} is therefore technically retired, however it was used for a very long time. More than 15 years in fact.
 The goal of the policy was to be fair. To do this it was based on a proportional-share algorithm.
 
 \subsection{How it works}
@@ -314,44 +321,58 @@ To do this we measure a so called vruntime.
 This is pretty similar to the pass value in stride scheduling, with the main difference being how this value is incremented.
 While in stride scheduling we use strides, in the CFS we increment the vruntime by the time that the process ran.
 If we have to make a scheduling decision, we just choose the process with the smallest vruntime.
-New jobs just receive the lowest vruntime value, so that they get a "priority" in the beginning.
+New jobs receive the lowest current vruntime value, so that they get a ``priority'' in the beginning.
 
-\subsection{Red-Black Binary Trees}
+\subsection{Red-Black Binary Trees} \label{sec:rb-tree}
 
-Here I will quickly mention, why a red black binary tree is used, but not how it is implemented.
+In this section I will quickly mention, why a red black binary tree is used, but not how it is implemented.
 That concept is out of the scope of this paper, because the goal is to explain the scheduling policies and not data structures.
-The CFS uses a special Red-Black Binary tree as its data structure.
+The \emph{CFS} uses a special Red-Black Binary tree as its data structure.
 The Red-Black Binary tree is a Balanced Binary Search tree.
-This means that it is sorted from lowest vruntime to highest vruntime.
-In addition to that the smallest branch is no smaller than half the size of the longest branch.
+The search property means that it is sorted from the lowest to the highest vruntime.
 The lowest vruntime is on the left of the tree.
 This is useful, because it is really easy to find the next job to run: It is on the outer most left leaf.
+In addition to that, a tree must have the following qualities to qualify as a legit red-black tree:
+\begin{enumerate}
+  \item Every node is either red or black
+  \item The root and leaves (NIL) are black
+  \item If a node is red, then the children must be black
+  \item All paths from a node to its NIL descendants contain the same amount of black nodes
+\end{enumerate}
+Following these rules, the longest branch can not be larger than twice the size of the smallest branch.
+You have only black nodes as the shortest branch and a red / black alternation as the longest branch.
+The beginning and the end are black, which means that there are a maximal of $n-1$ red nodes, where $n$ denotes the black ones.
+In the end for the shortest path we have $n$ nodes and for the longest we have $n + (n-1) = 2n-1$ nodes.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{Assets/Red-Black-Tree.png}
-    \caption{Red-Black Binary Tree\\Source: \url{https://en.wikipedia.org/wiki/Red\%E2\%80\%93black_tree}}
+    \includegraphics[width=0.8\textwidth]{Assets/Red-Black-Tree.png}
+    \caption{Red-Black Binary Tree, \\Source: \url{https://en.wikipedia.org/wiki/Red\%E2\%80\%93black_tree}}
     \label{fig:stride-scheduling}
 \end{figure}
 
-After the process finished running, we just need to put it back into the right place.
-To do so, we first adjust it's vruntime value by adding the time it ran and than use the insertion algorithm.
+While the process runs, we take out the choosen node.
+After the process finished running, we need to put the node back into the right place.
+To do so, we first adjust its vruntime value by adding the time it ran and then use the insertion algorithm.
+We need a special algorithm to put the node back, else the above mentionned demands are not fulfilled and the red black tree become illegible. The special algorithm just rebalances the tree after insertion.
 Due to the properties of red-black binary trees, all operations are O(log(n)) expensive.
 
 \subsection{Priorities}
 
-There isn't a special priority queue. The priority is adjusted by weighing the vruntime.
+There is not a special priority queue. The priority is adjusted by weighing the vruntime.
 $$ \text{vruntime}_k = \text{vruntime}_{k-1} + t_{\text{ran}}*\text{weight} $$
 If a process is more important, we adjust the weight, so that the time that it ran is counted as less. 
-This means that even though it ran for the same amount of time as the other, it didn't receive the same "penalty".
-Therefore it runs sooner than any other task.
-In linux the weight is called "niceness" and the $t_{\text{ran}}$ is multiplied by $\frac{1}{\text{niceness}}$
+This means that even though it ran for the same amount of time as the other, it did not receive the same ``penalty''.
+Therefore it runs sooner and gets overall more time than any other task.
+In linux the weight is called ``niceness'' and the $t_{\text{ran}}$ is multiplied by $\frac{1}{\text{niceness}}$
 
 
 \section*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
 
-In this paper we went from taking the first steps to trying to understand the real use application. 
-I hoped to make it easy to get started by using relatable a analogy.
-However, there is a point, where one has to abandon old beliefs to grasp newer ones.
-As time went on the algorithms became more and more complex. 
+In this paper we went from taking the first steps to trying to understand a real world application.
+I hoped to make it easy to get started by using a relatable analogy.
+However, there is a point, where one has to abandon old beliefs in order to grasp newer ones.
+As time went on the algorithms became more and more complex.
+In the end there is no perfect fit for all. Each policy has some advantages and disadvantages and fortunately we, as regular consumers, do not need to make a choice.
+
